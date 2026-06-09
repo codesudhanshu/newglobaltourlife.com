@@ -26,7 +26,7 @@ const navItems = [
   { label: "Services", href: "/services" },
   { label: "About",    href: "/about" },
   {
-    label: "Pages",
+    label: "Help",
     href: "#",
     children: [
       { label: "Blog",       href: "/blogs" },
