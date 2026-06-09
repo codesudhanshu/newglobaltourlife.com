@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="bg-[#0f172a] min-h-[88vh] flex items-center relative overflow-hidden">
+    <section className="bg-[#0f172a] lg:min-h-[88vh] flex items-center relative overflow-hidden">
       {/* Background glows */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-10 right-10 w-[500px] h-[500px] bg-[#f97316]/8 rounded-full blur-3xl" />
@@ -14,7 +14,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="container-custom py-16 relative z-10 w-full">
+      <div className="container-custom py-10 pb-6 lg:py-16 relative z-10 w-full">
         <div className="grid lg:grid-cols-2 gap-0 items-center">
 
           {/* Left — content */}
@@ -42,12 +42,11 @@ export default function Hero() {
           </div>
 
           {/* Right — car image */}
-          <div className="relative flex items-center justify-center">
+          <div className="relative flex items-center justify-center mt-6 lg:mt-0">
             {/* Glow ring */}
             <div className="absolute w-[420px] h-[420px] bg-[#f97316]/10 rounded-full blur-2xl" />
-            <div className="absolute w-[300px] h-[300px] bg-white/3 rounded-full blur-3xl bottom-0" />
 
-            {/* Car image — no card, floats over dark bg */}
+            {/* Car image */}
             <div className="relative w-full lg:scale-[1.35] lg:-translate-x-4">
               <Image
                 src="/hero-car-shadow.png"
