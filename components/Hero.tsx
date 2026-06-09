@@ -15,7 +15,7 @@ export default function Hero() {
       </div>
 
       <div className="container-custom py-16 relative z-10 w-full">
-        <div className="grid lg:grid-cols-2 gap-10 items-center">
+        <div className="grid lg:grid-cols-2 gap-0 items-center">
 
           {/* Left — content */}
           <div>
@@ -48,7 +48,7 @@ export default function Hero() {
             <div className="absolute w-[300px] h-[300px] bg-white/3 rounded-full blur-3xl bottom-0" />
 
             {/* Car image — no card, floats over dark bg */}
-            <div className="relative w-full lg:scale-125 lg:translate-x-12">
+            <div className="relative w-full lg:scale-[1.35] lg:translate-x-16">
               <Image
                 src="/hero-car-shadow.png"
                 alt="Premium car rental"

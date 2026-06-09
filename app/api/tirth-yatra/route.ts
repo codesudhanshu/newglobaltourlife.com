@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/db";
+import { connectDB } from "@/lib/db";
 import TirthYatra from "@/lib/models/TirthYatra";
 import { isAdminRequest } from "@/lib/auth";
 
