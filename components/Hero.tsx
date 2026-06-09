@@ -48,14 +48,14 @@ export default function Hero() {
             <div className="absolute w-[300px] h-[300px] bg-white/3 rounded-full blur-3xl bottom-0" />
 
             {/* Car image — no card, floats over dark bg */}
-            <div className="relative w-full max-w-xl">
+            <div className="relative w-full max-w-2xl lg:scale-110 lg:translate-x-8">
               <Image
                 src="/hero-car-shadow.png"
                 alt="Premium car rental"
-                width={1200}
-                height={700}
+                width={1400}
+                height={800}
                 priority
-                className="w-full h-auto object-contain drop-shadow-[0_20px_60px_rgba(249,115,22,0.15)]"
+                className="w-full h-auto object-contain drop-shadow-[0_20px_60px_rgba(249,115,22,0.2)]"
               />
               {/* Floating badge — price */}
               <div className="absolute top-4 right-4 bg-[#f97316] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-orange-900/40">
