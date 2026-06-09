@@ -22,16 +22,17 @@ const navItems = [
       { label: "Convertible",   href: "/cars?category=convertible" },
     ],
   },
-  { label: "Hotels",   href: "#hotels" },
-  { label: "Services", href: "#services" },
-  { label: "About",    href: "#about" },
+  { label: "Hotels",   href: "/hotels" },
+  { label: "Services", href: "/services" },
+  { label: "About",    href: "/about" },
   {
     label: "Pages",
     href: "#",
     children: [
-      { label: "Blog",       href: "#blog" },
-      { label: "Contact Us", href: "#contact" },
-      { label: "FAQ",        href: "#faq" },
+      { label: "Blog",       href: "/blogs" },
+      { label: "Tirth Yatra", href: "/tirth-yatra" },
+      { label: "Contact Us", href: "/#contact" },
+      { label: "FAQ",        href: "/#faq" },
     ],
   },
 ];

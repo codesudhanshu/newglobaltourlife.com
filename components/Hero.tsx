@@ -53,7 +53,7 @@ export default function Hero() {
             {/* Car image — no card, floats over dark bg */}
             <div className="relative w-full max-w-xl">
               <Image
-                src="/car-hero.png"
+                src="/hero-car-shadow.png"
                 alt="Premium car rental"
                 width={1200}
                 height={700}
