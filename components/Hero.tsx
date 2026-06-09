@@ -38,9 +38,6 @@ export default function Hero() {
               <a href="#cars" className="btn-primary !text-base !px-7 !py-3.5">
                 Let&apos;s Rent Your Best Car <ArrowRight size={18} />
               </a>
-              <a href="#about" className="btn-outline !text-base !px-7 !py-3.5">
-                Learn More
-              </a>
             </div>
           </div>
 

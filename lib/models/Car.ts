@@ -9,6 +9,7 @@ export interface ICar extends Document {
   price: number;
   description: string;
   image: string;
+  images: string[];
   order: number;
   available: boolean;
   createdAt: Date;
