@@ -36,7 +36,7 @@ export default function Hero() {
 
             <div className="flex flex-wrap gap-4">
               <a href="#cars" className="btn-primary !text-base !px-7 !py-3.5">
-                Let&apos;s Rent Your Best Car <ArrowRight size={18} />
+                Let&apos;s Rent Best Car <ArrowRight size={18} />
               </a>
             </div>
           </div>
@@ -48,7 +48,7 @@ export default function Hero() {
             <div className="absolute w-[300px] h-[300px] bg-white/3 rounded-full blur-3xl bottom-0" />
 
             {/* Car image — no card, floats over dark bg */}
-            <div className="relative w-full max-w-2xl lg:scale-110 lg:translate-x-8">
+            <div className="relative w-full max-w-4xl lg:scale-110 lg:translate-x-8">
               <Image
                 src="/hero-car-shadow.png"
                 alt="Premium car rental"
@@ -60,11 +60,6 @@ export default function Hero() {
               {/* Floating badge — price */}
               <div className="absolute top-4 right-4 bg-[#f97316] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg shadow-orange-900/40">
                 From ₹1,800/day
-              </div>
-              {/* Floating badge — rating */}
-              <div className="absolute bottom-6 left-4 bg-white text-[#0f172a] text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                <svg viewBox="0 0 24 24" className="w-3 h-3 fill-[#f97316]"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                4.9 · 1,200+ reviews
               </div>
             </div>
           </div>
