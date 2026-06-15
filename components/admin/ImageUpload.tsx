@@ -62,11 +62,11 @@ export default function ImageUpload({ value, onChange, token, folder = "new-glob
       ) : (
         <div
           onClick={() => inputRef.current?.click()}
-          className="w-full h-48 border-2 border-dashed border-slate-600 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-[#f97316] transition-colors"
+          className="w-full h-48 border-2 border-dashed border-slate-600 rounded-lg flex flex-col items-center justify-center cursor-pointer hover:border-[#01b7f2] transition-colors"
         >
           {uploading ? (
             <>
-              <Loader size={24} className="text-[#f97316] animate-spin mb-2" />
+              <Loader size={24} className="text-[#01b7f2] animate-spin mb-2" />
               <span className="text-sm text-gray-400">Uploading to Cloudinary...</span>
             </>
           ) : (

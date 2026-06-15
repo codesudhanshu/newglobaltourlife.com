@@ -70,11 +70,11 @@ export default function MultiImageUpload({ values, onChange, token, folder = "ne
       {/* Upload button */}
       <div
         onClick={() => !uploading && inputRef.current?.click()}
-        className="w-full h-20 border-2 border-dashed border-slate-600 rounded-lg flex items-center justify-center gap-2 cursor-pointer hover:border-[#f97316] transition-colors"
+        className="w-full h-20 border-2 border-dashed border-slate-600 rounded-lg flex items-center justify-center gap-2 cursor-pointer hover:border-[#01b7f2] transition-colors"
       >
         {uploading ? (
           <>
-            <Loader size={18} className="text-[#f97316] animate-spin" />
+            <Loader size={18} className="text-[#01b7f2] animate-spin" />
             <span className="text-sm text-gray-400">Uploading...</span>
           </>
         ) : (

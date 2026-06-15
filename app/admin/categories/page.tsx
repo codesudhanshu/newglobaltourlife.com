@@ -87,7 +87,7 @@ export default function AdminCategories() {
       ) : cats.length === 0 ? (
         <div className="text-center py-20 text-gray-500">
           No categories yet.{" "}
-          <Link href="/admin/categories/new" className="text-[#f97316] hover:underline">Create one</Link>
+          <Link href="/admin/categories/new" className="text-[#01b7f2] hover:underline">Create one</Link>
         </div>
       ) : (
         <>
@@ -138,10 +138,10 @@ export default function AdminCategories() {
                   </td>
                   <td className="px-5 py-4">
                     <div className="flex items-center justify-end gap-2">
-                      <button onClick={() => toggleActive(cat)} title={cat.active ? "Deactivate" : "Activate"} className="p-1.5 text-gray-400 hover:text-yellow-400">
+                      <button onClick={() => toggleActive(cat)} title={cat.active ? "Deactivate" : "Activate"} className="p-1.5 text-gray-400 hover:text-[#0A65AB]">
                         {cat.active ? <EyeOff size={15} /> : <Eye size={15} />}
                       </button>
-                      <Link href={`/admin/categories/${cat._id}/edit`} className="p-1.5 text-gray-400 hover:text-[#f97316]">
+                      <Link href={`/admin/categories/${cat._id}/edit`} className="p-1.5 text-gray-400 hover:text-[#01b7f2]">
                         <Pencil size={15} />
                       </Link>
                       <button onClick={() => deletecat(cat._id)} className="p-1.5 text-gray-400 hover:text-red-400">

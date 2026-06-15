@@ -86,7 +86,7 @@ export default function AdminBlogs() {
       ) : blogs.length === 0 ? (
         <div className="text-center py-20 text-gray-500">
           No blogs yet.{" "}
-          <Link href="/admin/blogs/new" className="text-[#f97316] hover:underline">
+          <Link href="/admin/blogs/new" className="text-[#01b7f2] hover:underline">
             Create one
           </Link>
         </div>
@@ -139,10 +139,10 @@ export default function AdminBlogs() {
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center justify-end gap-2">
-                        <button onClick={() => togglePublish(blog)} className="p-1.5 text-gray-400 hover:text-yellow-400" title="Toggle publish">
+                        <button onClick={() => togglePublish(blog)} className="p-1.5 text-gray-400 hover:text-[#0A65AB]" title="Toggle publish">
                           {blog.published ? <EyeOff size={15} /> : <Eye size={15} />}
                         </button>
-                        <Link href={`/admin/blogs/${blog._id}/edit`} className="p-1.5 text-gray-400 hover:text-[#f97316]">
+                        <Link href={`/admin/blogs/${blog._id}/edit`} className="p-1.5 text-gray-400 hover:text-[#01b7f2]">
                           <Pencil size={15} />
                         </Link>
                         <button onClick={() => deleteBlog(blog._id)} className="p-1.5 text-gray-400 hover:text-red-400">

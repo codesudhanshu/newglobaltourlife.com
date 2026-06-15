@@ -40,7 +40,7 @@ export default function FAQ() {
           {/* Left */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <div className="h-0.5 w-6 bg-[#f97316]" />
+              <div className="h-0.5 w-6 bg-[#01b7f2]" />
               <span className="section-tag">FAQ</span>
             </div>
             <h2 className="section-title mb-6">
@@ -66,12 +66,12 @@ export default function FAQ() {
                   onClick={() => setOpenIndex(openIndex === i ? null : i)}
                   className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors"
                 >
-                  <span className="font-semibold text-[#0f172a] text-sm pr-4">{q}</span>
-                  <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#f97316]/10 flex items-center justify-center">
+                  <span className="font-semibold text-[#0A65AB] text-sm pr-4">{q}</span>
+                  <div className="flex-shrink-0 w-7 h-7 rounded-full bg-[#01b7f2]/10 flex items-center justify-center">
                     {openIndex === i ? (
-                      <Minus size={14} className="text-[#f97316]" />
+                      <Minus size={14} className="text-[#01b7f2]" />
                     ) : (
-                      <Plus size={14} className="text-[#f97316]" />
+                      <Plus size={14} className="text-[#01b7f2]" />
                     )}
                   </div>
                 </button>

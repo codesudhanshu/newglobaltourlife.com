@@ -1,14 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --primary: #f97316;
-  --primary-dark: #ea580c;
-  --dark: #0f172a;
+  --primary: #01b7f2;
+  --primary-dark: #0299cc;
+  --dark: #0A65AB;
   --dark-card: #1e293b;
 }
 
 * {
   scroll-behavior: smooth;
+}
+
+/* Tailwind v4 drops default button cursor — restore pointer on all clickables */
+button:not(:disabled),
+[role="button"],
+a,
+label[for],
+summary,
+select {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 body {
@@ -31,7 +45,7 @@ body {
 }
 
 .btn-primary {
-  background-color: #f97316;
+  background-color: #01b7f2;
   color: #ffffff;
   padding: 0.75rem 2rem;
   border-radius: 0.375rem;
@@ -46,13 +60,13 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #ea580c;
+  background-color: #0299cc;
   transform: translateY(-1px);
 }
 
 .btn-outline {
-  border: 2px solid #f97316;
-  color: #f97316;
+  border: 2px solid #01b7f2;
+  color: #01b7f2;
   padding: 0.75rem 2rem;
   border-radius: 0.375rem;
   font-weight: 600;
@@ -66,7 +80,7 @@ body {
 }
 
 .btn-outline:hover {
-  background-color: #f97316;
+  background-color: #01b7f2;
   color: #ffffff;
 }
 
@@ -80,7 +94,7 @@ body {
 }
 
 .section-tag {
-  color: #f97316;
+  color: #01b7f2;
   font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -90,7 +104,7 @@ body {
 .section-title {
   font-size: 2.25rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #0A65AB;
   line-height: 1.2;
 }
 

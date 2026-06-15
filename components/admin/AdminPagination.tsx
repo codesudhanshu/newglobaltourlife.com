@@ -44,7 +44,7 @@ export default function AdminPagination({ page, total, pageSize, onChange }: Pro
               onClick={() => onChange(p as number)}
               className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors ${
                 p === page
-                  ? "bg-[#f97316] text-white"
+                  ? "bg-[#01b7f2] text-white"
                   : "text-gray-400 hover:text-white hover:bg-slate-700"
               }`}
             >

@@ -90,20 +90,20 @@ export default function BookingModal({ isOpen, onClose, subject = "", type = "ge
 
   if (!isOpen) return null;
 
-  const inputCls = "w-full bg-[#1e293b] border border-slate-600 rounded-xl px-4 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#f97316] transition-colors";
+  const inputCls = "w-full bg-[#1e293b] border border-slate-600 rounded-xl px-4 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#01b7f2] transition-colors";
   const labelCls = "block text-sm font-medium text-gray-300 mb-1.5 flex items-center gap-1.5";
 
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#0f172a] rounded-2xl border border-slate-700 w-full max-w-lg shadow-2xl z-10 max-h-[90vh] flex flex-col">
+      <div className="relative bg-[#0A65AB] rounded-2xl border border-slate-700 w-full max-w-lg shadow-2xl z-10 max-h-[90vh] flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-5 border-b border-slate-800 flex-shrink-0">
           <div>
             <h2 className="text-white font-bold text-lg">
               {success ? "Thank You!" : type === "car" ? "Book This Car" : type === "hotel" ? "Book This Hotel" : "Send Enquiry"}
             </h2>
-            {!success && subject && <p className="text-[#f97316] text-sm mt-0.5 font-medium">{subject}</p>}
+            {!success && subject && <p className="text-[#01b7f2] text-sm mt-0.5 font-medium">{subject}</p>}
           </div>
           <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-slate-800">
             <X size={20} />
@@ -123,10 +123,10 @@ export default function BookingModal({ isOpen, onClose, subject = "", type = "ge
               </p>
               <p className="text-gray-500 text-xs mb-6">
                 For urgent bookings call us at{" "}
-                <a href="tel:+919131727811" className="text-[#f97316] hover:underline font-medium">+91-9131727811</a>
+                <a href="tel:+919131727811" className="text-[#01b7f2] hover:underline font-medium">+91-9131727811</a>
               </p>
               <div className="flex flex-col gap-2">
-                <a href="tel:+919131727811" className="flex items-center justify-center gap-2 bg-[#f97316] text-white font-semibold py-2.5 rounded-xl text-sm hover:bg-[#ea580c] transition-colors">
+                <a href="tel:+919131727811" className="flex items-center justify-center gap-2 bg-[#01b7f2] text-white font-semibold py-2.5 rounded-xl text-sm hover:bg-[#0299cc] transition-colors">
                   <Phone size={15} /> Call Now
                 </a>
                 <button onClick={onClose} className="text-gray-400 hover:text-white text-sm transition-colors py-2">Close</button>
@@ -245,13 +245,13 @@ export default function BookingModal({ isOpen, onClose, subject = "", type = "ge
 
               {error && <p className="text-red-400 text-sm bg-red-900/20 rounded-lg px-3 py-2">{error}</p>}
 
-              <button type="submit" disabled={loading} className="w-full bg-[#f97316] hover:bg-[#ea580c] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-60">
+              <button type="submit" disabled={loading} className="w-full bg-[#01b7f2] hover:bg-[#0299cc] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-60">
                 {loading ? <Loader size={16} className="animate-spin" /> : <Send size={16} />}
                 {loading ? "Sending..." : "Send Enquiry"}
               </button>
 
               <p className="text-center text-gray-500 text-xs">
-                Or call: <a href="tel:+919131727811" className="text-[#f97316] hover:underline">+91-9131727811</a>
+                Or call: <a href="tel:+919131727811" className="text-[#01b7f2] hover:underline">+91-9131727811</a>
               </p>
             </form>
           )}

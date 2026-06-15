@@ -15,7 +15,7 @@ interface Category {
 
 const CATEGORY_COLORS: Record<string, { color: string; bg: string }> = {
   Business:   { color: "#3b82f6",  bg: "#1e3a5f" },
-  Family:     { color: "#f97316",  bg: "#4a1f00" },
+  Family:     { color: "#01b7f2",  bg: "#4a1f00" },
   Sports:     { color: "#ef4444",  bg: "#4a1010" },
   Luxury:     { color: "#8b5cf6",  bg: "#2e1a5e" },
   Electric:   { color: "#10b981",  bg: "#083d26" },
@@ -76,18 +76,18 @@ export default function CategorySection() {
   }, []);
 
   return (
-    <section className="section-padding bg-[#0f172a]">
+    <section className="section-padding bg-[#0A65AB]">
       <div className="container-custom">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-12">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <div className="h-0.5 w-6 bg-[#f97316]" />
+              <div className="h-0.5 w-6 bg-[#01b7f2]" />
               <span className="section-tag">Explore Fleet</span>
             </div>
             <h2 className="section-title-white">Browse by Category</h2>
           </div>
-          <Link href="/cars" className="flex items-center gap-2 text-[#f97316] font-semibold text-sm hover:gap-3 transition-all self-start lg:self-auto">
+          <Link href="/cars" className="flex items-center gap-2 text-[#01b7f2] font-semibold text-sm hover:gap-3 transition-all self-start lg:self-auto">
             View All Vehicles <ArrowRight size={16} />
           </Link>
         </div>
@@ -95,7 +95,7 @@ export default function CategorySection() {
         {/* Category grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {cats.map((cat) => {
-            const palette = CATEGORY_COLORS[cat.name] || { color: "#f97316", bg: "#2a1a00" };
+            const palette = CATEGORY_COLORS[cat.name] || { color: "#01b7f2", bg: "#2a1a00" };
             return (
               <Link
                 key={cat._id}
@@ -112,7 +112,7 @@ export default function CategorySection() {
                 ) : (
                   <div
                     className="absolute inset-0 transition-transform duration-500 group-hover:scale-105"
-                    style={{ background: `linear-gradient(135deg, ${palette.bg}, #0f172a)` }}
+                    style={{ background: `linear-gradient(135deg, ${palette.bg}, #0A65AB)` }}
                   >
                     {/* Background pattern */}
                     <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(circle at 70% 50%, ${palette.color}, transparent 60%)` }} />

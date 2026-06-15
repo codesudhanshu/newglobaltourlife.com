@@ -6,6 +6,7 @@ import Image from "next/image";
 import { User, Calendar, ArrowRight, ChevronRight, Search } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { BLOGS } from "@/lib/placeholders";
 
 interface Blog {
   _id: string;
@@ -19,9 +20,9 @@ interface Blog {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Travel: "#3b82f6", "Car Guide": "#f97316", Savings: "#10b981",
+  Travel: "#3b82f6", "Car Guide": "#01b7f2", Savings: "#10b981",
   News: "#8b5cf6", Tips: "#ef4444", General: "#64748b",
-  Tour: "#f97316", Adventure: "#10b981",
+  Tour: "#01b7f2", Adventure: "#10b981",
 };
 
 const PAGE_SIZE = 12;
@@ -35,8 +36,8 @@ function BlogPlaceholder({ color }: { color: string }) {
 }
 
 export default function BlogsPage() {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [blogs, setBlogs] = useState<Blog[]>(BLOGS as unknown as Blog[]);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
@@ -45,10 +46,10 @@ export default function BlogsPage() {
     fetch("/api/blogs")
       .then((r) => r.json())
       .then((data) => {
-        if (Array.isArray(data)) setBlogs(data.filter((b: Blog) => b.published !== false));
+        const pub = Array.isArray(data) ? data.filter((b: Blog) => b.published !== false) : [];
+        if (pub.length > 0) setBlogs(pub);
       })
-      .catch(() => {})
-      .finally(() => setLoading(false));
+      .catch(() => {});
   }, []);
 
   useEffect(() => { setPage(1); }, [search, activeCategory]);
@@ -74,16 +75,16 @@ export default function BlogsPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="bg-[#0f172a] relative overflow-hidden py-16 lg:py-20">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(#f97316 1px, transparent 1px), linear-gradient(90deg, #f97316 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+      <section className="bg-[#0A65AB] relative overflow-hidden py-16 lg:py-20">
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(#01b7f2 1px, transparent 1px), linear-gradient(90deg, #01b7f2 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
         <div className="container-custom relative z-10">
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-            <Link href="/" className="hover:text-[#f97316]">Home</Link>
+            <Link href="/" className="hover:text-[#01b7f2]">Home</Link>
             <ChevronRight size={14} />
             <span className="text-gray-300">Blog</span>
           </div>
           <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-3">
-            Travel <span className="text-[#f97316]">Blog</span>
+            Travel <span className="text-[#01b7f2]">Blog</span>
           </h1>
           <p className="text-gray-400 max-w-xl">Expert travel advice, tour guides, and insider tips from New Global Tour Life.</p>
         </div>
@@ -98,13 +99,13 @@ export default function BlogsPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search articles..."
-              className="bg-slate-700 border border-slate-600 rounded-full pl-8 pr-4 py-1.5 text-sm text-white focus:outline-none focus:border-[#f97316] w-48"
+              className="bg-slate-700 border border-slate-600 rounded-full pl-8 pr-4 py-1.5 text-sm text-white focus:outline-none focus:border-[#01b7f2] w-48"
             />
           </div>
           <div className="flex items-center gap-2 overflow-x-auto">
             <button
               onClick={() => setActiveCategory("")}
-              className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${!activeCategory ? "bg-[#f97316] text-white" : "text-gray-400 hover:text-white hover:bg-slate-700"}`}
+              className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${!activeCategory ? "bg-[#01b7f2] text-white" : "text-gray-400 hover:text-white hover:bg-slate-700"}`}
             >
               All
             </button>
@@ -112,7 +113,7 @@ export default function BlogsPage() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(activeCategory === cat ? "" : cat)}
-                className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${activeCategory === cat ? "bg-[#f97316] text-white" : "text-gray-400 hover:text-white hover:bg-slate-700"}`}
+                className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${activeCategory === cat ? "bg-[#01b7f2] text-white" : "text-gray-400 hover:text-white hover:bg-slate-700"}`}
               >
                 {cat}
               </button>
@@ -130,7 +131,7 @@ export default function BlogsPage() {
           ) : filtered.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-4xl mb-4">📰</div>
-              <h3 className="font-bold text-[#0f172a] text-xl mb-2">No articles found</h3>
+              <h3 className="font-bold text-[#0A65AB] text-xl mb-2">No articles found</h3>
               <button onClick={() => { setSearch(""); setActiveCategory(""); }} className="btn-primary mt-4">Clear filters</button>
             </div>
           ) : (
@@ -160,11 +161,11 @@ export default function BlogsPage() {
                             <span className="flex items-center gap-1"><User size={11} /> {post.author}</span>
                             {dateStr && <span className="flex items-center gap-1"><Calendar size={11} /> {dateStr}</span>}
                           </div>
-                          <h3 className="font-extrabold text-[#0f172a] mb-3 leading-snug group-hover:text-[#f97316] transition-colors flex-1">
+                          <h3 className="font-extrabold text-[#0A65AB] mb-3 leading-snug group-hover:text-[#01b7f2] transition-colors flex-1">
                             {post.title}
                           </h3>
                           {post.excerpt && <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">{post.excerpt}</p>}
-                          <span className="inline-flex items-center gap-1.5 text-[#f97316] text-sm font-semibold group-hover:gap-3 transition-all mt-auto">
+                          <span className="inline-flex items-center gap-1.5 text-[#01b7f2] text-sm font-semibold group-hover:gap-3 transition-all mt-auto">
                             Read More <ArrowRight size={14} />
                           </span>
                         </div>
@@ -178,7 +179,7 @@ export default function BlogsPage() {
               {totalPages > 1 && (
                 <div className="flex items-center justify-center gap-2 mt-10">
                   <button onClick={() => goPage(page - 1)} disabled={page === 1}
-                    className="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#f97316] hover:text-[#f97316] disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                    className="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#01b7f2] hover:text-[#01b7f2] disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
                     <ArrowRight size={15} className="rotate-180" />
                   </button>
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
@@ -188,13 +189,13 @@ export default function BlogsPage() {
                     if (!show) return null;
                     return (
                       <button key={p} onClick={() => goPage(p)}
-                        className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${p === page ? "bg-[#f97316] text-white shadow-lg" : "border border-gray-200 text-gray-600 hover:border-[#f97316] hover:text-[#f97316]"}`}>
+                        className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${p === page ? "bg-[#01b7f2] text-white shadow-lg" : "border border-gray-200 text-gray-600 hover:border-[#01b7f2] hover:text-[#01b7f2]"}`}>
                         {p}
                       </button>
                     );
                   })}
                   <button onClick={() => goPage(page + 1)} disabled={page === totalPages}
-                    className="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#f97316] hover:text-[#f97316] disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                    className="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#01b7f2] hover:text-[#01b7f2] disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
                     <ArrowRight size={15} />
                   </button>
                   <span className="ml-2 text-xs text-gray-400">Page {page} of {totalPages}</span>

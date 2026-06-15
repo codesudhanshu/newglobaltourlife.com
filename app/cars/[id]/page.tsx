@@ -24,7 +24,7 @@ interface Car {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Business: "#3b82f6", Family: "#f97316", Sports: "#ef4444",
+  Business: "#3b82f6", Family: "#01b7f2", Sports: "#ef4444",
   Luxury: "#8b5cf6", Electric: "#10b981", SUV: "#0ea5e9",
   Economy: "#64748b", Sedan: "#3b82f6", Convertible: "#ec4899",
 };
@@ -70,7 +70,7 @@ export default function CarDetailPage() {
       .catch(() => { setNotFound(true); setLoading(false); });
   }, [id]);
 
-  const color = car ? (CATEGORY_COLORS[car.category] || "#f97316") : "#f97316";
+  const color = car ? (CATEGORY_COLORS[car.category] || "#01b7f2") : "#01b7f2";
   const imgs = car ? (car.images?.length ? car.images : car.image ? [car.image] : []) : [];
 
   if (loading) {
@@ -78,7 +78,7 @@ export default function CarDetailPage() {
       <>
         <Navbar />
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-          <div className="w-10 h-10 border-4 border-[#f97316] border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-[#01b7f2] border-t-transparent rounded-full animate-spin" />
         </div>
         <Footer />
       </>
@@ -91,7 +91,7 @@ export default function CarDetailPage() {
         <Navbar />
         <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center gap-4">
           <div className="text-5xl">🚗</div>
-          <h1 className="text-2xl font-bold text-[#0f172a]">Vehicle not found</h1>
+          <h1 className="text-2xl font-bold text-[#0A65AB]">Vehicle not found</h1>
           <Link href="/cars" className="btn-primary">Back to Fleet</Link>
         </div>
         <Footer />
@@ -104,11 +104,11 @@ export default function CarDetailPage() {
       <Navbar />
 
       {/* Breadcrumb */}
-      <div className="bg-[#0f172a] py-4">
+      <div className="bg-[#0A65AB] py-4">
         <div className="container-custom flex items-center gap-2 text-sm text-gray-400">
-          <Link href="/" className="hover:text-[#f97316] transition-colors">Home</Link>
+          <Link href="/" className="hover:text-[#01b7f2] transition-colors">Home</Link>
           <span>/</span>
-          <Link href="/cars" className="hover:text-[#f97316] transition-colors">Fleet</Link>
+          <Link href="/cars" className="hover:text-[#01b7f2] transition-colors">Fleet</Link>
           <span>/</span>
           <span className="text-white">{car.name}</span>
         </div>
@@ -118,7 +118,7 @@ export default function CarDetailPage() {
         <div className="container-custom">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-gray-500 hover:text-[#f97316] transition-colors mb-8 text-sm font-medium"
+            className="flex items-center gap-2 text-gray-500 hover:text-[#01b7f2] transition-colors mb-8 text-sm font-medium"
           >
             <ChevronLeft size={18} /> Back to Fleet
           </button>
@@ -149,7 +149,7 @@ export default function CarDetailPage() {
                     <button
                       key={i}
                       onClick={() => setActiveImg(i)}
-                      className={`relative flex-shrink-0 w-20 h-14 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? "border-[#f97316] scale-105" : "border-gray-200 hover:border-[#f97316]/50"}`}
+                      className={`relative flex-shrink-0 w-20 h-14 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? "border-[#01b7f2] scale-105" : "border-gray-200 hover:border-[#01b7f2]/50"}`}
                     >
                       <Image src={img} alt="" fill className="object-cover" />
                     </button>
@@ -160,10 +160,10 @@ export default function CarDetailPage() {
 
             {/* Details */}
             <div>
-              <h1 className="text-3xl lg:text-4xl font-extrabold text-[#0f172a] mb-2">{car.name}</h1>
+              <h1 className="text-3xl lg:text-4xl font-extrabold text-[#0A65AB] mb-2">{car.name}</h1>
               <div className="flex items-center gap-3 mb-6">
                 <div className="flex items-center gap-1">
-                  {[1,2,3,4,5].map((s) => <Star key={s} size={14} className="fill-yellow-400 text-yellow-400" />)}
+                  {[1,2,3,4,5].map((s) => <Star key={s} size={14} className="fill-[#0A65AB] text-[#0A65AB]" />)}
                 </div>
                 <span className="text-gray-400 text-sm">Premium fleet vehicle</span>
               </div>
@@ -171,7 +171,7 @@ export default function CarDetailPage() {
               {/* Price */}
               <div className="bg-white rounded-2xl p-5 border border-gray-100 mb-6">
                 <div className="flex items-end gap-2 mb-1">
-                  <span className="text-4xl font-extrabold text-[#0f172a]">₹{car.price.toLocaleString("en-IN")}</span>
+                  <span className="text-4xl font-extrabold text-[#0A65AB]">₹{car.price.toLocaleString("en-IN")}</span>
                   <span className="text-gray-400 text-lg mb-1">/day</span>
                 </div>
                 <p className="text-gray-500 text-sm">Inclusive of driver. Fuel extra.</p>
@@ -191,7 +191,7 @@ export default function CarDetailPage() {
                     </div>
                     <div>
                       <div className="text-xs text-gray-400">{label}</div>
-                      <div className="text-sm font-semibold text-[#0f172a]">{value}</div>
+                      <div className="text-sm font-semibold text-[#0A65AB]">{value}</div>
                     </div>
                   </div>
                 ))}
@@ -200,7 +200,7 @@ export default function CarDetailPage() {
               {/* Description */}
               {car.description && (
                 <div className="bg-white rounded-2xl p-5 border border-gray-100 mb-6">
-                  <h3 className="font-bold text-[#0f172a] mb-2">About This Vehicle</h3>
+                  <h3 className="font-bold text-[#0A65AB] mb-2">About This Vehicle</h3>
                   <p className="text-gray-500 text-sm leading-relaxed">{car.description}</p>
                 </div>
               )}
@@ -209,20 +209,20 @@ export default function CarDetailPage() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() => setModalOpen(true)}
-                  className="flex-1 flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold py-3.5 rounded-xl transition-colors text-center"
+                  className="flex-1 flex items-center justify-center gap-2 bg-[#01b7f2] hover:bg-[#0299cc] text-white font-bold py-3.5 rounded-xl transition-colors text-center"
                 >
                   Book This Car
                 </button>
                 <button
                   onClick={() => setModalOpen(true)}
-                  className="flex-1 flex items-center justify-center gap-2 border-2 border-[#f97316] text-[#f97316] hover:bg-[#f97316] hover:text-white font-bold py-3.5 rounded-xl transition-all text-center"
+                  className="flex-1 flex items-center justify-center gap-2 border-2 border-[#01b7f2] text-[#01b7f2] hover:bg-[#01b7f2] hover:text-white font-bold py-3.5 rounded-xl transition-all text-center"
                 >
                   Enquire Now
                 </button>
               </div>
 
               <p className="text-center text-gray-400 text-xs mt-3">
-                📞 <a href="tel:+919131727811" className="hover:text-[#f97316]">+91-9131727811</a> · Available 24/7
+                📞 <a href="tel:+919131727811" className="hover:text-[#01b7f2]">+91-9131727811</a> · Available 24/7
               </p>
             </div>
           </div>

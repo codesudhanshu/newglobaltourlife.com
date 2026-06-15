@@ -21,17 +21,17 @@ export default function AboutPage() {
       <Navbar />
 
       {/* Hero */}
-      <div className="bg-[#0f172a] py-16">
+      <div className="bg-[#0A65AB] py-16">
         <div className="container-custom">
           <div className="flex items-center gap-2 text-sm text-gray-400 mb-6">
-            <Link href="/" className="hover:text-[#f97316]">Home</Link>
+            <Link href="/" className="hover:text-[#01b7f2]">Home</Link>
             <span>/</span>
             <span className="text-white">About Us</span>
           </div>
           <div className="max-w-3xl">
-            <span className="text-xs bg-[#f97316] text-white px-3 py-1 rounded-full font-semibold mb-4 inline-block">Our Story</span>
+            <span className="text-xs bg-[#01b7f2] text-white px-3 py-1 rounded-full font-semibold mb-4 inline-block">Our Story</span>
             <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-4 leading-tight">
-              About <span className="text-[#f97316]">New Global Tour Life</span>
+              About <span className="text-[#01b7f2]">New Global Tour Life</span>
             </h1>
             <p className="text-gray-400 text-lg leading-relaxed">
               Full range Tour &amp; Travel service provider — Domestic, International, Inbound &amp; Outbound.
@@ -40,15 +40,15 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <main className="bg-[#0f172a] pb-20">
+      <main className="bg-[#0A65AB] pb-20">
         <div className="container-custom">
 
           {/* Stats */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 py-10">
             {stats.map(({ icon: Icon, label, value }) => (
               <div key={label} className="bg-[#1e293b] rounded-2xl p-6 border border-slate-700 text-center">
-                <div className="w-11 h-11 bg-[#f97316]/15 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <Icon size={22} className="text-[#f97316]" />
+                <div className="w-11 h-11 bg-[#01b7f2]/15 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <Icon size={22} className="text-[#01b7f2]" />
                 </div>
                 <div className="text-2xl font-extrabold text-white mb-1">{value}</div>
                 <div className="text-gray-400 text-sm">{label}</div>
@@ -75,7 +75,7 @@ export default function AboutPage() {
               <div className="bg-[#1e293b] rounded-2xl p-8 border border-slate-700">
                 <h2 className="text-2xl font-extrabold text-white mb-4">Our Journey</h2>
                 <p className="text-gray-400 leading-relaxed mb-4">
-                  We started our services in <span className="text-[#f97316] font-semibold">2016</span>. We are the
+                  We started our services in <span className="text-[#01b7f2] font-semibold">2016</span>. We are the
                   Destination Management Company (DMC) for Singapore, Thailand, Malaysia, Bali, Sri Lanka, and Vietnam.
                 </p>
                 <p className="text-gray-400 leading-relaxed">
@@ -90,13 +90,13 @@ export default function AboutPage() {
               {/* DMC Destinations */}
               <div className="bg-[#1e293b] rounded-2xl p-8 border border-slate-700">
                 <h2 className="text-2xl font-extrabold text-white mb-5 flex items-center gap-2">
-                  <Globe size={22} className="text-[#f97316]" /> DMC Destinations
+                  <Globe size={22} className="text-[#01b7f2]" /> DMC Destinations
                 </h2>
                 <p className="text-gray-400 text-sm mb-4">We are the official Destination Management Company for:</p>
                 <div className="grid grid-cols-2 gap-3">
                   {destinations.map((d) => (
                     <div key={d} className="flex items-center gap-2 bg-slate-800 rounded-xl px-4 py-2.5">
-                      <MapPin size={14} className="text-[#f97316]" />
+                      <MapPin size={14} className="text-[#01b7f2]" />
                       <span className="text-gray-300 text-sm font-medium">{d}</span>
                     </div>
                   ))}
@@ -106,16 +106,16 @@ export default function AboutPage() {
               {/* Car Hiring section */}
               <div className="bg-[#1e293b] rounded-2xl p-8 border border-slate-700">
                 <h2 className="text-2xl font-extrabold text-white mb-4 flex items-center gap-2">
-                  <Car size={22} className="text-[#f97316]" /> Car Hiring Services
+                  <Car size={22} className="text-[#01b7f2]" /> Car Hiring Services
                 </h2>
                 <p className="text-gray-400 leading-relaxed mb-3">
-                  In <span className="text-[#f97316] font-semibold">2018</span>, we successfully served car rental
+                  In <span className="text-[#01b7f2] font-semibold">2018</span>, we successfully served car rental
                   services at <strong className="text-white">Orthocon Event in Indore</strong>.
                 </p>
                 <p className="text-gray-400 leading-relaxed mb-3">
                   We served our car hiring services for the{" "}
                   <strong className="text-white">National Paediatrics Conference</strong>, held in Indore from{" "}
-                  <span className="text-[#f97316]">7th January to 12th January 2020</span>.
+                  <span className="text-[#01b7f2]">7th January to 12th January 2020</span>.
                 </p>
                 <p className="text-gray-400 leading-relaxed">
                   We provide car hiring/cab booking services across all parts of India — making your trip to the Asian
@@ -126,11 +126,11 @@ export default function AboutPage() {
           </div>
 
           {/* CTA */}
-          <div className="mt-12 bg-gradient-to-r from-[#f97316] to-[#ea580c] rounded-2xl p-10 text-center">
+          <div className="mt-12 bg-gradient-to-r from-[#01b7f2] to-[#0299cc] rounded-2xl p-10 text-center">
             <h2 className="text-2xl font-extrabold text-white mb-3">Ready to Plan Your Dream Trip?</h2>
-            <p className="text-orange-100 mb-6">Get in touch with our travel experts today.</p>
+            <p className="text-cyan-100 mb-6">Get in touch with our travel experts today.</p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link href="/services" className="bg-white text-[#f97316] font-bold px-8 py-3 rounded-xl hover:bg-orange-50 transition-colors">
+              <Link href="/services" className="bg-white text-[#01b7f2] font-bold px-8 py-3 rounded-xl hover:bg-cyan-50 transition-colors">
                 Our Services
               </Link>
               <Link href="/#contact" className="border-2 border-white text-white font-bold px-8 py-3 rounded-xl hover:bg-white/10 transition-colors">

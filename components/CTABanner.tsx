@@ -4,7 +4,7 @@ export default function CTABanner() {
   return (
     <>
       {/* First CTA — Book Now */}
-      <section className="bg-[#f97316] py-16 relative overflow-hidden">
+      <section className="bg-[#01b7f2] py-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full translate-y-1/2 -translate-x-1/2" />
@@ -27,7 +27,7 @@ export default function CTABanner() {
             <div className="flex flex-col sm:flex-row gap-4">
               <a
                 href="#cars"
-                className="bg-white text-[#f97316] font-bold px-8 py-3.5 rounded-lg hover:bg-orange-50 transition-colors flex items-center gap-2 whitespace-nowrap"
+                className="bg-white text-[#01b7f2] font-bold px-8 py-3.5 rounded-lg hover:bg-cyan-50 transition-colors flex items-center gap-2 whitespace-nowrap"
               >
                 Book a Car <ArrowRight size={16} />
               </a>
@@ -43,24 +43,24 @@ export default function CTABanner() {
       </section>
 
       {/* Second CTA — Contact */}
-      <section className="bg-[#0f172a] py-16">
+      <section className="bg-[#0A65AB] py-16">
         <div className="container-custom">
           <div className="bg-[#1e293b] rounded-2xl p-10 lg:p-14 border border-slate-700 flex flex-col lg:flex-row items-center gap-10">
             {/* Icon */}
             <div className="flex-shrink-0">
-              <div className="w-24 h-24 bg-[#f97316]/10 rounded-2xl flex items-center justify-center">
+              <div className="w-24 h-24 bg-[#01b7f2]/10 rounded-2xl flex items-center justify-center">
                 <svg viewBox="0 0 80 80" className="w-14 h-14" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="40" cy="40" r="36" fill="#f97316" opacity="0.15" />
-                  <path d="M20 52 L30 28 L50 28 L60 52 Z" fill="#f97316" opacity="0.8" />
-                  <circle cx="28" cy="54" r="6" fill="#1e293b" stroke="#f97316" strokeWidth="2" />
-                  <circle cx="52" cy="54" r="6" fill="#1e293b" stroke="#f97316" strokeWidth="2" />
+                  <circle cx="40" cy="40" r="36" fill="#01b7f2" opacity="0.15" />
+                  <path d="M20 52 L30 28 L50 28 L60 52 Z" fill="#01b7f2" opacity="0.8" />
+                  <circle cx="28" cy="54" r="6" fill="#1e293b" stroke="#01b7f2" strokeWidth="2" />
+                  <circle cx="52" cy="54" r="6" fill="#1e293b" stroke="#01b7f2" strokeWidth="2" />
                   <rect x="24" y="36" width="18" height="12" rx="2" fill="#93c5fd" opacity="0.5" />
                 </svg>
               </div>
             </div>
 
             <div className="flex-1 text-center lg:text-left">
-              <p className="text-[#f97316] font-semibold text-sm uppercase tracking-widest mb-2">
+              <p className="text-[#01b7f2] font-semibold text-sm uppercase tracking-widest mb-2">
                 Need Help?
               </p>
               <h3 className="text-2xl lg:text-3xl font-extrabold text-white mb-3">

@@ -2,9 +2,9 @@ import { Tag, ArrowRight } from "lucide-react";
 
 export default function DiscountOffer() {
   return (
-    <section className="bg-[#0f172a] py-14">
+    <section className="bg-[#0A65AB] py-14">
       <div className="container-custom">
-        <div className="relative bg-gradient-to-r from-[#f97316] to-[#ea580c] rounded-2xl overflow-hidden p-10 lg:p-14">
+        <div className="relative bg-gradient-to-r from-[#01b7f2] to-[#0299cc] rounded-2xl overflow-hidden p-10 lg:p-14">
           {/* Background circles */}
           <div className="absolute -top-12 -right-12 w-48 h-48 bg-white/10 rounded-full" />
           <div className="absolute -bottom-10 -left-10 w-36 h-36 bg-white/10 rounded-full" />
@@ -33,7 +33,7 @@ export default function DiscountOffer() {
               </div>
               <a
                 href="#cars"
-                className="bg-white text-[#f97316] font-bold px-8 py-3.5 rounded-lg hover:bg-orange-50 transition-colors inline-flex items-center gap-2"
+                className="bg-white text-[#01b7f2] font-bold px-8 py-3.5 rounded-lg hover:bg-cyan-50 transition-colors inline-flex items-center gap-2"
               >
                 Claim Discount <ArrowRight size={16} />
               </a>

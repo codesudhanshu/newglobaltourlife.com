@@ -34,7 +34,7 @@ function StarRating({ count }: { count: number }) {
   return (
     <div className="flex items-center gap-1">
       {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} size={16} className={i < count ? "text-yellow-400 fill-yellow-400" : "text-gray-300"} />
+        <Star key={i} size={16} className={i < count ? "text-[#0A65AB] fill-[#0A65AB]" : "text-gray-300"} />
       ))}
     </div>
   );
@@ -67,8 +67,8 @@ export default function HotelDetailPage() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-[#0f172a] flex items-center justify-center">
-          <div className="w-10 h-10 border-4 border-[#f97316] border-t-transparent rounded-full animate-spin" />
+        <div className="min-h-screen bg-[#0A65AB] flex items-center justify-center">
+          <div className="w-10 h-10 border-4 border-[#01b7f2] border-t-transparent rounded-full animate-spin" />
         </div>
         <Footer />
       </>
@@ -79,7 +79,7 @@ export default function HotelDetailPage() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-[#0f172a] flex flex-col items-center justify-center gap-4">
+        <div className="min-h-screen bg-[#0A65AB] flex flex-col items-center justify-center gap-4">
           <div className="text-5xl">🏨</div>
           <h1 className="text-2xl font-bold text-white">Hotel not found</h1>
           <Link href="/hotels" className="btn-primary">View All Hotels</Link>
@@ -96,39 +96,39 @@ export default function HotelDetailPage() {
       <Navbar />
 
       {/* Header */}
-      <div className="bg-[#0f172a] py-10">
+      <div className="bg-[#0A65AB] py-10">
         <div className="container-custom">
           <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
-            <Link href="/" className="hover:text-[#f97316]">Home</Link>
+            <Link href="/" className="hover:text-[#01b7f2]">Home</Link>
             <span>/</span>
-            <Link href="/hotels" className="hover:text-[#f97316]">Hotels</Link>
+            <Link href="/hotels" className="hover:text-[#01b7f2]">Hotels</Link>
             <span>/</span>
             <span className="text-white">{hotel.name}</span>
           </div>
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <span className="text-xs bg-[#f97316] text-white px-3 py-1 rounded-full font-semibold mb-3 inline-block">{hotel.category}</span>
+              <span className="text-xs bg-[#01b7f2] text-white px-3 py-1 rounded-full font-semibold mb-3 inline-block">{hotel.category}</span>
               <h1 className="text-3xl lg:text-4xl font-extrabold text-white mb-2">{hotel.name}</h1>
               <div className="flex items-center gap-3">
                 <StarRating count={hotel.stars} />
                 <span className="text-gray-400 text-sm flex items-center gap-1.5">
-                  <MapPin size={13} className="text-[#f97316]" /> {hotel.city}, {hotel.country}
+                  <MapPin size={13} className="text-[#01b7f2]" /> {hotel.city}, {hotel.country}
                 </span>
               </div>
             </div>
             <div className="text-right">
-              <div className="text-3xl font-extrabold text-[#f97316]">₹{hotel.pricePerNight.toLocaleString("en-IN")}</div>
+              <div className="text-3xl font-extrabold text-[#01b7f2]">₹{hotel.pricePerNight.toLocaleString("en-IN")}</div>
               <div className="text-gray-400 text-sm">per night</div>
             </div>
           </div>
         </div>
       </div>
 
-      <main className="bg-[#0f172a] min-h-screen pb-16">
+      <main className="bg-[#0A65AB] min-h-screen pb-16">
         <div className="container-custom pt-8">
           <button
             onClick={() => router.back()}
-            className="flex items-center gap-2 text-gray-400 hover:text-[#f97316] transition-colors mb-8 text-sm font-medium"
+            className="flex items-center gap-2 text-gray-400 hover:text-[#01b7f2] transition-colors mb-8 text-sm font-medium"
           >
             <ChevronLeft size={18} /> Back to Hotels
           </button>
@@ -154,11 +154,11 @@ export default function HotelDetailPage() {
                     <button
                       key={i}
                       onClick={() => setActiveImg(i)}
-                      className={`relative flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? "border-[#f97316] scale-105" : "border-slate-700 hover:border-slate-500"}`}
+                      className={`relative flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? "border-[#01b7f2] scale-105" : "border-slate-700 hover:border-slate-500"}`}
                     >
                       <Image src={img} alt="" fill className="object-cover" />
                       {i === 0 && (
-                        <span className="absolute bottom-0.5 left-0.5 text-[9px] bg-[#f97316] text-white px-1 rounded">Cover</span>
+                        <span className="absolute bottom-0.5 left-0.5 text-[9px] bg-[#01b7f2] text-white px-1 rounded">Cover</span>
                       )}
                     </button>
                   ))}
@@ -178,7 +178,7 @@ export default function HotelDetailPage() {
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     {hotel.amenities.map((a) => (
                       <div key={a} className="flex items-center gap-2 text-gray-300 text-sm bg-slate-800 rounded-lg px-3 py-2.5">
-                        <span className="text-[#f97316]">{AMENITY_ICONS[a] ?? "✓"}</span>
+                        <span className="text-[#01b7f2]">{AMENITY_ICONS[a] ?? "✓"}</span>
                         {a}
                       </div>
                     ))}
@@ -191,7 +191,7 @@ export default function HotelDetailPage() {
             <div className="lg:col-span-1">
               <div className="bg-[#1e293b] rounded-2xl p-6 border border-slate-700 sticky top-24">
                 <div className="text-center mb-5 pb-5 border-b border-slate-700">
-                  <div className="text-3xl font-extrabold text-[#f97316]">₹{hotel.pricePerNight.toLocaleString("en-IN")}</div>
+                  <div className="text-3xl font-extrabold text-[#01b7f2]">₹{hotel.pricePerNight.toLocaleString("en-IN")}</div>
                   <div className="text-gray-400 text-sm mt-1">per night · taxes extra</div>
                 </div>
 
@@ -212,20 +212,20 @@ export default function HotelDetailPage() {
 
                 <button
                   onClick={() => setModalOpen(true)}
-                  className="w-full flex items-center justify-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold py-3.5 rounded-xl transition-colors mb-3"
+                  className="w-full flex items-center justify-center gap-2 bg-[#01b7f2] hover:bg-[#0299cc] text-white font-bold py-3.5 rounded-xl transition-colors mb-3"
                 >
                   Book This Hotel
                 </button>
                 <button
                   onClick={() => setModalOpen(true)}
-                  className="w-full flex items-center justify-center gap-2 border border-[#f97316]/50 hover:border-[#f97316] text-[#f97316] font-semibold py-3 rounded-xl transition-all text-sm"
+                  className="w-full flex items-center justify-center gap-2 border border-[#01b7f2]/50 hover:border-[#01b7f2] text-[#01b7f2] font-semibold py-3 rounded-xl transition-all text-sm"
                 >
                   Enquire Now
                 </button>
 
                 <p className="text-center text-gray-500 text-xs mt-4">Free cancellation · Best price guaranteed</p>
                 <p className="text-center mt-2">
-                  <a href="tel:+919131727811" className="text-gray-400 hover:text-[#f97316] text-xs transition-colors">📞 +91-9131727811</a>
+                  <a href="tel:+919131727811" className="text-gray-400 hover:text-[#01b7f2] text-xs transition-colors">📞 +91-9131727811</a>
                 </p>
               </div>
             </div>

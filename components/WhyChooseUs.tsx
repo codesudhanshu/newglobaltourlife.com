@@ -40,9 +40,9 @@ export default function WhyChooseUs() {
         {/* Header */}
         <div className="text-center mb-14">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <div className="h-0.5 w-6 bg-[#f97316]" />
+            <div className="h-0.5 w-6 bg-[#01b7f2]" />
             <span className="section-tag">Why New Global Tour Life</span>
-            <div className="h-0.5 w-6 bg-[#f97316]" />
+            <div className="h-0.5 w-6 bg-[#01b7f2]" />
           </div>
           <h2 className="section-title mb-4">Why Choose Us</h2>
           <p className="text-gray-500 max-w-xl mx-auto">
@@ -59,12 +59,12 @@ export default function WhyChooseUs() {
               className="bg-white rounded-2xl p-7 border border-gray-100 card-hover text-center"
             >
               <div className="w-14 h-14 bg-[#fff7ed] rounded-full flex items-center justify-center mx-auto mb-5">
-                <Icon size={24} className="text-[#f97316]" />
+                <Icon size={24} className="text-[#01b7f2]" />
               </div>
-              <div className="text-xs font-bold text-[#f97316] mb-2">
+              <div className="text-xs font-bold text-[#01b7f2] mb-2">
                 0{i + 1}
               </div>
-              <h3 className="font-bold text-[#0f172a] text-lg mb-3">{title}</h3>
+              <h3 className="font-bold text-[#0A65AB] text-lg mb-3">{title}</h3>
               <p className="text-gray-500 text-sm leading-relaxed">{desc}</p>
             </div>
           ))}

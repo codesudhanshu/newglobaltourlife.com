@@ -2,6 +2,7 @@
 
 import { Phone, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -20,20 +21,21 @@ const destinations = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0f172a] text-gray-400">
+    <footer className="bg-white text-gray-500 border-t border-gray-100">
       <div className="container-custom py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-[#f97316] rounded-full flex items-center justify-center">
-                <span className="text-white font-black text-sm">N</span>
-              </div>
-              <span className="text-white font-extrabold text-xl tracking-tight">
-                NEW GLOBAL<span className="text-[#f97316]"> TOUR LIFE</span>
-              </span>
+            <div className="mb-4">
+              <Image
+                src="/logo.png"
+                alt="New Global Tour Life"
+                width={170}
+                height={64}
+                className="h-14 w-auto object-contain"
+              />
             </div>
-            <p className="text-sm leading-relaxed mb-2 italic text-[#f97316]">
+            <p className="text-sm leading-relaxed mb-2 italic text-[#01b7f2]">
               "Let's Discover the world together!"
             </p>
             <p className="text-sm leading-relaxed mb-6">
@@ -41,30 +43,30 @@ export default function Footer() {
             </p>
             {/* Contact */}
             <div className="space-y-3">
-              <a href="tel:+919131727811" className="flex items-center gap-3 text-sm hover:text-[#f97316] transition-colors">
-                <Phone size={15} className="text-[#f97316] flex-shrink-0" /> +91-9131727811
+              <a href="tel:+919131727811" className="flex items-center gap-3 text-sm hover:text-[#01b7f2] transition-colors">
+                <Phone size={15} className="text-[#01b7f2] flex-shrink-0" /> +91-9131727811
               </a>
-              <a href="mailto:newglobaltourlife@gmail.com" className="flex items-center gap-3 text-sm hover:text-[#f97316] transition-colors">
-                <Mail size={15} className="text-[#f97316] flex-shrink-0" /> newglobaltourlife@gmail.com
+              <a href="mailto:newglobaltourlife@gmail.com" className="flex items-center gap-3 text-sm hover:text-[#01b7f2] transition-colors">
+                <Mail size={15} className="text-[#01b7f2] flex-shrink-0" /> newglobaltourlife@gmail.com
               </a>
               <div className="flex items-start gap-3 text-sm">
-                <MapPin size={15} className="text-[#f97316] mt-0.5 flex-shrink-0" />
+                <MapPin size={15} className="text-[#01b7f2] mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-gray-300 block">Corporate Office:</strong>
+                  <strong className="text-[#0A65AB] block">Corporate Office:</strong>
                   1352 A2, Scheme No. 136, Niranjanpur,<br />Indore – 452010 (M.P.)
                 </span>
               </div>
               <div className="flex items-start gap-3 text-sm">
-                <MapPin size={15} className="text-[#f97316] mt-0.5 flex-shrink-0" />
+                <MapPin size={15} className="text-[#01b7f2] mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-gray-300 block">Head Office:</strong>
+                  <strong className="text-[#0A65AB] block">Head Office:</strong>
                   N-354, Malwa County, Indore
                 </span>
               </div>
               <div className="flex items-start gap-3 text-sm">
-                <MapPin size={15} className="text-[#f97316] mt-0.5 flex-shrink-0" />
+                <MapPin size={15} className="text-[#01b7f2] mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-gray-300 block">Branch Office:</strong>
+                  <strong className="text-[#0A65AB] block">Branch Office:</strong>
                   House No. 12, Amrut Sagar Colony,<br />Khandwa Road, Indore – 453552
                 </span>
               </div>
@@ -73,15 +75,15 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <h4 className="text-white font-bold text-base mb-5">Quick Links</h4>
+            <h4 className="text-[#0A65AB] font-bold text-base mb-5">Quick Links</h4>
             <ul className="space-y-2.5">
               {quickLinks.map(({ label, href }) => (
                 <li key={label}>
                   <Link
                     href={href}
-                    className="text-sm hover:text-[#f97316] transition-colors flex items-center gap-2 group"
+                    className="text-sm hover:text-[#01b7f2] transition-colors flex items-center gap-2 group"
                   >
-                    <span className="w-1 h-1 rounded-full bg-[#f97316] opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="w-1 h-1 rounded-full bg-[#01b7f2] opacity-0 group-hover:opacity-100 transition-opacity" />
                     {label}
                   </Link>
                 </li>
@@ -91,15 +93,15 @@ export default function Footer() {
 
           {/* Popular Destinations */}
           <div>
-            <h4 className="text-white font-bold text-base mb-5">Popular Destinations</h4>
+            <h4 className="text-[#0A65AB] font-bold text-base mb-5">Popular Destinations</h4>
             <ul className="space-y-2.5">
               {destinations.map((dest) => (
                 <li key={dest}>
                   <a
                     href="#blog"
-                    className="text-sm hover:text-[#f97316] transition-colors flex items-center gap-2 group"
+                    className="text-sm hover:text-[#01b7f2] transition-colors flex items-center gap-2 group"
                   >
-                    <span className="w-1 h-1 rounded-full bg-[#f97316] opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="w-1 h-1 rounded-full bg-[#01b7f2] opacity-0 group-hover:opacity-100 transition-opacity" />
                     {dest}
                   </a>
                 </li>
@@ -109,7 +111,7 @@ export default function Footer() {
 
           {/* Newsletter + Social */}
           <div>
-            <h4 className="text-white font-bold text-base mb-5">Stay Updated</h4>
+            <h4 className="text-[#0A65AB] font-bold text-base mb-5">Stay Updated</h4>
             <p className="text-sm mb-5">
               Subscribe for exclusive travel deals, tour packages, and destination guides straight to your inbox.
             </p>
@@ -118,18 +120,18 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Your email address"
-                  className="flex-1 bg-[#1e293b] border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-[#f97316] transition-colors"
+                  className="flex-1 bg-white border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-[#0A65AB] placeholder-gray-400 focus:outline-none focus:border-[#01b7f2] transition-colors"
                 />
                 <button
                   type="submit"
-                  className="bg-[#f97316] text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#ea580c] transition-colors"
+                  className="bg-[#01b7f2] text-white px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-[#0299cc] transition-colors"
                 >
                   Go
                 </button>
               </div>
             </form>
             <div>
-              <p className="text-sm font-semibold text-white mb-3">Follow Us</p>
+              <p className="text-sm font-semibold text-[#0A65AB] mb-3">Follow Us</p>
               <div className="flex gap-3">
                 {[
                   { label: "Facebook", path: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" },
@@ -141,9 +143,9 @@ export default function Footer() {
                     key={label}
                     href="#"
                     aria-label={label}
-                    className="w-9 h-9 bg-[#1e293b] border border-slate-700 rounded-lg flex items-center justify-center hover:bg-[#f97316] hover:border-[#f97316] transition-all"
+                    className="group w-9 h-9 bg-gray-100 border border-gray-200 rounded-lg flex items-center justify-center hover:bg-[#01b7f2] hover:border-[#01b7f2] transition-all"
                   >
-                    <svg viewBox="0 0 24 24" className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#0A65AB] group-hover:text-white" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d={path} />
                     </svg>
                   </a>
@@ -155,13 +157,13 @@ export default function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-slate-800 py-5">
+      <div className="border-t border-gray-200 py-5">
         <div className="container-custom flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
           <p>&copy; {new Date().getFullYear()} New Global Tour Life. All rights reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-[#f97316] transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-[#f97316] transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-[#f97316] transition-colors">Cookie Policy</a>
+            <a href="#" className="hover:text-[#01b7f2] transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-[#01b7f2] transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-[#01b7f2] transition-colors">Cookie Policy</a>
           </div>
         </div>
       </div>

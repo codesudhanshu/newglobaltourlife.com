@@ -31,12 +31,12 @@ export default function AdminSettingsPage() {
     setTimeout(() => setSaved(false), 3000);
   }
 
-  if (loading) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-[#f97316] border-t-transparent rounded-full animate-spin" /></div>;
+  if (loading) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-[#01b7f2] border-t-transparent rounded-full animate-spin" /></div>;
 
   return (
     <div className="max-w-2xl">
       <div className="flex items-center gap-3 mb-6">
-        <Megaphone className="text-[#f97316]" size={24} />
+        <Megaphone className="text-[#01b7f2]" size={24} />
         <div>
           <h1 className="text-2xl font-bold text-white">Site Settings</h1>
           <p className="text-gray-400 text-sm">Manage announcement bar and site-wide settings</p>
@@ -55,7 +55,7 @@ export default function AdminSettingsPage() {
                 value={emoji}
                 onChange={(e) => setEmoji(e.target.value)}
                 maxLength={4}
-                className="w-16 text-center bg-slate-700 border border-slate-600 rounded-lg px-2 py-2 text-white text-lg focus:outline-none focus:border-[#f97316]"
+                className="w-16 text-center bg-slate-700 border border-slate-600 rounded-lg px-2 py-2 text-white text-lg focus:outline-none focus:border-[#01b7f2]"
               />
             </div>
             <div className="flex-1">
@@ -64,7 +64,7 @@ export default function AdminSettingsPage() {
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder="e.g. Special discount on tour packages — Call +91-9131727811 to book!"
-                className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#f97316]"
+                className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#01b7f2]"
               />
             </div>
           </div>
@@ -74,7 +74,7 @@ export default function AdminSettingsPage() {
               type="checkbox"
               checked={active}
               onChange={(e) => setActive(e.target.checked)}
-              className="w-4 h-4 accent-[#f97316]"
+              className="w-4 h-4 accent-[#01b7f2]"
             />
             <span className="text-gray-300 text-sm">Show announcement bar</span>
           </label>
@@ -82,7 +82,7 @@ export default function AdminSettingsPage() {
           {/* Preview */}
           <div className="rounded-lg overflow-hidden">
             <p className="text-gray-500 text-xs mb-1.5">Preview:</p>
-            <div className={`py-2 px-4 text-center text-sm font-semibold text-white rounded-lg ${active ? "bg-[#f97316]" : "bg-slate-600"}`}>
+            <div className={`py-2 px-4 text-center text-sm font-semibold text-white rounded-lg ${active ? "bg-[#01b7f2]" : "bg-slate-600"}`}>
               {active && text ? `${emoji} ${text}` : <span className="opacity-50">Bar hidden</span>}
             </div>
           </div>

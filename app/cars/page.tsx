@@ -31,7 +31,7 @@ interface Category {
 }
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Business:  "#3b82f6", Family:   "#f97316", Sports:  "#ef4444",
+  Business:  "#3b82f6", Family:   "#01b7f2", Sports:  "#ef4444",
   Luxury:    "#8b5cf6", Electric: "#10b981", SUV:     "#0ea5e9",
   Economy:   "#64748b", Sedan:    "#3b82f6", Minivan: "#f59e0b",
   Pickup:    "#b45309", Convertible: "#ec4899",
@@ -124,16 +124,16 @@ function CarsContent() {
       <Navbar />
 
       {/* Hero banner */}
-      <section className="bg-[#0f172a] relative overflow-hidden">
+      <section className="bg-[#0A65AB] relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#f97316]/5 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#f97316]/5 rounded-full blur-3xl" />
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#01b7f2]/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#01b7f2]/5 rounded-full blur-3xl" />
           {/* Grid pattern */}
-          <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(#f97316 1px, transparent 1px), linear-gradient(90deg, #f97316 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+          <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(#01b7f2 1px, transparent 1px), linear-gradient(90deg, #01b7f2 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
         </div>
         <div className="container-custom py-16 lg:py-20 relative z-10">
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-            <Link href="/" className="hover:text-[#f97316] transition-colors">Home</Link>
+            <Link href="/" className="hover:text-[#01b7f2] transition-colors">Home</Link>
             <ChevronRight size={14} />
             <span className="text-gray-300">
               {activeCatName && activeCatName !== "All Vehicles" ? activeCatName : "Our Fleet"}
@@ -141,8 +141,8 @@ function CarsContent() {
           </div>
           <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-3">
             {activeCatName && activeCatName !== "All Vehicles"
-              ? <>{activeCatName} <span className="text-[#f97316]">Vehicles</span></>
-              : <>Our <span className="text-[#f97316]">Vehicle Fleet</span></>
+              ? <>{activeCatName} <span className="text-[#01b7f2]">Vehicles</span></>
+              : <>Our <span className="text-[#01b7f2]">Vehicle Fleet</span></>
             }
           </h1>
           <p className="text-gray-400 max-w-xl">
@@ -165,7 +165,7 @@ function CarsContent() {
                   onClick={() => router.push(cat.slug ? `/cars?category=${cat.slug}` : "/cars")}
                   className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                     isActive
-                      ? "bg-[#f97316] text-white shadow-lg shadow-orange-900/30"
+                      ? "bg-[#01b7f2] text-white shadow-lg shadow-cyan-900/30"
                       : "text-gray-400 hover:text-white hover:bg-slate-700"
                   }`}
                 >
@@ -189,7 +189,7 @@ function CarsContent() {
             <aside className={`lg:w-72 flex-shrink-0 ${showFilters ? "block" : "hidden lg:block"}`}>
               <div className="bg-white rounded-2xl border border-gray-200 p-6 sticky top-36">
                 <div className="flex items-center justify-between mb-5">
-                  <h3 className="font-bold text-[#0f172a]">Filters</h3>
+                  <h3 className="font-bold text-[#0A65AB]">Filters</h3>
                   <button onClick={() => setShowFilters(false)} className="lg:hidden text-gray-400 hover:text-gray-600">
                     <X size={18} />
                   </button>
@@ -204,7 +204,7 @@ function CarsContent() {
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
                       placeholder="Search cars..."
-                      className="w-full border border-gray-200 rounded-lg pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:border-[#f97316] transition-colors"
+                      className="w-full border border-gray-200 rounded-lg pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:border-[#01b7f2] transition-colors"
                     />
                   </div>
                 </div>
@@ -213,12 +213,12 @@ function CarsContent() {
                 <div className="mb-5">
                   <div className="flex items-center justify-between mb-2">
                     <label className="text-sm font-semibold text-gray-700">Max Price / Day</label>
-                    <span className="text-sm font-bold text-[#f97316]">₹{maxPrice.toLocaleString("en-IN")}</span>
+                    <span className="text-sm font-bold text-[#01b7f2]">₹{maxPrice.toLocaleString("en-IN")}</span>
                   </div>
                   <input
                     type="range" min={1000} max={50000} step={500} value={maxPrice}
                     onChange={(e) => setMaxPrice(+e.target.value)}
-                    className="w-full accent-orange-500"
+                    className="w-full accent-cyan-500"
                   />
                   <div className="flex justify-between text-xs text-gray-400 mt-1">
                     <span>₹1,000</span><span>₹50,000</span>
@@ -235,7 +235,7 @@ function CarsContent() {
                         onClick={() => router.push(cat.slug ? `/cars?category=${cat.slug}` : "/cars")}
                         className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors ${
                           cat.slug === activeSlug
-                            ? "bg-orange-50 text-[#f97316] font-semibold"
+                            ? "bg-cyan-50 text-[#01b7f2] font-semibold"
                             : "text-gray-600 hover:bg-gray-50"
                         }`}
                       >
@@ -254,7 +254,7 @@ function CarsContent() {
                 {(search || maxPrice < 500 || activeSlug) && (
                   <button
                     onClick={() => { setSearch(""); setMaxPrice(500); router.push("/cars"); }}
-                    className="mt-5 w-full text-center text-sm text-[#f97316] hover:underline"
+                    className="mt-5 w-full text-center text-sm text-[#01b7f2] hover:underline"
                   >
                     Clear all filters
                   </button>
@@ -267,11 +267,11 @@ function CarsContent() {
               {/* Top bar */}
               <div className="flex items-center justify-between mb-6">
                 <p className="text-gray-600 text-sm">
-                  Showing <span className="font-semibold text-[#0f172a]">{filtered.length}</span> vehicle{filtered.length !== 1 ? "s" : ""}
+                  Showing <span className="font-semibold text-[#0A65AB]">{filtered.length}</span> vehicle{filtered.length !== 1 ? "s" : ""}
                 </p>
                 <button
                   onClick={() => setShowFilters(!showFilters)}
-                  className="lg:hidden flex items-center gap-2 text-sm text-gray-600 border border-gray-200 rounded-lg px-3 py-2 hover:border-[#f97316] hover:text-[#f97316] transition-colors"
+                  className="lg:hidden flex items-center gap-2 text-sm text-gray-600 border border-gray-200 rounded-lg px-3 py-2 hover:border-[#01b7f2] hover:text-[#01b7f2] transition-colors"
                 >
                   <SlidersHorizontal size={15} /> Filters
                 </button>
@@ -286,7 +286,7 @@ function CarsContent() {
               ) : filtered.length === 0 ? (
                 <div className="text-center py-20">
                   <div className="text-4xl mb-4">🚗</div>
-                  <h3 className="font-bold text-[#0f172a] text-xl mb-2">No vehicles found</h3>
+                  <h3 className="font-bold text-[#0A65AB] text-xl mb-2">No vehicles found</h3>
                   <p className="text-gray-500 text-sm mb-5">Try adjusting your filters</p>
                   <button onClick={() => { setSearch(""); setMaxPrice(500); router.push("/cars"); }} className="btn-primary">
                     Clear Filters
@@ -313,14 +313,14 @@ function CarsContent() {
                           </span>
                           {/* Price badge */}
                           <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 shadow-lg">
-                            <span className="font-extrabold text-[#0f172a] text-sm">₹{car.price.toLocaleString("en-IN")}</span>
+                            <span className="font-extrabold text-[#0A65AB] text-sm">₹{car.price.toLocaleString("en-IN")}</span>
                             <span className="text-gray-400 text-xs">/day</span>
                           </div>
                         </div>
 
                         {/* Content */}
                         <div className="p-5">
-                          <h3 className="font-extrabold text-[#0f172a] text-lg mb-2 group-hover:text-[#f97316] transition-colors">
+                          <h3 className="font-extrabold text-[#0A65AB] text-lg mb-2 group-hover:text-[#01b7f2] transition-colors">
                             {car.name}
                           </h3>
 
@@ -345,13 +345,13 @@ function CarsContent() {
                           <div className="flex items-center gap-3">
                             <Link
                               href="#contact"
-                              className="flex-1 bg-[#f97316] text-white text-sm font-bold py-2.5 rounded-xl hover:bg-[#ea580c] transition-colors text-center"
+                              className="flex-1 bg-[#01b7f2] text-white text-sm font-bold py-2.5 rounded-xl hover:bg-[#0299cc] transition-colors text-center"
                             >
                               Book Now
                             </Link>
                             <Link
                               href={`/cars/${car._id}`}
-                              className="flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-[#f97316] transition-colors border border-gray-200 px-3 py-2.5 rounded-xl hover:border-[#f97316]"
+                              className="flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-[#01b7f2] transition-colors border border-gray-200 px-3 py-2.5 rounded-xl hover:border-[#01b7f2]"
                             >
                               Details <ArrowRight size={13} />
                             </Link>
@@ -370,7 +370,7 @@ function CarsContent() {
                   <button
                     onClick={() => goPage(page - 1)}
                     disabled={page === 1}
-                    className="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#f97316] hover:text-[#f97316] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    className="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#01b7f2] hover:text-[#01b7f2] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                   >
                     <ArrowRight size={15} className="rotate-180" />
                   </button>
@@ -388,8 +388,8 @@ function CarsContent() {
                         onClick={() => goPage(p)}
                         className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${
                           isActive
-                            ? "bg-[#f97316] text-white shadow-lg shadow-orange-900/20"
-                            : "border border-gray-200 text-gray-600 hover:border-[#f97316] hover:text-[#f97316]"
+                            ? "bg-[#01b7f2] text-white shadow-lg shadow-cyan-900/20"
+                            : "border border-gray-200 text-gray-600 hover:border-[#01b7f2] hover:text-[#01b7f2]"
                         }`}
                       >
                         {p}
@@ -401,7 +401,7 @@ function CarsContent() {
                   <button
                     onClick={() => goPage(page + 1)}
                     disabled={page === totalPages}
-                    className="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#f97316] hover:text-[#f97316] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                    className="w-10 h-10 rounded-xl border border-gray-200 flex items-center justify-center text-gray-500 hover:border-[#01b7f2] hover:text-[#01b7f2] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
                   >
                     <ArrowRight size={15} />
                   </button>
@@ -423,7 +423,7 @@ function CarsContent() {
 
 export default function CarsPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#0f172a] flex items-center justify-center text-white">Loading...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-[#0A65AB] flex items-center justify-center text-white">Loading...</div>}>
       <CarsContent />
     </Suspense>
   );

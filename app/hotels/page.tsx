@@ -34,7 +34,7 @@ function StarRating({ count }: { count: number }) {
   return (
     <div className="flex items-center gap-0.5">
       {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} size={12} className={i < count ? "text-yellow-400 fill-yellow-400" : "text-gray-600"} />
+        <Star key={i} size={12} className={i < count ? "text-[#0A65AB] fill-[#0A65AB]" : "text-gray-600"} />
       ))}
     </div>
   );
@@ -80,16 +80,16 @@ export default function HotelsPage() {
       <Navbar />
 
       {/* Hero */}
-      <section className="bg-[#0f172a] relative overflow-hidden py-16 lg:py-20">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(#f97316 1px, transparent 1px), linear-gradient(90deg, #f97316 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+      <section className="bg-[#0A65AB] relative overflow-hidden py-16 lg:py-20">
+        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(#01b7f2 1px, transparent 1px), linear-gradient(90deg, #01b7f2 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
         <div className="container-custom relative z-10">
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-            <Link href="/" className="hover:text-[#f97316]">Home</Link>
+            <Link href="/" className="hover:text-[#01b7f2]">Home</Link>
             <ChevronRight size={14} />
             <span className="text-gray-300">Hotels &amp; Resorts</span>
           </div>
           <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-3">
-            Hotels &amp; <span className="text-[#f97316]">Resorts</span>
+            Hotels &amp; <span className="text-[#01b7f2]">Resorts</span>
           </h1>
           <p className="text-gray-400 max-w-xl">Handpicked stays across India and beyond — from hill retreats to beach resorts.</p>
         </div>
@@ -104,13 +104,13 @@ export default function HotelsPage() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search hotels, cities..."
-              className="bg-slate-700 border border-slate-600 rounded-full pl-8 pr-4 py-1.5 text-sm text-white focus:outline-none focus:border-[#f97316] w-52"
+              className="bg-slate-700 border border-slate-600 rounded-full pl-8 pr-4 py-1.5 text-sm text-white focus:outline-none focus:border-[#01b7f2] w-52"
             />
           </div>
           <div className="flex items-center gap-2 overflow-x-auto">
             <button
               onClick={() => setActiveCategory("")}
-              className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${!activeCategory ? "bg-[#f97316] text-white" : "text-gray-400 hover:text-white hover:bg-slate-700"}`}
+              className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${!activeCategory ? "bg-[#01b7f2] text-white" : "text-gray-400 hover:text-white hover:bg-slate-700"}`}
             >
               All
             </button>
@@ -118,7 +118,7 @@ export default function HotelsPage() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(activeCategory === cat ? "" : cat)}
-                className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${activeCategory === cat ? "bg-[#f97316] text-white" : "text-gray-400 hover:text-white hover:bg-slate-700"}`}
+                className={`flex-shrink-0 px-4 py-1.5 rounded-full text-sm font-medium transition-all ${activeCategory === cat ? "bg-[#01b7f2] text-white" : "text-gray-400 hover:text-white hover:bg-slate-700"}`}
               >
                 {cat}
               </button>
@@ -127,7 +127,7 @@ export default function HotelsPage() {
         </div>
       </div>
 
-      <div className="bg-[#0f172a] min-h-screen py-12">
+      <div className="bg-[#0A65AB] min-h-screen py-12">
         <div className="container-custom">
           {loading ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -145,7 +145,7 @@ export default function HotelsPage() {
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {paged.map((hotel) => (
                   <Link key={hotel._id} href={`/hotels/${hotel._id}`} className="group block">
-                    <div className="bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700 group-hover:border-[#f97316]/50 transition-all duration-300 h-full flex flex-col">
+                    <div className="bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700 group-hover:border-[#01b7f2]/50 transition-all duration-300 h-full flex flex-col">
                       <div className="relative h-48 overflow-hidden flex-shrink-0">
                         {hotel.images?.[0] ? (
                           <Image src={hotel.images[0]} alt={hotel.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
@@ -155,16 +155,16 @@ export default function HotelsPage() {
                           </div>
                         )}
                         <div className="absolute top-3 left-3">
-                          <span className="bg-[#f97316] text-white text-xs font-semibold px-2.5 py-1 rounded-full">{hotel.category}</span>
+                          <span className="bg-[#01b7f2] text-white text-xs font-semibold px-2.5 py-1 rounded-full">{hotel.category}</span>
                         </div>
                       </div>
                       <div className="p-5 flex flex-col flex-1">
                         <div className="flex items-start justify-between gap-2 mb-1">
-                          <h3 className="text-white font-bold text-base leading-tight group-hover:text-[#f97316] transition-colors">{hotel.name}</h3>
+                          <h3 className="text-white font-bold text-base leading-tight group-hover:text-[#01b7f2] transition-colors">{hotel.name}</h3>
                           <StarRating count={hotel.stars} />
                         </div>
                         <div className="flex items-center gap-1.5 text-gray-400 text-xs mb-3">
-                          <MapPin size={12} className="text-[#f97316]" />
+                          <MapPin size={12} className="text-[#01b7f2]" />
                           <span>{hotel.city}, {hotel.country}</span>
                         </div>
                         <p className="text-gray-400 text-xs leading-relaxed mb-4 line-clamp-2 flex-1">{hotel.description}</p>
@@ -180,10 +180,10 @@ export default function HotelsPage() {
                         )}
                         <div className="flex items-center justify-between pt-3 border-t border-slate-700 mt-auto">
                           <div>
-                            <span className="text-[#f97316] font-extrabold text-lg">₹{hotel.pricePerNight.toLocaleString("en-IN")}</span>
+                            <span className="text-[#01b7f2] font-extrabold text-lg">₹{hotel.pricePerNight.toLocaleString("en-IN")}</span>
                             <span className="text-gray-500 text-xs ml-1">/ night</span>
                           </div>
-                          <span className="text-xs text-[#f97316] font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                          <span className="text-xs text-[#01b7f2] font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
                             View Details <ArrowRight size={12} />
                           </span>
                         </div>
@@ -197,7 +197,7 @@ export default function HotelsPage() {
               {totalPages > 1 && (
                 <div className="flex items-center justify-center gap-2 mt-10">
                   <button onClick={() => goPage(page - 1)} disabled={page === 1}
-                    className="w-10 h-10 rounded-xl border border-slate-700 flex items-center justify-center text-gray-400 hover:border-[#f97316] hover:text-[#f97316] disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                    className="w-10 h-10 rounded-xl border border-slate-700 flex items-center justify-center text-gray-400 hover:border-[#01b7f2] hover:text-[#01b7f2] disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
                     <ArrowRight size={15} className="rotate-180" />
                   </button>
                   {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
@@ -207,13 +207,13 @@ export default function HotelsPage() {
                     if (!show) return null;
                     return (
                       <button key={p} onClick={() => goPage(p)}
-                        className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${p === page ? "bg-[#f97316] text-white" : "border border-slate-700 text-gray-400 hover:border-[#f97316] hover:text-[#f97316]"}`}>
+                        className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${p === page ? "bg-[#01b7f2] text-white" : "border border-slate-700 text-gray-400 hover:border-[#01b7f2] hover:text-[#01b7f2]"}`}>
                         {p}
                       </button>
                     );
                   })}
                   <button onClick={() => goPage(page + 1)} disabled={page === totalPages}
-                    className="w-10 h-10 rounded-xl border border-slate-700 flex items-center justify-center text-gray-400 hover:border-[#f97316] hover:text-[#f97316] disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
+                    className="w-10 h-10 rounded-xl border border-slate-700 flex items-center justify-center text-gray-400 hover:border-[#01b7f2] hover:text-[#01b7f2] disabled:opacity-30 disabled:cursor-not-allowed transition-colors">
                     <ArrowRight size={15} />
                   </button>
                   <span className="ml-2 text-xs text-gray-400">Page {page} of {totalPages}</span>

@@ -65,7 +65,7 @@ export default function EditHotelPage() {
     else { setError(data.error || "Save failed"); setSaving(false); }
   }
 
-  if (loading || fetching) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-[#f97316] border-t-transparent rounded-full animate-spin" /></div>;
+  if (loading || fetching) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-[#01b7f2] border-t-transparent rounded-full animate-spin" /></div>;
 
   return (
     <div className="max-w-3xl">
@@ -80,24 +80,24 @@ export default function EditHotelPage() {
           <div className="grid grid-cols-2 gap-4">
             <div className="col-span-2">
               <label className="block text-gray-400 text-sm mb-1.5">Hotel Name *</label>
-              <input value={form.name} onChange={(e) => field("name", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#f97316]" />
+              <input value={form.name} onChange={(e) => field("name", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#01b7f2]" />
             </div>
             <div>
               <label className="block text-gray-400 text-sm mb-1.5">City</label>
-              <input value={form.city} onChange={(e) => field("city", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#f97316]" />
+              <input value={form.city} onChange={(e) => field("city", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#01b7f2]" />
             </div>
             <div>
               <label className="block text-gray-400 text-sm mb-1.5">Country</label>
-              <input value={form.country} onChange={(e) => field("country", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#f97316]" />
+              <input value={form.country} onChange={(e) => field("country", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#01b7f2]" />
             </div>
             <div className="col-span-2">
               <label className="block text-gray-400 text-sm mb-1.5">Location / Area</label>
-              <input value={form.location} onChange={(e) => field("location", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#f97316]" />
+              <input value={form.location} onChange={(e) => field("location", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#01b7f2]" />
             </div>
           </div>
           <div>
             <label className="block text-gray-400 text-sm mb-1.5">Description</label>
-            <textarea value={form.description} onChange={(e) => field("description", e.target.value)} rows={3} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#f97316] resize-none" />
+            <textarea value={form.description} onChange={(e) => field("description", e.target.value)} rows={3} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#01b7f2] resize-none" />
           </div>
         </div>
 
@@ -106,17 +106,17 @@ export default function EditHotelPage() {
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-gray-400 text-sm mb-1.5">Stars</label>
-              <select value={form.stars} onChange={(e) => field("stars", Number(e.target.value))} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#f97316]">
+              <select value={form.stars} onChange={(e) => field("stars", Number(e.target.value))} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#01b7f2]">
                 {[1,2,3,4,5].map((s) => <option key={s} value={s}>{s} Star{s > 1 ? "s" : ""}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-gray-400 text-sm mb-1.5">Price per Night (₹)</label>
-              <input type="number" value={form.pricePerNight} onChange={(e) => field("pricePerNight", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#f97316]" />
+              <input type="number" value={form.pricePerNight} onChange={(e) => field("pricePerNight", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#01b7f2]" />
             </div>
             <div>
               <label className="block text-gray-400 text-sm mb-1.5">Category</label>
-              <select value={form.category} onChange={(e) => field("category", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#f97316]">
+              <select value={form.category} onChange={(e) => field("category", e.target.value)} className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-[#01b7f2]">
                 {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
               </select>
             </div>
@@ -126,7 +126,7 @@ export default function EditHotelPage() {
             <label className="block text-gray-400 text-sm mb-2">Amenities</label>
             <div className="flex flex-wrap gap-2">
               {AMENITY_OPTIONS.map((a) => (
-                <button key={a} type="button" onClick={() => toggleAmenity(a)} className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${form.amenities.includes(a) ? "bg-[#f97316] border-[#f97316] text-white" : "border-slate-600 text-gray-400 hover:border-gray-400"}`}>
+                <button key={a} type="button" onClick={() => toggleAmenity(a)} className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${form.amenities.includes(a) ? "bg-[#01b7f2] border-[#01b7f2] text-white" : "border-slate-600 text-gray-400 hover:border-gray-400"}`}>
                   {a}
                 </button>
               ))}
@@ -135,11 +135,11 @@ export default function EditHotelPage() {
 
           <div className="flex items-center gap-6">
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" checked={form.featured} onChange={(e) => field("featured", e.target.checked)} className="w-4 h-4 accent-[#f97316]" />
+              <input type="checkbox" checked={form.featured} onChange={(e) => field("featured", e.target.checked)} className="w-4 h-4 accent-[#01b7f2]" />
               <span className="text-gray-300 text-sm">Featured on homepage</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" checked={form.available} onChange={(e) => field("available", e.target.checked)} className="w-4 h-4 accent-[#f97316]" />
+              <input type="checkbox" checked={form.available} onChange={(e) => field("available", e.target.checked)} className="w-4 h-4 accent-[#01b7f2]" />
               <span className="text-gray-300 text-sm">Available</span>
             </label>
           </div>
@@ -153,7 +153,7 @@ export default function EditHotelPage() {
         {error && <p className="text-red-400 text-sm bg-red-900/20 rounded-lg px-4 py-2">{error}</p>}
 
         <div className="flex gap-3">
-          <button type="submit" disabled={saving} className="bg-[#f97316] hover:bg-[#ea6c0a] disabled:opacity-50 text-white px-6 py-2.5 rounded-lg font-medium transition-colors">
+          <button type="submit" disabled={saving} className="bg-[#01b7f2] hover:bg-[#ea6c0a] disabled:opacity-50 text-white px-6 py-2.5 rounded-lg font-medium transition-colors">
             {saving ? "Saving..." : "Save Changes"}
           </button>
           <Link href="/admin/hotels" className="text-gray-400 hover:text-white px-6 py-2.5 rounded-lg font-medium transition-colors">Cancel</Link>

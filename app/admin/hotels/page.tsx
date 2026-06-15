@@ -65,7 +65,7 @@ export default function AdminHotelsPage() {
 
   const paged = hotels.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
-  if (loading || fetching) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-[#f97316] border-t-transparent rounded-full animate-spin" /></div>;
+  if (loading || fetching) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-4 border-[#01b7f2] border-t-transparent rounded-full animate-spin" /></div>;
 
   return (
     <div>
@@ -74,7 +74,7 @@ export default function AdminHotelsPage() {
           <h1 className="text-2xl font-bold text-white">Hotels</h1>
           <p className="text-gray-400 text-sm mt-1">{hotels.length} hotels in database</p>
         </div>
-        <Link href="/admin/hotels/new" className="flex items-center gap-2 bg-[#f97316] hover:bg-[#ea6c0a] text-white px-4 py-2 rounded-lg font-medium transition-colors">
+        <Link href="/admin/hotels/new" className="flex items-center gap-2 bg-[#01b7f2] hover:bg-[#ea6c0a] text-white px-4 py-2 rounded-lg font-medium transition-colors">
           <Plus size={16} /> Add Hotel
         </Link>
       </div>
@@ -82,7 +82,7 @@ export default function AdminHotelsPage() {
       {hotels.length === 0 ? (
         <div className="text-center py-16 text-gray-500">
           <p className="text-lg mb-2">No hotels yet</p>
-          <Link href="/admin/hotels/new" className="text-[#f97316] hover:underline">Add your first hotel</Link>
+          <Link href="/admin/hotels/new" className="text-[#01b7f2] hover:underline">Add your first hotel</Link>
         </div>
       ) : (
         <>
@@ -127,13 +127,13 @@ export default function AdminHotelsPage() {
                   <td className="px-4 py-3 text-gray-300 text-sm">{h.city}, {h.country}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-0.5">
-                      {Array.from({ length: h.stars }).map((_, j) => <Star key={j} size={12} className="text-yellow-400 fill-yellow-400" />)}
+                      {Array.from({ length: h.stars }).map((_, j) => <Star key={j} size={12} className="text-[#0A65AB] fill-[#0A65AB]" />)}
                     </div>
                   </td>
                   <td className="px-4 py-3 text-gray-300 text-sm">₹{h.pricePerNight.toLocaleString()}</td>
                   <td className="px-4 py-3">
                     <button onClick={() => toggleFeatured(h)} className="transition-colors">
-                      {h.featured ? <ToggleRight size={22} className="text-[#f97316]" /> : <ToggleLeft size={22} className="text-gray-500" />}
+                      {h.featured ? <ToggleRight size={22} className="text-[#01b7f2]" /> : <ToggleLeft size={22} className="text-gray-500" />}
                     </button>
                   </td>
                   <td className="px-4 py-3">

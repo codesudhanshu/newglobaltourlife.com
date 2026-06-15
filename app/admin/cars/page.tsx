@@ -88,7 +88,7 @@ export default function AdminCars() {
       ) : cars.length === 0 ? (
         <div className="text-center py-20 text-gray-500">
           No cars yet.{" "}
-          <Link href="/admin/cars/new" className="text-[#f97316] hover:underline">Add one</Link>
+          <Link href="/admin/cars/new" className="text-[#01b7f2] hover:underline">Add one</Link>
         </div>
       ) : (
         <>
@@ -128,7 +128,7 @@ export default function AdminCars() {
                       </div>
                     </td>
                     <td className="hidden md:table-cell px-5 py-4 text-gray-400">{car.category}</td>
-                    <td className="hidden md:table-cell px-5 py-4 text-[#f97316] font-bold">₹{car.price.toLocaleString("en-IN")}/day</td>
+                    <td className="hidden md:table-cell px-5 py-4 text-[#01b7f2] font-bold">₹{car.price.toLocaleString("en-IN")}/day</td>
                     <td className="px-5 py-4">
                       <button onClick={() => toggleAvailable(car)}>
                         <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${car.available ? "bg-green-900/50 text-green-400" : "bg-gray-800 text-gray-400"}`}>
@@ -138,7 +138,7 @@ export default function AdminCars() {
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center justify-end gap-2">
-                        <Link href={`/admin/cars/${car._id}/edit`} className="p-1.5 text-gray-400 hover:text-[#f97316]">
+                        <Link href={`/admin/cars/${car._id}/edit`} className="p-1.5 text-gray-400 hover:text-[#01b7f2]">
                           <Pencil size={15} />
                         </Link>
                         <button onClick={() => deleteCar(car._id)} className="p-1.5 text-gray-400 hover:text-red-400">

@@ -1,89 +1,65 @@
-import { ArrowRight, MapPin, Crown, Briefcase, Zap, Plane, UserCheck } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 const services = [
   {
-    icon: MapPin,
-    title: "One-Way Rental",
-    desc: "Pick up in one city and drop off in another. Perfect for one-way road trips with flexible drop-off locations nationwide.",
-    color: "#3b82f6",
-    bgColor: "#eff6ff",
+    title: "HOTELS",
+    desc: "New Global Tour Life is offering budget to luxury hotels locally and internationally. Book hotels with us with best discount rates.",
+    href: "/hotels",
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80",
   },
   {
-    icon: Crown,
-    title: "Luxury Car Rental",
-    desc: "Arrive in style with our premium fleet of luxury vehicles. Experience comfort and sophistication on every drive.",
-    color: "#8b5cf6",
-    bgColor: "#f5f3ff",
+    title: "FLIGHTS",
+    desc: "New Global Tour Life is offering competitive flight rates for domestic flights and international flights to book with us.",
+    href: "/flight",
+    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&q=80",
   },
   {
-    icon: Briefcase,
-    title: "Corporate Rental",
-    desc: "Tailored corporate packages with dedicated account management, invoicing, and priority service for business travelers.",
-    color: "#f97316",
-    bgColor: "#fff7ed",
+    title: "CARS",
+    desc: "New Global Tour Life is offering cab booking services in Indore and across India. Please get in touch with us for cab booking.",
+    href: "/cars",
+    image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=600&q=80",
   },
   {
-    icon: Zap,
-    title: "Electric Vehicles",
-    desc: "Go green with our growing EV fleet. Eco-friendly, silent, and cost-effective for environmentally conscious drivers.",
-    color: "#10b981",
-    bgColor: "#ecfdf5",
-  },
-  {
-    icon: Plane,
-    title: "Airport Transfer",
-    desc: "Stress-free airport pickups and drop-offs. Our drivers track your flight and ensure you're never left waiting.",
-    color: "#ef4444",
-    bgColor: "#fef2f2",
-  },
-  {
-    icon: UserCheck,
-    title: "Driver Services",
-    desc: "Hire a professional chauffeur for any occasion. Fully licensed, vetted, and punctual drivers at your service.",
-    color: "#0ea5e9",
-    bgColor: "#f0f9ff",
+    title: "TRAVEL-PACKAGES",
+    desc: "New Global Tour Life offers domestic and international travel packages. Readymade to highly customize travel packages.",
+    href: "/packages",
+    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=600&q=80",
   },
 ];
 
 export default function Services() {
   return (
-    <section id="services" className="section-padding bg-[#0f172a]">
+    <section id="services" className="section-padding bg-white">
       <div className="container-custom">
-        {/* Header */}
-        <div className="text-center mb-14">
-          <div className="flex items-center justify-center gap-2 mb-3">
-            <div className="h-0.5 w-6 bg-[#f97316]" />
-            <span className="section-tag">What We Offer</span>
-            <div className="h-0.5 w-6 bg-[#f97316]" />
-          </div>
-          <h2 className="section-title-white mb-4">Our Premium Services</h2>
-          <p className="text-gray-400 max-w-xl mx-auto">
-            Comprehensive rental solutions designed to meet every travel need —
-            from quick city commutes to cross-country adventures.
+        <div className="text-center mb-12">
+          <h2 className="section-title mb-4">Our Services</h2>
+          <p className="text-gray-500 max-w-2xl mx-auto text-sm leading-relaxed">
+            New Global Tour Life has started with a vision to cater quality travel services. We are offering
+            travel services which include Hotel Booking, Flight Booking, Car Hire and Travel Packages. We offer
+            quality travel service at an affordable cost.
           </p>
         </div>
 
-        {/* Services grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map(({ icon: Icon, title, desc, color, bgColor }) => (
+        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {services.map(({ title, desc, href, image }) => (
             <div
               key={title}
-              className="bg-[#1e293b] rounded-2xl p-7 border border-slate-700 hover:border-[#f97316]/40 transition-all card-hover group"
+              className="flex gap-4 bg-white rounded-xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
             >
-              <div
-                className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
-                style={{ backgroundColor: `${color}20` }}
-              >
-                <Icon size={26} style={{ color }} />
+              <div className="relative w-28 h-24 flex-shrink-0 rounded-lg overflow-hidden">
+                <Image src={image} alt={title} fill className="object-cover" sizes="112px" />
               </div>
-              <h3 className="font-bold text-white text-lg mb-3">{title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed mb-5">{desc}</p>
-              <a
-                href="#"
-                className="inline-flex items-center gap-1.5 text-[#f97316] text-sm font-semibold hover:gap-3 transition-all"
-              >
-                Learn More <ArrowRight size={14} />
-              </a>
+              <div className="flex flex-col">
+                <h3 className="text-sm font-bold text-[#0A65AB] tracking-wide mb-1">{title}</h3>
+                <p className="text-xs text-gray-500 leading-relaxed mb-2 line-clamp-3">{desc}</p>
+                <Link
+                  href={href}
+                  className="mt-auto inline-block w-fit text-xs font-semibold text-white bg-[#01b7f2] hover:bg-[#0299cc] px-4 py-1.5 rounded transition-colors"
+                >
+                  Know More
+                </Link>
+              </div>
             </div>
           ))}
         </div>

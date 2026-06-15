@@ -52,7 +52,7 @@ export default function TirthYatraAdmin() {
           <h1 className="text-2xl font-extrabold text-white">Tirth Yatra</h1>
           <p className="text-gray-400 text-sm mt-1">{items.length} destination{items.length !== 1 ? "s" : ""}</p>
         </div>
-        <Link href="/admin/tirth-yatra/new" className="flex items-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-bold px-4 py-2.5 rounded-lg text-sm transition-colors">
+        <Link href="/admin/tirth-yatra/new" className="flex items-center gap-2 bg-[#01b7f2] hover:bg-[#0299cc] text-white font-bold px-4 py-2.5 rounded-lg text-sm transition-colors">
           <Plus size={16} /> Add Destination
         </Link>
       </div>
@@ -89,11 +89,11 @@ export default function TirthYatraAdmin() {
                             <Image src={item.image} alt={item.name} fill className="object-cover" />
                           </div>
                         ) : (
-                          <div className="w-9 h-9 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0 text-base">🛕</div>
+                          <div className="w-9 h-9 rounded-lg bg-[#0A65AB]/20 flex items-center justify-center flex-shrink-0 text-base">🛕</div>
                         )}
                         <div>
                           <div className="text-white font-medium">{item.name}</div>
-                          {item.featured && <span className="text-[9px] bg-amber-500/20 text-amber-400 px-1.5 py-0.5 rounded font-semibold">FEATURED</span>}
+                          {item.featured && <span className="text-[9px] bg-[#0A65AB]/20 text-[#0A65AB] px-1.5 py-0.5 rounded font-semibold">FEATURED</span>}
                         </div>
                       </div>
                     </td>
@@ -109,7 +109,7 @@ export default function TirthYatraAdmin() {
                     </td>
                     <td className="px-5 py-3 text-right">
                       <div className="flex items-center justify-end gap-2">
-                        <Link href={`/admin/tirth-yatra/${item._id}/edit`} className="text-gray-400 hover:text-[#f97316] transition-colors p-1.5 hover:bg-slate-700 rounded-lg">
+                        <Link href={`/admin/tirth-yatra/${item._id}/edit`} className="text-gray-400 hover:text-[#01b7f2] transition-colors p-1.5 hover:bg-slate-700 rounded-lg">
                           <Pencil size={14} />
                         </Link>
                         <button onClick={() => del(item._id)} className="text-gray-400 hover:text-red-400 transition-colors p-1.5 hover:bg-slate-700 rounded-lg">

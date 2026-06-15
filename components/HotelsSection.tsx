@@ -40,7 +40,7 @@ function StarRating({ count }: { count: number }) {
   return (
     <div className="flex items-center gap-0.5">
       {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} size={12} className={i < count ? "text-yellow-400 fill-yellow-400" : "text-gray-600"} />
+        <Star key={i} size={12} className={i < count ? "text-[#0A65AB] fill-[#0A65AB]" : "text-gray-600"} />
       ))}
     </div>
   );
@@ -63,15 +63,15 @@ export default function HotelsSection() {
   }, []);
 
   return (
-    <section id="hotels" className="py-20 bg-[#0f172a]">
+    <section id="hotels" className="py-20 bg-[#01b7f2]">
       <div className="container-custom">
         {/* Header */}
         <div className="text-center mb-12">
-          <span className="text-[#f97316] text-sm font-semibold uppercase tracking-widest">Handpicked Stays</span>
+          <span className="text-white/90 text-sm font-semibold uppercase tracking-widest">Handpicked Stays</span>
           <h2 className="text-3xl md:text-4xl font-extrabold text-white mt-2 mb-4">
             Hotels &amp; Resorts
           </h2>
-          <p className="text-gray-400 max-w-xl mx-auto text-sm md:text-base">
+          <p className="text-white/80 max-w-xl mx-auto text-sm md:text-base">
             From luxurious overwater villas in the Maldives to heritage houseboats on Dal Lake — we curate stays that become part of your travel story.
           </p>
         </div>
@@ -84,7 +84,7 @@ export default function HotelsSection() {
             const wrapProps = staticCard ? {} : { href: `/hotels/${hotel._id}` };
             return (
               // @ts-ignore
-              <CardWrapper key={hotel._id} {...wrapProps} className="group block bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700 hover:border-[#f97316]/50 transition-all duration-300">
+              <CardWrapper key={hotel._id} {...wrapProps} className="group block bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700 hover:border-[#01b7f2]/50 transition-all duration-300">
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
                   {hotel.images?.[0] ? (
@@ -100,19 +100,19 @@ export default function HotelsSection() {
                     </div>
                   )}
                   <div className="absolute top-3 left-3">
-                    <span className="bg-[#f97316] text-white text-xs font-semibold px-2.5 py-1 rounded-full">{hotel.category}</span>
+                    <span className="bg-[#01b7f2] text-white text-xs font-semibold px-2.5 py-1 rounded-full">{hotel.category}</span>
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-5">
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <h3 className="text-white font-bold text-base leading-tight group-hover:text-[#f97316] transition-colors">{hotel.name}</h3>
+                    <h3 className="text-white font-bold text-base leading-tight group-hover:text-[#01b7f2] transition-colors">{hotel.name}</h3>
                     <StarRating count={hotel.stars} />
                   </div>
 
                   <div className="flex items-center gap-1.5 text-gray-400 text-xs mb-3">
-                    <MapPin size={12} className="text-[#f97316]" />
+                    <MapPin size={12} className="text-[#01b7f2]" />
                     <span>{hotel.city}, {hotel.country}</span>
                   </div>
 
@@ -134,19 +134,19 @@ export default function HotelsSection() {
 
                   <div className="flex items-center justify-between pt-3 border-t border-slate-700">
                     <div>
-                      <span className="text-[#f97316] font-extrabold text-lg">₹{hotel.pricePerNight.toLocaleString()}</span>
+                      <span className="text-[#01b7f2] font-extrabold text-lg">₹{hotel.pricePerNight.toLocaleString()}</span>
                       <span className="text-gray-500 text-xs ml-1">/ night</span>
                     </div>
                     {staticCard ? (
                       <a
                         href="#contact"
-                        className="bg-[#f97316]/10 hover:bg-[#f97316] text-[#f97316] hover:text-white text-xs font-semibold px-4 py-2 rounded-lg border border-[#f97316]/30 hover:border-[#f97316] transition-all"
+                        className="bg-[#01b7f2]/10 hover:bg-[#01b7f2] text-[#01b7f2] hover:text-white text-xs font-semibold px-4 py-2 rounded-lg border border-[#01b7f2]/30 hover:border-[#01b7f2] transition-all"
                         onClick={(e) => e.stopPropagation()}
                       >
                         Book Now
                       </a>
                     ) : (
-                      <span className="text-[#f97316] text-xs font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                      <span className="text-[#01b7f2] text-xs font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
                         View Details <ArrowRight size={12} />
                       </span>
                     )}
@@ -161,7 +161,7 @@ export default function HotelsSection() {
         <div className="text-center mt-10">
           <Link
             href="/hotels"
-            className="inline-flex items-center gap-2 bg-[#f97316] hover:bg-[#ea580c] text-white font-semibold px-8 py-3 rounded-xl transition-colors"
+            className="inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-[#01b7f2] font-semibold px-8 py-3 rounded-xl transition-colors shadow-md"
           >
             View All Hotels &amp; Resorts <ArrowRight size={16} />
           </Link>

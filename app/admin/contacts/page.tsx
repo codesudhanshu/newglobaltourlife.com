@@ -50,7 +50,7 @@ export default function AdminContacts() {
         <div>
           <h1 className="text-2xl font-extrabold text-white">Contact Messages</h1>
           {unread > 0 && (
-            <span className="text-sm text-[#f97316] mt-1 block">{unread} unread message{unread > 1 ? "s" : ""}</span>
+            <span className="text-sm text-[#01b7f2] mt-1 block">{unread} unread message{unread > 1 ? "s" : ""}</span>
           )}
         </div>
       </div>
@@ -65,15 +65,15 @@ export default function AdminContacts() {
             {paged.map((contact) => (
               <div
                 key={contact._id}
-                className={`bg-[#1e293b] rounded-xl border p-6 transition-colors ${contact.read ? "border-slate-700" : "border-[#f97316]/40"}`}
+                className={`bg-[#1e293b] rounded-xl border p-6 transition-colors ${contact.read ? "border-slate-700" : "border-[#01b7f2]/40"}`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className={`w-2 h-2 rounded-full ${contact.read ? "bg-gray-600" : "bg-[#f97316]"}`} />
+                      <div className={`w-2 h-2 rounded-full ${contact.read ? "bg-gray-600" : "bg-[#01b7f2]"}`} />
                       <h3 className="font-bold text-white">{contact.name}</h3>
                       {!contact.read && (
-                        <span className="text-xs bg-[#f97316]/20 text-[#f97316] px-2 py-0.5 rounded-full font-medium">New</span>
+                        <span className="text-xs bg-[#01b7f2]/20 text-[#01b7f2] px-2 py-0.5 rounded-full font-medium">New</span>
                       )}
                     </div>
                     <div className="flex flex-wrap gap-4 text-sm text-gray-400 mb-3">
@@ -83,7 +83,7 @@ export default function AdminContacts() {
                         <Calendar size={13} /> {new Date(contact.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
                       </span>
                     </div>
-                    <p className="text-gray-300 text-sm leading-relaxed bg-[#0f172a] rounded-lg p-4">{contact.message}</p>
+                    <p className="text-gray-300 text-sm leading-relaxed bg-[#0A65AB] rounded-lg p-4">{contact.message}</p>
                   </div>
                   {!contact.read && (
                     <button

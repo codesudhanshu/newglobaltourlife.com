@@ -11,7 +11,7 @@ const services = [
   {
     icon: Car,
     title: "Car Rental",
-    color: "#f97316",
+    color: "#01b7f2",
     description: "Self-drive or chauffeur-driven cars across all of India. Economy to Luxury — all categories available.",
     features: ["City rides & outstation trips", "Airport transfers", "Corporate car hiring", "Event & conference fleet"],
     service: "Car Rental",
@@ -67,17 +67,17 @@ export default function ServicesPage() {
       <Navbar />
 
       {/* Header */}
-      <div className="bg-[#0f172a] py-14">
+      <div className="bg-[#0A65AB] py-14">
         <div className="container-custom">
           <div className="flex items-center gap-2 text-sm text-gray-400 mb-6">
-            <Link href="/" className="hover:text-[#f97316]">Home</Link>
+            <Link href="/" className="hover:text-[#01b7f2]">Home</Link>
             <span>/</span>
             <span className="text-white">Services</span>
           </div>
           <div className="max-w-2xl">
-            <span className="text-xs bg-[#f97316] text-white px-3 py-1 rounded-full font-semibold mb-4 inline-block">What We Offer</span>
+            <span className="text-xs bg-[#01b7f2] text-white px-3 py-1 rounded-full font-semibold mb-4 inline-block">What We Offer</span>
             <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-4 leading-tight">
-              Our <span className="text-[#f97316]">Services</span>
+              Our <span className="text-[#01b7f2]">Services</span>
             </h1>
             <p className="text-gray-400 text-lg leading-relaxed">
               Complete travel solutions — from car rentals and hotel bookings to international tours, pilgrimage packages, and visa assistance.
@@ -86,7 +86,7 @@ export default function ServicesPage() {
         </div>
       </div>
 
-      <main className="bg-[#0f172a] pb-20 min-h-screen">
+      <main className="bg-[#0A65AB] pb-20 min-h-screen">
         <div className="container-custom pt-10">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((s) => {
@@ -129,12 +129,12 @@ export default function ServicesPage() {
               <p className="text-gray-400 text-sm">Talk to our experts and we&apos;ll craft the perfect itinerary for you.</p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <a href="tel:+919131727811" className="flex items-center gap-2 bg-[#f97316] text-white font-bold px-6 py-3 rounded-xl hover:bg-[#ea580c] transition-colors text-sm">
+              <a href="tel:+919131727811" className="flex items-center gap-2 bg-[#01b7f2] text-white font-bold px-6 py-3 rounded-xl hover:bg-[#0299cc] transition-colors text-sm">
                 <Phone size={16} /> Call Now
               </a>
               <button
                 onClick={() => setModal({ open: true, service: "Tour Package" })}
-                className="border border-[#f97316]/50 text-[#f97316] hover:border-[#f97316] font-bold px-6 py-3 rounded-xl transition-all text-sm"
+                className="border border-[#01b7f2]/50 text-[#01b7f2] hover:border-[#01b7f2] font-bold px-6 py-3 rounded-xl transition-all text-sm"
               >
                 Send Enquiry
               </button>

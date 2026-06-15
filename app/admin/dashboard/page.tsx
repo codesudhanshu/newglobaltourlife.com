@@ -19,7 +19,7 @@ export default function Dashboard() {
 
   const cards = [
     { label: "Categories",      value: stats.categories,      icon: Tag,          color: "#8b5cf6", href: "/admin/categories" },
-    { label: "Total Cars",      value: stats.cars,            icon: Car,          color: "#f97316", href: "/admin/cars" },
+    { label: "Total Cars",      value: stats.cars,            icon: Car,          color: "#01b7f2", href: "/admin/cars" },
     { label: "Total Hotels",    value: stats.hotels,          icon: Hotel,        color: "#06b6d4", href: "/admin/hotels" },
     { label: "Total Blogs",     value: stats.blogs,           icon: FileText,     color: "#3b82f6", href: "/admin/blogs" },
     { label: "Total Contacts",  value: stats.contacts,        icon: MessageSquare,color: "#10b981", href: "/admin/contacts" },
@@ -69,15 +69,15 @@ export default function Dashboard() {
       <div className="bg-[#1e293b] rounded-xl border border-slate-700 p-6">
         <h2 className="text-white font-bold mb-4">Quick Actions</h2>
         <div className="grid sm:grid-cols-3 gap-4">
-          <Link href="/admin/blogs/new" className="flex items-center gap-3 p-4 bg-[#0f172a] rounded-lg hover:bg-slate-900 border border-slate-700 hover:border-[#f97316]/50 transition-all">
+          <Link href="/admin/blogs/new" className="flex items-center gap-3 p-4 bg-[#0A65AB] rounded-lg hover:bg-slate-900 border border-slate-700 hover:border-[#01b7f2]/50 transition-all">
             <FileText size={18} className="text-[#3b82f6]" />
             <span className="text-white text-sm font-medium">Write New Blog</span>
           </Link>
-          <Link href="/admin/cars/new" className="flex items-center gap-3 p-4 bg-[#0f172a] rounded-lg hover:bg-slate-900 border border-slate-700 hover:border-[#f97316]/50 transition-all">
-            <Car size={18} className="text-[#f97316]" />
+          <Link href="/admin/cars/new" className="flex items-center gap-3 p-4 bg-[#0A65AB] rounded-lg hover:bg-slate-900 border border-slate-700 hover:border-[#01b7f2]/50 transition-all">
+            <Car size={18} className="text-[#01b7f2]" />
             <span className="text-white text-sm font-medium">Add New Car</span>
           </Link>
-          <Link href="/admin/contacts" className="flex items-center gap-3 p-4 bg-[#0f172a] rounded-lg hover:bg-slate-900 border border-slate-700 hover:border-[#f97316]/50 transition-all">
+          <Link href="/admin/contacts" className="flex items-center gap-3 p-4 bg-[#0A65AB] rounded-lg hover:bg-slate-900 border border-slate-700 hover:border-[#01b7f2]/50 transition-all">
             <MessageSquare size={18} className="text-[#10b981]" />
             <span className="text-white text-sm font-medium">View Contacts</span>
           </Link>

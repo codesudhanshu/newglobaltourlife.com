@@ -75,7 +75,7 @@ export default function NewCategory() {
               <input type="number" value={form.order} onChange={(e) => set("order", +e.target.value)} className="input w-32" />
             </div>
             <div className="flex items-center gap-3">
-              <input type="checkbox" id="active" checked={form.active} onChange={(e) => set("active", e.target.checked)} className="w-4 h-4 accent-orange-500" />
+              <input type="checkbox" id="active" checked={form.active} onChange={(e) => set("active", e.target.checked)} className="w-4 h-4 accent-cyan-500" />
               <label htmlFor="active" className="text-gray-300 text-sm">Active — visible on homepage</label>
             </div>
           </div>
@@ -90,7 +90,7 @@ export default function NewCategory() {
 
           {error && <div className="bg-red-900/30 border border-red-800 rounded-lg p-3 text-red-400 text-sm">{error}</div>}
 
-          <button type="submit" disabled={saving} className="w-full bg-[#f97316] text-white font-bold py-3 rounded-lg hover:bg-[#ea580c] disabled:opacity-60 flex items-center justify-center gap-2">
+          <button type="submit" disabled={saving} className="w-full bg-[#01b7f2] text-white font-bold py-3 rounded-lg hover:bg-[#0299cc] disabled:opacity-60 flex items-center justify-center gap-2">
             {saving && <Loader size={16} className="animate-spin" />}
             {saving ? "Saving..." : "Create Category"}
           </button>
@@ -99,8 +99,8 @@ export default function NewCategory() {
 
       <style jsx>{`
         .label { display: block; font-size: 0.875rem; font-weight: 500; color: #cbd5e1; margin-bottom: 0.375rem; }
-        .input { width: 100%; background: #0f172a; border: 1px solid #475569; border-radius: 0.5rem; padding: 0.625rem 0.875rem; color: white; font-size: 0.875rem; outline: none; transition: border-color 0.15s; }
-        .input:focus { border-color: #f97316; }
+        .input { width: 100%; background: #0A65AB; border: 1px solid #475569; border-radius: 0.5rem; padding: 0.625rem 0.875rem; color: white; font-size: 0.875rem; outline: none; transition: border-color 0.15s; }
+        .input:focus { border-color: #01b7f2; }
         .input::placeholder { color: #64748b; }
       `}</style>
     </div>
