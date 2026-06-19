@@ -12,7 +12,7 @@ export interface IContact extends Document {
 const ContactSchema = new Schema<IContact>(
   {
     name: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, default: "" },
     phone: { type: String, default: "" },
     message: { type: String, required: true },
     read: { type: Boolean, default: false },
