@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, Car, MessageSquare, LogOut, Menu, X, Tag, Hotel, Settings, Landmark } from "lucide-react";
+import { LayoutDashboard, FileText, Car, MessageSquare, LogOut, Menu, X, Tag, Hotel, Settings, Landmark, IndianRupee } from "lucide-react";
 import { useState } from "react";
 
 interface Props { onLogout: () => void; }
@@ -12,6 +12,7 @@ const links = [
   { href: "/admin/dashboard",  label: "Dashboard",  icon: LayoutDashboard },
   { href: "/admin/categories", label: "Categories", icon: Tag },
   { href: "/admin/cars",       label: "Cars",       icon: Car },
+  { href: "/admin/pricing",    label: "Pricing",     icon: IndianRupee },
   { href: "/admin/hotels",     label: "Hotels",     icon: Hotel },
   { href: "/admin/blogs",      label: "Blogs",      icon: FileText },
   { href: "/admin/contacts",     label: "Contacts",    icon: MessageSquare },
