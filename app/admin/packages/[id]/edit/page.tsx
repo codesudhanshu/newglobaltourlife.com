@@ -9,6 +9,10 @@ import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
 interface Day { day: number; title: string; description: string }
 
+function slugify(s: string): string {
+  return s.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+}
+
 export default function EditPackage() {
   const { authHeaders, token, loading } = useAdmin();
   const router = useRouter();
@@ -75,10 +79,11 @@ export default function EditPackage() {
     setError("");
     setSaving(true);
     try {
+      const slug = form.slug.trim() || slugify(form.title);
       const res = await fetch(`/api/packages/${id}`, {
         method: "PUT",
         headers: { ...authHeaders(), "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, image: form.images[0] || form.image }),
+        body: JSON.stringify({ ...form, slug, image: form.images[0] || form.image }),
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error || "Save failed"); setSaving(false); return; }
