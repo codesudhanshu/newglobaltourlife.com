@@ -35,10 +35,10 @@ export default function DestinationsIndia() {
             <Link
               key={d._id}
               href={`/destinations/${d.slug}`}
-              className="snap-start shrink-0 w-[240px] group"
+              className="snap-start shrink-0 w-[260px] group"
             >
               <div className="relative h-44 rounded-2xl overflow-hidden mb-3 shadow-sm">
-                <Image src={d.image} alt={d.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="240px" />
+                <Image src={d.image} alt={d.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="260px" />
               </div>
               <h3 className="text-base font-bold text-[#0A65AB] group-hover:text-[#01b7f2] transition-colors">
                 {d.name} Tour Packages

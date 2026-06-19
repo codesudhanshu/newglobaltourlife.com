@@ -56,28 +56,26 @@ export default function SpecialOffers() {
             {items.map((o) => (
               <div
                 key={o._id}
-                className="snap-start shrink-0 w-[360px] bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow overflow-hidden flex"
+                className="snap-start shrink-0 w-[260px] bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow overflow-hidden group"
               >
-                {/* Left image */}
-                <div className="relative w-32 shrink-0 bg-[#0A65AB]">
-                  <Image src={o.image} alt={o.title} fill className="object-cover opacity-90" sizes="128px" />
+                {/* Top image */}
+                <div className="relative h-44 bg-[#0A65AB] overflow-hidden">
+                  <Image src={o.image} alt={o.title} fill className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-500" sizes="260px" />
+                  {o.code && (
+                    <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-white/90 text-[#0A65AB] text-[11px] font-bold px-2.5 py-1 rounded">
+                      <Tag size={11} /> {o.code}
+                    </span>
+                  )}
                 </div>
-                {/* Right content */}
-                <div className="p-4 flex-1">
+                {/* Content */}
+                <div className="p-4">
                   <div className="text-xs font-bold text-[#0A65AB] mb-1">{o.partner}</div>
                   <div className="text-lg font-extrabold text-[#01b7f2] leading-tight mb-1">{o.discountText}</div>
                   <div className="text-xs text-gray-500 mb-2">{o.subText}</div>
                   <p className="text-[11px] text-gray-400 leading-snug mb-3 line-clamp-2">{o.terms}</p>
-                  <div className="flex items-center justify-between gap-2">
-                    {o.code ? (
-                      <span className="inline-flex items-center gap-1 bg-[#0A65AB] text-white text-[11px] font-bold px-3 py-1.5 rounded">
-                        <Tag size={11} /> {o.code}
-                      </span>
-                    ) : <span />}
-                    <a href="#contact" className="text-xs font-semibold text-[#01b7f2] hover:text-[#0299cc] flex items-center gap-1">
-                      View Details <ArrowRight size={12} />
-                    </a>
-                  </div>
+                  <a href="#contact" className="text-xs font-semibold text-[#01b7f2] hover:text-[#0299cc] flex items-center gap-1">
+                    View Details <ArrowRight size={12} />
+                  </a>
                 </div>
               </div>
             ))}

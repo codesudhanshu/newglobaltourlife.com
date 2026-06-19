@@ -14,7 +14,7 @@ export type ExploreCardProps = {
 export default function ExploreCard({ image, title, sub, price, href, discount }: ExploreCardProps) {
   return (
     <div className="shrink-0 w-[260px] bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-shadow group">
-      <Link href={href} className="block relative h-40 overflow-hidden">
+      <Link href={href} className="block relative h-44 overflow-hidden">
         {discount ? (
           <span className="absolute top-3 left-0 z-10 bg-[#0A65AB] text-white text-[11px] font-bold pl-3 pr-3 py-1 rounded-r-full shadow">
             Up to {discount}% Off

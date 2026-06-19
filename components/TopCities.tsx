@@ -56,10 +56,10 @@ export default function TopCities() {
             <Link
               key={c.name}
               href={`/hotels?city=${encodeURIComponent(c.name)}`}
-              className="snap-start shrink-0 w-[200px] group text-center"
+              className="snap-start shrink-0 w-[260px] group text-center"
             >
               <div className="relative h-44 rounded-2xl overflow-hidden mb-3 shadow-sm">
-                <Image src={c.image} alt={c.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="200px" />
+                <Image src={c.image} alt={c.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="260px" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
               </div>
               <h3 className="font-bold text-[#0A65AB] group-hover:text-[#01b7f2] transition-colors">{c.name}</h3>
