@@ -8,6 +8,7 @@ export interface ICar extends Document {
   category: string;
   price: number;
   description: string;
+  longContent: string;
   image: string;
   images: string[];
   order: number;
@@ -25,6 +26,7 @@ const CarSchema = new Schema<ICar>(
     category: { type: String, default: "Sedan" },
     price: { type: Number, required: true },
     description: { type: String, default: "" },
+    longContent: { type: String, default: "" },
     image: { type: String, default: "" },
     images: { type: [String], default: [] },
     order: { type: Number, default: 0 },

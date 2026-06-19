@@ -19,7 +19,7 @@ export default function EditCar() {
   const [error, setError] = useState("");
   const [form, setForm] = useState({
     name: "", year: 2024, transmission: "Automatic", capacity: 5,
-    category: "Economy", price: 0, description: "", image: "", images: [] as string[], order: 0, available: true,
+    category: "Economy", price: 0, description: "", longContent: "", image: "", images: [] as string[], order: 0, available: true,
   });
 
   useEffect(() => {
@@ -29,6 +29,7 @@ export default function EditCar() {
       .then((data) => {
         setForm({
           ...data,
+          longContent: data.longContent || "",
           images: data.images?.length ? data.images : (data.image ? [data.image] : []),
         });
         setFetching(false);
@@ -104,6 +105,11 @@ export default function EditCar() {
             <div>
               <label className="label">Description</label>
               <textarea value={form.description} onChange={(e) => set("description", e.target.value)} rows={4} className="input resize-none" />
+            </div>
+            <div>
+              <label className="label">Long Content (SEO / page body)</label>
+              <p className="text-gray-500 text-xs mb-2">Shown as the text content section on the car page. Blank lines separate paragraphs.</p>
+              <textarea value={form.longContent} onChange={(e) => set("longContent", e.target.value)} rows={8} placeholder="e.g. Honda City Car Booking in Indore..." className="input resize-none" />
             </div>
           </div>
 
