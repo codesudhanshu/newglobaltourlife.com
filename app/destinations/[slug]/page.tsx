@@ -7,7 +7,6 @@ import Image from "next/image";
 import { MapPin, Check, Globe } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import FAQ from "@/components/FAQ";
 import DestinationEnquiryForm from "@/components/DestinationEnquiryForm";
 import RelatedDestinations from "@/components/RelatedDestinations";
 
@@ -165,9 +164,6 @@ export default function DestinationDetailPage() {
 
       {/* Related */}
       <RelatedDestinations currentSlug={dest.slug} region={dest.region} />
-
-      {/* FAQ */}
-      <FAQ />
 
       <Footer />
     </>

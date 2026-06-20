@@ -1,5 +1,10 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+export interface IFaq {
+  question: string;
+  answer: string;
+}
+
 export interface IItineraryDay {
   day: number;
   title: string;
@@ -20,6 +25,7 @@ export interface IPackage extends Document {
   highlights: string[];
   itinerary: string;
   itineraryDays: IItineraryDay[];
+  faqs: IFaq[];
   category: string;
   featured: boolean;
   order: number;
@@ -48,6 +54,15 @@ const PackageSchema = new Schema<IPackage>(
           day: { type: Number, default: 0 },
           title: { type: String, default: "" },
           description: { type: String, default: "" },
+        },
+      ],
+      default: [],
+    },
+    faqs: {
+      type: [
+        {
+          question: { type: String, default: "" },
+          answer: { type: String, default: "" },
         },
       ],
       default: [],

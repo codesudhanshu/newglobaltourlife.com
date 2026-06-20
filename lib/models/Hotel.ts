@@ -1,5 +1,10 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+export interface IFaq {
+  question: string;
+  answer: string;
+}
+
 export interface IRoom {
   name: string;
   price: number;
@@ -21,6 +26,7 @@ export interface IHotel extends Document {
   category: string;
   amenities: string[];
   rooms: IRoom[];
+  faqs: IFaq[];
   featured: boolean;
   available: boolean;
   order: number;
@@ -48,6 +54,15 @@ const HotelSchema = new Schema<IHotel>(
           size: { type: String, default: "" },
           bed: { type: String, default: "" },
           image: { type: String, default: "" },
+        },
+      ],
+      default: [],
+    },
+    faqs: {
+      type: [
+        {
+          question: { type: String, default: "" },
+          answer: { type: String, default: "" },
         },
       ],
       default: [],

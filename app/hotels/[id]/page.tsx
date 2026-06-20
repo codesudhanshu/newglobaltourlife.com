@@ -26,6 +26,7 @@ interface Hotel {
   category: string;
   amenities: string[];
   rooms: Room[];
+  faqs: { question: string; answer: string }[];
 }
 
 const AMENITY_ICONS: Record<string, React.ReactNode> = {
@@ -243,7 +244,7 @@ export default function HotelDetailPage() {
       <RelatedHotels currentId={hotel._id} city={hotel.city} category={hotel.category} />
 
       {/* FAQ */}
-      <FAQ />
+      <FAQ items={hotel.faqs || []} />
 
       <Footer />
     </>

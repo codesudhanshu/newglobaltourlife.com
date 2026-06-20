@@ -1,5 +1,10 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+export interface IFaq {
+  question: string;
+  answer: string;
+}
+
 export interface ICar extends Document {
   name: string;
   year: number;
@@ -11,6 +16,7 @@ export interface ICar extends Document {
   longContent: string;
   image: string;
   images: string[];
+  faqs: IFaq[];
   order: number;
   available: boolean;
   createdAt: Date;
@@ -29,6 +35,15 @@ const CarSchema = new Schema<ICar>(
     longContent: { type: String, default: "" },
     image: { type: String, default: "" },
     images: { type: [String], default: [] },
+    faqs: {
+      type: [
+        {
+          question: { type: String, default: "" },
+          answer: { type: String, default: "" },
+        },
+      ],
+      default: [],
+    },
     order: { type: Number, default: 0 },
     available: { type: Boolean, default: true },
   },

@@ -28,6 +28,7 @@ interface Pkg {
   highlights: string[];
   itinerary: string;
   itineraryDays: ItineraryDay[];
+  faqs: { question: string; answer: string }[];
   category: string;
   available: boolean;
 }
@@ -231,7 +232,7 @@ export default function PackageDetailPage() {
       <RelatedPackages currentId={pkg._id} category={pkg.category} />
 
       {/* FAQ */}
-      <FAQ />
+      <FAQ items={pkg.faqs || []} />
 
       <Footer />
     </>

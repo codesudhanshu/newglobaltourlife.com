@@ -25,6 +25,7 @@ interface Car {
   longContent: string;
   image: string;
   images: string[];
+  faqs: { question: string; answer: string }[];
   available: boolean;
 }
 
@@ -174,7 +175,7 @@ export default function CarDetailPage() {
       <ContactForm />
 
       {/* FAQ */}
-      <FAQ />
+      <FAQ items={car.faqs || []} />
 
       <Footer />
     </>
