@@ -10,17 +10,33 @@ const SLIDES = [
   { image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80", heading: "Your Trip, Your Way", sub: "Custom packages tailored to your budget and dreams." },
 ];
 
+type Slide = { image: string; heading: string; sub: string };
+
 export default function Hero() {
+  const [slides, setSlides] = useState<Slide[]>(SLIDES);
   const [i, setI] = useState(0);
+
   useEffect(() => {
-    const t = setInterval(() => setI((p) => (p + 1) % SLIDES.length), 2500);
-    return () => clearInterval(t);
+    fetch("/api/hero-slides")
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setSlides(data.map((s: Slide) => ({ image: s.image, heading: s.heading, sub: s.sub })));
+          setI(0);
+        }
+      })
+      .catch(() => {});
   }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => setI((p) => (p + 1) % slides.length), 2500);
+    return () => clearInterval(t);
+  }, [slides.length]);
 
   return (
     <section className="relative">
       <div className="relative h-[70vh] min-h-[480px] overflow-hidden">
-        {SLIDES.map((s, idx) => (
+        {slides.map((s, idx) => (
           <div
             key={idx}
             className={`absolute inset-0 transition-opacity duration-1000 ${idx === i ? "opacity-100" : "opacity-0"}`}
@@ -36,13 +52,13 @@ export default function Hero() {
             <span className="text-[#01b7f2] text-sm font-semibold tracking-widest uppercase">New Global Tour Life</span>
             <span className="h-0.5 w-8 bg-[#01b7f2]" />
           </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold max-w-3xl leading-tight">{SLIDES[i].heading}</h1>
-          <p className="mt-4 text-base md:text-lg text-gray-200 max-w-xl">{SLIDES[i].sub}</p>
+          <h1 className="text-3xl md:text-5xl font-extrabold max-w-3xl leading-tight">{slides[i]?.heading}</h1>
+          <p className="mt-4 text-base md:text-lg text-gray-200 max-w-xl">{slides[i]?.sub}</p>
         </div>
 
         {/* Slide dots */}
         <div className="absolute bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-          {SLIDES.map((_, idx) => (
+          {slides.map((_, idx) => (
             <button
               key={idx}
               type="button"
