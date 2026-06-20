@@ -73,7 +73,7 @@ export default function SpecialOffers() {
                   <p className="text-[10px] text-gray-400 leading-snug line-clamp-2 mb-2">{o.terms}</p>
                   <div className="mt-auto flex items-center gap-3">
                     {o.code && (
-                      <span className="inline-flex items-center bg-[#ef4444] text-white text-[11px] font-bold px-3 py-1.5 rounded-full">
+                      <span className="inline-flex items-center bg-[#0A65AB] text-white text-[11px] font-bold px-3 py-1.5 rounded-full">
                         {o.code}
                       </span>
                     )}
