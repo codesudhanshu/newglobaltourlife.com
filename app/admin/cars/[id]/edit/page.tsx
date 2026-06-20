@@ -5,7 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter, useParams } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
 import Link from "next/link";
-import { ArrowLeft, Loader } from "lucide-react";
+import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
 const CATEGORIES = ["Economy", "Family", "Business", "SUV", "Luxury", "Electric", "Sports", "Convertible", "Sedan", "Minivan", "Pickup"];
 const TRANSMISSIONS = ["Automatic", "Manual"];
@@ -20,6 +20,7 @@ export default function EditCar() {
   const [form, setForm] = useState({
     name: "", year: 2024, transmission: "Automatic", capacity: 5,
     category: "Economy", price: 0, description: "", longContent: "", image: "", images: [] as string[], order: 0, available: true,
+    faqs: [] as { question: string; answer: string }[],
   });
 
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function EditCar() {
           ...data,
           longContent: data.longContent || "",
           images: data.images?.length ? data.images : (data.image ? [data.image] : []),
+          faqs: data.faqs || [],
         });
         setFetching(false);
       })
@@ -44,6 +46,12 @@ export default function EditCar() {
   function handleImages(urls: string[]) {
     setForm((prev) => ({ ...prev, images: urls, image: urls[0] || prev.image }));
   }
+
+  function addFaq() { setForm((p) => ({ ...p, faqs: [...p.faqs, { question: "", answer: "" }] })); }
+  function updateFaq(i: number, key: "question" | "answer", value: string) {
+    setForm((p) => ({ ...p, faqs: p.faqs.map((f, idx) => (idx === i ? { ...f, [key]: value } : f)) }));
+  }
+  function removeFaq(i: number) { setForm((p) => ({ ...p, faqs: p.faqs.filter((_, idx) => idx !== i) })); }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -125,6 +133,26 @@ export default function EditCar() {
                 folder="new-global-tour-life/cars"
               />
             )}
+          </div>
+
+          {/* FAQs */}
+          <div className="bg-[#1e293b] rounded-xl border border-slate-700 p-6">
+            <div className="flex items-center justify-between mb-3">
+              <label className="label mb-0">FAQs (shown on the car page)</label>
+              <button type="button" onClick={addFaq} className="bg-[#01b7f2] text-white px-3 py-1.5 rounded-lg hover:bg-[#0299cc] flex items-center gap-1 text-sm font-semibold"><Plus size={14} /> Add FAQ</button>
+            </div>
+            <div className="space-y-3">
+              {form.faqs.map((f, i) => (
+                <div key={i} className="border border-slate-700 rounded-lg p-3 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <input value={f.question} onChange={(e) => updateFaq(i, "question", e.target.value)} placeholder="Question" className="input flex-1" />
+                    <button type="button" onClick={() => removeFaq(i)} className="text-gray-500 hover:text-red-400 p-1"><X size={16} /></button>
+                  </div>
+                  <textarea value={f.answer} onChange={(e) => updateFaq(i, "answer", e.target.value)} rows={2} placeholder="Answer" className="input resize-none" />
+                </div>
+              ))}
+              {form.faqs.length === 0 && <p className="text-gray-500 text-sm">No FAQs added yet.</p>}
+            </div>
           </div>
         </div>
 
