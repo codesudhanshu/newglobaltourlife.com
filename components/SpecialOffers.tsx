@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import { ArrowRight, Tag } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { OFFERS, type Offer } from "@/lib/placeholders";
 import Slider from "@/components/Slider";
 
-const TABS = ["All", "Flights", "Hotels", "Holidays", "Buses"] as const;
+const TABS = ["All", "Flights", "Hotels", "Holidays", "Buses", "Rajasthan Attractions"] as const;
 
 export default function SpecialOffers() {
   const [offers, setOffers] = useState<Offer[]>(OFFERS);
@@ -27,7 +27,7 @@ export default function SpecialOffers() {
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <h2 className="section-title">Special Offers</h2>
           <a href="#contact" className="text-sm font-semibold text-[#01b7f2] hover:text-[#0299cc] flex items-center gap-1">
-            View all offers <ArrowRight size={15} />
+            View all offers <ArrowUpRight size={15} />
           </a>
         </div>
 
@@ -56,26 +56,31 @@ export default function SpecialOffers() {
             {items.map((o) => (
               <div
                 key={o._id}
-                className="snap-start shrink-0 w-[260px] bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow overflow-hidden group"
+                className="snap-start shrink-0 w-[360px] h-[180px] relative bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow overflow-hidden"
               >
-                {/* Top image */}
-                <div className="relative h-44 bg-[#0A65AB] overflow-hidden">
-                  <Image src={o.image} alt={o.title} fill className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-500" sizes="260px" />
-                  {o.code && (
-                    <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-white/90 text-[#0A65AB] text-[11px] font-bold px-2.5 py-1 rounded">
-                      <Tag size={11} /> {o.code}
-                    </span>
-                  )}
+                {/* Right image */}
+                <div className="absolute right-0 inset-y-0 w-1/2">
+                  <Image src={o.image} alt={o.title} fill className="object-cover" sizes="180px" />
                 </div>
+                {/* White curved overlay over the left/content area */}
+                <div className="absolute left-0 inset-y-0 w-3/4 bg-white rounded-r-[55%]" />
+
                 {/* Content */}
-                <div className="p-4">
-                  <div className="text-xs font-bold text-[#0A65AB] mb-1">{o.partner}</div>
-                  <div className="text-lg font-extrabold text-[#01b7f2] leading-tight mb-1">{o.discountText}</div>
-                  <div className="text-xs text-gray-500 mb-2">{o.subText}</div>
-                  <p className="text-[11px] text-gray-400 leading-snug mb-3 line-clamp-2">{o.terms}</p>
-                  <a href="#contact" className="text-xs font-semibold text-[#01b7f2] hover:text-[#0299cc] flex items-center gap-1">
-                    View Details <ArrowRight size={12} />
-                  </a>
+                <div className="relative z-10 h-full p-5 flex flex-col w-[62%]">
+                  <div className="text-xs font-bold text-[#0A65AB] mb-1 truncate">{o.partner || o.title}</div>
+                  <div className="text-lg font-extrabold text-[#0A65AB] leading-tight">{o.discountText}</div>
+                  <div className="text-[11px] text-gray-500 mb-1">{o.subText}</div>
+                  <p className="text-[10px] text-gray-400 leading-snug line-clamp-2 mb-2">{o.terms}</p>
+                  <div className="mt-auto flex items-center gap-3">
+                    {o.code && (
+                      <span className="inline-flex items-center bg-[#ef4444] text-white text-[11px] font-bold px-3 py-1.5 rounded-full">
+                        {o.code}
+                      </span>
+                    )}
+                    <a href="#contact" className="text-xs font-semibold text-[#0A65AB] hover:text-[#01b7f2] flex items-center gap-0.5">
+                      View Details <ArrowUpRight size={12} />
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}

@@ -13,7 +13,7 @@ const SLIDES = [
 export default function Hero() {
   const [i, setI] = useState(0);
   useEffect(() => {
-    const t = setInterval(() => setI((p) => (p + 1) % SLIDES.length), 5000);
+    const t = setInterval(() => setI((p) => (p + 1) % SLIDES.length), 2500);
     return () => clearInterval(t);
   }, []);
 
