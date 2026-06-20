@@ -1,13 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Star, MapPin, ChevronLeft, Wifi, Car, Coffee, Waves } from "lucide-react";
+import { Star, MapPin, Wifi, Car, Coffee, Waves, Dumbbell, Wind, Check, Users, BedDouble, Maximize } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import BookingModal from "@/components/BookingModal";
+import FAQ from "@/components/FAQ";
+import HotelBookingForm from "@/components/HotelBookingForm";
+import RelatedHotels from "@/components/RelatedHotels";
+
+interface Room { name: string; price: number; capacity: number; size: string; bed: string; image: string }
 
 interface Hotel {
   _id: string;
@@ -21,20 +25,19 @@ interface Hotel {
   pricePerNight: number;
   category: string;
   amenities: string[];
-  featured: boolean;
-  available: boolean;
+  rooms: Room[];
 }
 
 const AMENITY_ICONS: Record<string, React.ReactNode> = {
-  "WiFi": <Wifi size={15} />, "Pool": <Waves size={15} />,
-  "Parking": <Car size={15} />, "Restaurant": <Coffee size={15} />,
+  WiFi: <Wifi size={15} />, Pool: <Waves size={15} />, Parking: <Car size={15} />,
+  Restaurant: <Coffee size={15} />, Gym: <Dumbbell size={15} />, AC: <Wind size={15} />,
 };
 
-function StarRating({ count }: { count: number }) {
+function Stars({ count }: { count: number }) {
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-0.5">
       {Array.from({ length: 5 }).map((_, i) => (
-        <Star key={i} size={16} className={i < count ? "text-[#0A65AB] fill-[#0A65AB]" : "text-gray-300"} />
+        <Star key={i} size={15} className={i < count ? "text-[#01b7f2] fill-[#01b7f2]" : "text-gray-300"} />
       ))}
     </div>
   );
@@ -42,12 +45,11 @@ function StarRating({ count }: { count: number }) {
 
 export default function HotelDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const router = useRouter();
   const [hotel, setHotel] = useState<Hotel | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedRoom, setSelectedRoom] = useState("");
 
   useEffect(() => {
     if (!id) return;
@@ -57,17 +59,23 @@ export default function HotelDetailPage() {
         return r.json();
       })
       .then((data) => {
-        if (data) setHotel(data);
+        if (data && !data.error) setHotel(data);
+        else setNotFound(true);
         setLoading(false);
       })
       .catch(() => { setNotFound(true); setLoading(false); });
   }, [id]);
 
+  function bookRoom(name: string) {
+    setSelectedRoom(name);
+    document.getElementById("booking")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
   if (loading) {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-[#0A65AB] flex items-center justify-center">
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="w-10 h-10 border-4 border-[#01b7f2] border-t-transparent rounded-full animate-spin" />
         </div>
         <Footer />
@@ -79,9 +87,9 @@ export default function HotelDetailPage() {
     return (
       <>
         <Navbar />
-        <div className="min-h-screen bg-[#0A65AB] flex flex-col items-center justify-center gap-4">
+        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center gap-4">
           <div className="text-5xl">🏨</div>
-          <h1 className="text-2xl font-bold text-white">Hotel not found</h1>
+          <h1 className="text-2xl font-bold text-[#0A65AB]">Hotel not found</h1>
           <Link href="/hotels" className="btn-primary">View All Hotels</Link>
         </div>
         <Footer />
@@ -90,15 +98,16 @@ export default function HotelDetailPage() {
   }
 
   const imgs = hotel.images?.length ? hotel.images : [];
+  const mapQuery = encodeURIComponent(`${hotel.name} ${hotel.city}`);
 
   return (
     <>
       <Navbar />
 
-      {/* Header */}
+      {/* Breadcrumb hero */}
       <div className="bg-[#0A65AB] py-10">
         <div className="container-custom">
-          <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
+          <div className="flex items-center gap-2 text-sm text-gray-300 mb-4">
             <Link href="/" className="hover:text-[#01b7f2]">Home</Link>
             <span>/</span>
             <Link href="/hotels" className="hover:text-[#01b7f2]">Hotels</Link>
@@ -110,137 +119,133 @@ export default function HotelDetailPage() {
               <span className="text-xs bg-[#01b7f2] text-white px-3 py-1 rounded-full font-semibold mb-3 inline-block">{hotel.category}</span>
               <h1 className="text-3xl lg:text-4xl font-extrabold text-white mb-2">{hotel.name}</h1>
               <div className="flex items-center gap-3">
-                <StarRating count={hotel.stars} />
-                <span className="text-gray-400 text-sm flex items-center gap-1.5">
-                  <MapPin size={13} className="text-[#01b7f2]" /> {hotel.city}, {hotel.country}
-                </span>
+                <Stars count={hotel.stars} />
+                <span className="text-gray-300 text-sm flex items-center gap-1.5"><MapPin size={13} className="text-[#01b7f2]" /> {hotel.city}, {hotel.country}</span>
               </div>
             </div>
             <div className="text-right">
               <div className="text-3xl font-extrabold text-[#01b7f2]">₹{hotel.pricePerNight.toLocaleString("en-IN")}</div>
-              <div className="text-gray-400 text-sm">per night</div>
+              <div className="text-gray-300 text-sm">per night</div>
             </div>
           </div>
         </div>
       </div>
 
-      <main className="bg-[#0A65AB] min-h-screen pb-16">
-        <div className="container-custom pt-8">
-          <button
-            onClick={() => router.back()}
-            className="flex items-center gap-2 text-gray-400 hover:text-[#01b7f2] transition-colors mb-8 text-sm font-medium"
-          >
-            <ChevronLeft size={18} /> Back to Hotels
-          </button>
-
-          <div className="grid lg:grid-cols-3 gap-10">
-            {/* Images + Details */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Main image */}
-              <div className="relative h-72 lg:h-96 rounded-2xl overflow-hidden border border-slate-700">
+      <main className="bg-gray-50 py-10 lg:py-14">
+        <div className="container-custom grid lg:grid-cols-3 gap-10 items-start">
+          {/* Left content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Gallery */}
+            <div className="space-y-3">
+              <div className="relative h-72 lg:h-[420px] rounded-2xl overflow-hidden bg-white border border-gray-100">
                 {imgs[activeImg] ? (
-                  <Image src={imgs[activeImg]} alt={hotel.name} fill className="object-cover" />
+                  <Image src={imgs[activeImg]} alt={hotel.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" priority />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center">
-                    <span className="text-6xl">🏨</span>
-                  </div>
+                  <div className="w-full h-full flex items-center justify-center text-7xl">🏨</div>
                 )}
               </div>
-
-              {/* Thumbnails gallery */}
               {imgs.length > 1 && (
-                <div className="flex gap-3 overflow-x-auto pb-1">
+                <div className="flex gap-2 overflow-x-auto pb-1">
                   {imgs.map((img, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveImg(i)}
-                      className={`relative flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? "border-[#01b7f2] scale-105" : "border-slate-700 hover:border-slate-500"}`}
-                    >
-                      <Image src={img} alt="" fill className="object-cover" />
-                      {i === 0 && (
-                        <span className="absolute bottom-0.5 left-0.5 text-[9px] bg-[#01b7f2] text-white px-1 rounded">Cover</span>
-                      )}
+                    <button key={i} onClick={() => setActiveImg(i)}
+                      className={`relative flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? "border-[#01b7f2] scale-105" : "border-gray-200 hover:border-[#01b7f2]/50"}`}>
+                      <Image src={img} alt="" fill className="object-cover" sizes="96px" />
                     </button>
                   ))}
                 </div>
               )}
+            </div>
 
-              {/* Description */}
-              <div className="bg-[#1e293b] rounded-2xl p-6 border border-slate-700">
-                <h2 className="text-white font-bold text-lg mb-3">About This Property</h2>
-                <p className="text-gray-400 leading-relaxed">{hotel.description || "Detailed description coming soon."}</p>
-              </div>
+            {/* Overview */}
+            <section className="bg-white rounded-2xl p-6 border border-gray-100">
+              <h2 className="text-xl font-extrabold text-[#0A65AB] mb-3">About This Property</h2>
+              <p className="text-gray-600 leading-relaxed text-sm">{hotel.description || "Detailed description coming soon."}</p>
+            </section>
 
-              {/* Amenities */}
-              {hotel.amenities?.length > 0 && (
-                <div className="bg-[#1e293b] rounded-2xl p-6 border border-slate-700">
-                  <h2 className="text-white font-bold text-lg mb-4">Amenities</h2>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {hotel.amenities.map((a) => (
-                      <div key={a} className="flex items-center gap-2 text-gray-300 text-sm bg-slate-800 rounded-lg px-3 py-2.5">
-                        <span className="text-[#01b7f2]">{AMENITY_ICONS[a] ?? "✓"}</span>
-                        {a}
+            {/* Amenities */}
+            {hotel.amenities?.length > 0 && (
+              <section className="bg-white rounded-2xl p-6 border border-gray-100">
+                <h2 className="text-xl font-extrabold text-[#0A65AB] mb-4">Amenities</h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {hotel.amenities.map((a) => (
+                    <div key={a} className="flex items-center gap-2 text-gray-600 text-sm bg-gray-50 rounded-lg px-3 py-2.5">
+                      <span className="text-[#01b7f2]">{AMENITY_ICONS[a] ?? <Check size={15} />}</span>
+                      {a}
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Rooms */}
+            {hotel.rooms?.length > 0 && (
+              <section>
+                <h2 className="text-xl font-extrabold text-[#0A65AB] mb-4">Rooms</h2>
+                <div className="space-y-4">
+                  {hotel.rooms.map((room, i) => (
+                    <div key={i} className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col sm:flex-row">
+                      <div className="relative h-44 sm:h-auto sm:w-56 flex-shrink-0 bg-gray-100">
+                        {room.image ? (
+                          <Image src={room.image} alt={room.name} fill className="object-cover" sizes="224px" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-4xl">🛏️</div>
+                        )}
                       </div>
-                    ))}
-                  </div>
+                      <div className="p-5 flex-1 flex flex-col">
+                        <h3 className="font-bold text-[#0A65AB] text-lg mb-2">{room.name || "Room"}</h3>
+                        <div className="flex flex-wrap gap-2 mb-4 text-xs text-gray-500">
+                          {room.capacity > 0 && <span className="flex items-center gap-1 bg-gray-50 px-2.5 py-1 rounded-full"><Users size={12} className="text-[#01b7f2]" /> {room.capacity} guests</span>}
+                          {room.size && <span className="flex items-center gap-1 bg-gray-50 px-2.5 py-1 rounded-full"><Maximize size={12} className="text-[#01b7f2]" /> {room.size}</span>}
+                          {room.bed && <span className="flex items-center gap-1 bg-gray-50 px-2.5 py-1 rounded-full"><BedDouble size={12} className="text-[#01b7f2]" /> {room.bed}</span>}
+                        </div>
+                        <div className="flex items-center justify-between mt-auto">
+                          <div><span className="text-xl font-extrabold text-[#01b7f2]">₹{room.price.toLocaleString("en-IN")}</span><span className="text-gray-400 text-xs"> /night</span></div>
+                          <button onClick={() => bookRoom(room.name)} className="bg-[#01b7f2] hover:bg-[#0299cc] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">Book this room</button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              )}
-            </div>
+              </section>
+            )}
 
-            {/* Booking card */}
-            <div className="lg:col-span-1">
-              <div className="bg-[#1e293b] rounded-2xl p-6 border border-slate-700 sticky top-24">
-                <div className="text-center mb-5 pb-5 border-b border-slate-700">
-                  <div className="text-3xl font-extrabold text-[#01b7f2]">₹{hotel.pricePerNight.toLocaleString("en-IN")}</div>
-                  <div className="text-gray-400 text-sm mt-1">per night · taxes extra</div>
-                </div>
-
-                <div className="space-y-3 mb-6">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Location</span>
-                    <span className="text-white">{hotel.city}, {hotel.country}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Category</span>
-                    <span className="text-white">{hotel.category}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Rating</span>
-                    <StarRating count={hotel.stars} />
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setModalOpen(true)}
-                  className="w-full flex items-center justify-center gap-2 bg-[#01b7f2] hover:bg-[#0299cc] text-white font-bold py-3.5 rounded-xl transition-colors mb-3"
-                >
-                  Book This Hotel
-                </button>
-                <button
-                  onClick={() => setModalOpen(true)}
-                  className="w-full flex items-center justify-center gap-2 border border-[#01b7f2]/50 hover:border-[#01b7f2] text-[#01b7f2] font-semibold py-3 rounded-xl transition-all text-sm"
-                >
-                  Enquire Now
-                </button>
-
-                <p className="text-center text-gray-500 text-xs mt-4">Free cancellation · Best price guaranteed</p>
-                <p className="text-center mt-2">
-                  <a href="tel:+919131727811" className="text-gray-400 hover:text-[#01b7f2] text-xs transition-colors">📞 +91-9131727811</a>
-                </p>
+            {/* Location */}
+            <section className="bg-white rounded-2xl p-6 border border-gray-100">
+              <h2 className="text-xl font-extrabold text-[#0A65AB] mb-3">Location</h2>
+              <p className="text-gray-600 text-sm mb-4 flex items-center gap-1.5">
+                <MapPin size={15} className="text-[#01b7f2]" /> {[hotel.location, hotel.city, hotel.country].filter(Boolean).join(", ")}
+              </p>
+              <div className="rounded-xl overflow-hidden border border-gray-100 h-64">
+                <iframe
+                  title={`Map of ${hotel.name}`}
+                  src={`https://www.google.com/maps?q=${mapQuery}&output=embed`}
+                  className="w-full h-full"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
               </div>
-            </div>
+            </section>
+          </div>
+
+          {/* Right — booking widget */}
+          <div id="booking" className="lg:sticky lg:top-6 scroll-mt-24">
+            <HotelBookingForm
+              hotelName={hotel.name}
+              rooms={hotel.rooms?.map((r) => ({ name: r.name, price: r.price })) || []}
+              selectedRoom={selectedRoom}
+              onSelectRoom={setSelectedRoom}
+            />
           </div>
         </div>
       </main>
 
-      <Footer />
+      {/* Related */}
+      <RelatedHotels currentId={hotel._id} city={hotel.city} category={hotel.category} />
 
-      <BookingModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        subject={hotel.name}
-        type="hotel"
-      />
+      {/* FAQ */}
+      <FAQ />
+
+      <Footer />
     </>
   );
 }
