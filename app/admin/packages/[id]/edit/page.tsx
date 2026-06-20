@@ -28,6 +28,7 @@ export default function EditPackage() {
     category: "", itinerary: "", order: 0, featured: false, available: true,
     inclusions: [] as string[], exclusions: [] as string[], highlights: [] as string[],
     itineraryDays: [] as Day[], images: [] as string[], image: "",
+    faqs: [] as { question: string; answer: string }[],
   });
 
   useEffect(() => {
@@ -43,6 +44,7 @@ export default function EditPackage() {
             featured: !!data.featured, available: data.available !== false,
             inclusions: data.inclusions || [], exclusions: data.exclusions || [], highlights: data.highlights || [],
             itineraryDays: data.itineraryDays || [], images: data.images || [], image: data.image || "",
+            faqs: data.faqs || [],
           });
         }
         setFetching(false);
@@ -70,6 +72,11 @@ export default function EditPackage() {
   function removeDay(i: number) {
     setForm((prev) => ({ ...prev, itineraryDays: prev.itineraryDays.filter((_, idx) => idx !== i) }));
   }
+  function addFaq() { setForm((p) => ({ ...p, faqs: [...p.faqs, { question: "", answer: "" }] })); }
+  function updateFaq(i: number, key: "question" | "answer", value: string) {
+    setForm((p) => ({ ...p, faqs: p.faqs.map((f, idx) => (idx === i ? { ...f, [key]: value } : f)) }));
+  }
+  function removeFaq(i: number) { setForm((p) => ({ ...p, faqs: p.faqs.filter((_, idx) => idx !== i) })); }
   function handleImages(urls: string[]) {
     setForm((prev) => ({ ...prev, images: urls, image: urls[0] || prev.image }));
   }
@@ -161,6 +168,26 @@ export default function EditPackage() {
                 </div>
               ))}
               {form.itineraryDays.length === 0 && <p className="text-gray-500 text-sm">No days added yet.</p>}
+            </div>
+          </div>
+
+          {/* FAQs */}
+          <div className="bg-[#1e293b] rounded-xl border border-slate-700 p-6">
+            <div className="flex items-center justify-between mb-3">
+              <label className="label mb-0">FAQs (shown on the package page)</label>
+              <button type="button" onClick={addFaq} className="bg-[#01b7f2] text-white px-3 py-1.5 rounded-lg hover:bg-[#0299cc] flex items-center gap-1 text-sm font-semibold"><Plus size={14} /> Add FAQ</button>
+            </div>
+            <div className="space-y-3">
+              {form.faqs.map((f, i) => (
+                <div key={i} className="border border-slate-700 rounded-lg p-3 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <input value={f.question} onChange={(e) => updateFaq(i, "question", e.target.value)} placeholder="Question" className="input flex-1" />
+                    <button type="button" onClick={() => removeFaq(i)} className="text-gray-500 hover:text-red-400 p-1"><X size={16} /></button>
+                  </div>
+                  <textarea value={f.answer} onChange={(e) => updateFaq(i, "answer", e.target.value)} rows={2} placeholder="Answer" className="input resize-none" />
+                </div>
+              ))}
+              {form.faqs.length === 0 && <p className="text-gray-500 text-sm">No FAQs added yet.</p>}
             </div>
           </div>
 
