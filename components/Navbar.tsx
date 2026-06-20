@@ -52,6 +52,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
+  const [mobileCatsOpen, setMobileCatsOpen] = useState(false);
   const [announcement, setAnnouncement] = useState<{ text: string; active: boolean; emoji: string } | null>(null);
 
   const [destinations, setDestinations] = useState<Destination[]>(DESTINATIONS);
@@ -118,16 +119,6 @@ export default function Navbar() {
         </div>
       </div>
     );
-  }
-
-  function mobileChildren(item: NavItem): Child[] {
-    if (item.mega === "destinations") return [
-      { label: "India", href: "/destinations?region=India" },
-      { label: "World", href: "/destinations?region=World" },
-      { label: "Honeymoon", href: "/destinations" },
-    ];
-    if (item.mega === "cars") return CAR_CATEGORIES;
-    return item.children || [];
   }
 
   return (
@@ -199,26 +190,117 @@ export default function Navbar() {
       {mobileOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100 px-6 pb-6 max-h-[80vh] overflow-y-auto">
           {navItems.map((item) => {
-            const kids = mobileChildren(item);
+            const isOpen = mobileDropdown === item.label;
+            const hasPanel = !!item.mega || !!(item.children && item.children.length > 0);
+
+            if (!hasPanel) {
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="block py-3 text-[#0A65AB] font-medium border-b border-gray-100 hover:text-[#01b7f2] transition-colors"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {item.label}
+                </a>
+              );
+            }
+
+            const carList = cars.length > 0
+              ? cars.map((c) => ({ label: c.name, href: `/cars/${c._id}` }))
+              : CAR_FALLBACK.map((n) => ({ label: n, href: "/cars" }));
+
+            const destGroups = [
+              { title: "India", items: india },
+              { title: "World", items: world },
+              { title: "Honeymoon", items: honeymoon },
+            ];
+
             return (
               <div key={item.label}>
-                {kids.length > 0 ? (
-                  <button
-                    className="flex items-center justify-between w-full py-3 text-[#0A65AB] font-medium border-b border-gray-100 hover:text-[#01b7f2] transition-colors"
-                    onClick={() => setMobileDropdown(mobileDropdown === item.label ? null : item.label)}
-                  >
-                    {item.label}
-                    <ChevronDown size={16} className={`transition-transform duration-200 ${mobileDropdown === item.label ? "rotate-180" : ""}`} />
-                  </button>
-                ) : (
-                  <a href={item.href} className="block py-3 text-[#0A65AB] font-medium border-b border-gray-100 hover:text-[#01b7f2] transition-colors" onClick={() => setMobileOpen(false)}>
-                    {item.label}
-                  </a>
-                )}
-                {kids.length > 0 && mobileDropdown === item.label && (
+                <button
+                  className="flex items-center justify-between w-full py-3 text-[#0A65AB] font-medium border-b border-gray-100 hover:text-[#01b7f2] transition-colors"
+                  onClick={() => { setMobileDropdown(isOpen ? null : item.label); setMobileCatsOpen(false); }}
+                >
+                  {item.label}
+                  <ChevronDown size={16} className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+                </button>
+
+                {/* Cars: nested Categories + car list */}
+                {isOpen && item.mega === "cars" && (
                   <div className="pl-4 pb-2">
-                    {kids.map((child) => (
-                      <a key={child.label} href={child.href} className="block py-2 text-gray-500 text-sm hover:text-[#01b7f2] transition-colors" onClick={() => { setMobileOpen(false); setMobileDropdown(null); }}>
+                    <button
+                      className="flex items-center justify-between w-full py-2 text-[#0A65AB] text-sm font-semibold hover:text-[#01b7f2] transition-colors"
+                      onClick={() => setMobileCatsOpen((v) => !v)}
+                    >
+                      Categories
+                      <ChevronDown size={14} className={`transition-transform duration-200 ${mobileCatsOpen ? "rotate-180" : ""}`} />
+                    </button>
+                    {mobileCatsOpen && (
+                      <div className="pl-4">
+                        {CAR_CATEGORIES.map((c) => (
+                          <a
+                            key={c.href}
+                            href={c.href}
+                            className="block py-1.5 text-gray-500 text-sm hover:text-[#01b7f2] transition-colors"
+                            onClick={() => { setMobileOpen(false); setMobileDropdown(null); setMobileCatsOpen(false); }}
+                          >
+                            {c.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                    <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#01b7f2] mt-3 mb-1">Browse Cars</div>
+                    <div className="max-h-60 overflow-y-auto">
+                      {carList.map((it) => (
+                        <a
+                          key={it.href + it.label}
+                          href={it.href}
+                          className="block py-1.5 text-gray-500 text-sm hover:text-[#01b7f2] transition-colors"
+                          onClick={() => { setMobileOpen(false); setMobileDropdown(null); }}
+                        >
+                          {it.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Destinations: India / World / Honeymoon groups */}
+                {isOpen && item.mega === "destinations" && (
+                  <div className="pl-4 pb-2">
+                    {destGroups.map((g) => (
+                      <div key={g.title} className="mb-1">
+                        <div className="text-[11px] font-extrabold uppercase tracking-wide text-[#01b7f2] mt-2 mb-1">{g.title}</div>
+                        {g.items.length === 0 ? (
+                          <div className="py-1 text-gray-400 text-sm">Coming soon</div>
+                        ) : (
+                          g.items.map((d) => (
+                            <a
+                              key={d.slug}
+                              href={`/destinations/${d.slug}`}
+                              className="block py-1.5 text-gray-500 text-sm hover:text-[#01b7f2] transition-colors"
+                              onClick={() => { setMobileOpen(false); setMobileDropdown(null); }}
+                            >
+                              {d.name}
+                            </a>
+                          ))
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Services / other children */}
+                {isOpen && !item.mega && item.children && (
+                  <div className="pl-4 pb-2">
+                    {item.children.map((child) => (
+                      <a
+                        key={child.label}
+                        href={child.href}
+                        className="block py-2 text-gray-500 text-sm hover:text-[#01b7f2] transition-colors"
+                        onClick={() => { setMobileOpen(false); setMobileDropdown(null); }}
+                      >
                         {child.label}
                       </a>
                     ))}
