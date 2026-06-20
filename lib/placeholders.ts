@@ -41,7 +41,7 @@ export const DESTINATIONS: Destination[] = [
 ];
 
 export type Offer = {
-  _id: string; title: string; category: "Flights" | "Hotels" | "Holidays" | "Buses";
+  _id: string; title: string; category: "Flights" | "Hotels" | "Holidays" | "Buses" | "Rajasthan Attractions";
   partner: string; discountText: string; subText: string; terms: string;
   code: string; image: string;
 };
