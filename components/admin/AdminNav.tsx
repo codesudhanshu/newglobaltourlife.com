@@ -3,13 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, Car, MessageSquare, LogOut, Menu, X, Tag, Hotel, Settings, Landmark, IndianRupee, Package } from "lucide-react";
+import { LayoutDashboard, FileText, Car, MessageSquare, LogOut, Menu, X, Tag, Hotel, Settings, Landmark, IndianRupee, Package, Images } from "lucide-react";
 import { useState } from "react";
 
 interface Props { onLogout: () => void; }
 
 const links = [
   { href: "/admin/dashboard",  label: "Dashboard",  icon: LayoutDashboard },
+  { href: "/admin/hero-slides", label: "Hero Slides", icon: Images },
   { href: "/admin/categories", label: "Categories", icon: Tag },
   { href: "/admin/cars",       label: "Cars",       icon: Car },
   { href: "/admin/pricing",    label: "Pricing",     icon: IndianRupee },
