@@ -3,13 +3,15 @@ import { connectDB } from "@/lib/db";
 import Destination from "@/lib/models/Destination";
 import { isAdminRequest } from "@/lib/auth";
 
-// Public: get active destinations, optional ?region=India|World
+// Public: get active destinations, optional ?region=India|World or ?slug=<slug>
 export async function GET(request: Request) {
   await connectDB();
   const { searchParams } = new URL(request.url);
   const region = searchParams.get("region");
+  const slug = searchParams.get("slug");
   const query: Record<string, unknown> = { active: true };
   if (region === "India" || region === "World") query.region = region;
+  if (slug) query.slug = slug;
   const destinations = await Destination.find(query).sort({ order: 1, createdAt: -1 });
   return NextResponse.json(destinations);
 }
