@@ -5,7 +5,10 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter, useParams } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Plus, X } from "lucide-react";
+import ImageUpload from "@/components/admin/ImageUpload";
+
+interface Room { name: string; price: number; capacity: number; size: string; bed: string; image: string }
 
 const CATEGORIES = ["Luxury", "Resort", "Boutique", "Budget", "Heritage", "Business", "Beach", "Mountain", "City"];
 const AMENITY_OPTIONS = ["WiFi", "Pool", "AC", "Parking", "Restaurant", "Bar", "Gym", "Spa", "Laundry", "Room Service", "Concierge", "Beach Access", "Mountain View", "Airport Shuttle"];
@@ -25,6 +28,13 @@ export default function EditHotelPage() {
     featured: false, available: true, order: 0,
   });
   const [images, setImages] = useState<string[]>([]);
+  const [rooms, setRooms] = useState<Room[]>([]);
+
+  function addRoom() { setRooms((r) => [...r, { name: "", price: 0, capacity: 2, size: "", bed: "", image: "" }]); }
+  function updateRoom(i: number, key: keyof Room, value: string | number) {
+    setRooms((r) => r.map((room, idx) => (idx === i ? { ...room, [key]: value } : room)));
+  }
+  function removeRoom(i: number) { setRooms((r) => r.filter((_, idx) => idx !== i)); }
 
   useEffect(() => {
     if (!token) return;
@@ -38,6 +48,7 @@ export default function EditHotelPage() {
           featured: h.featured, available: h.available, order: h.order,
         });
         setImages(h.images || []);
+        setRooms(h.rooms || []);
       }
       setFetching(false);
     });
@@ -58,7 +69,7 @@ export default function EditHotelPage() {
     const res = await fetch(`/api/hotels/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json", ...authHeaders() },
-      body: JSON.stringify({ ...form, images, pricePerNight: Number(form.pricePerNight) }),
+      body: JSON.stringify({ ...form, images, rooms, pricePerNight: Number(form.pricePerNight) }),
     });
     const data = await res.json();
     if (res.ok) { router.push("/admin/hotels"); }
@@ -143,6 +154,31 @@ export default function EditHotelPage() {
               <span className="text-gray-300 text-sm">Available</span>
             </label>
           </div>
+        </div>
+
+        {/* Rooms */}
+        <div className="bg-slate-800 rounded-xl p-5 border border-slate-700 space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-white font-medium">Rooms</h2>
+            <button type="button" onClick={addRoom} className="bg-[#01b7f2] text-white px-3 py-1.5 rounded-lg hover:bg-[#0299cc] flex items-center gap-1 text-sm font-medium"><Plus size={14} /> Add Room</button>
+          </div>
+          {rooms.length === 0 && <p className="text-gray-500 text-sm">No rooms added yet.</p>}
+          {rooms.map((room, i) => (
+            <div key={i} className="border border-slate-700 rounded-lg p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-300 text-sm font-medium">Room {i + 1}</span>
+                <button type="button" onClick={() => removeRoom(i)} className="text-gray-500 hover:text-red-400"><X size={16} /></button>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <input value={room.name} onChange={(e) => updateRoom(i, "name", e.target.value)} placeholder="Room name (e.g. Deluxe King)" className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#01b7f2]" />
+                <input type="number" value={room.price} onChange={(e) => updateRoom(i, "price", Number(e.target.value))} placeholder="Price/night" className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#01b7f2]" />
+                <input type="number" value={room.capacity} onChange={(e) => updateRoom(i, "capacity", Number(e.target.value))} placeholder="Capacity (guests)" className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#01b7f2]" />
+                <input value={room.size} onChange={(e) => updateRoom(i, "size", e.target.value)} placeholder="Size (e.g. 15 m²)" className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#01b7f2]" />
+                <input value={room.bed} onChange={(e) => updateRoom(i, "bed", e.target.value)} placeholder="Bed (e.g. 1 King bed)" className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#01b7f2] col-span-2" />
+              </div>
+              {token && <ImageUpload value={room.image} onChange={(url) => updateRoom(i, "image", url)} token={token} folder="newglobaltourlife/hotels" />}
+            </div>
+          ))}
         </div>
 
         <div className="bg-slate-800 rounded-xl p-5 border border-slate-700">
