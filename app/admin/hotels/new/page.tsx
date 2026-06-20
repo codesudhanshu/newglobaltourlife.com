@@ -27,12 +27,19 @@ export default function NewHotelPage() {
   });
   const [images, setImages] = useState<string[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
+  const [faqs, setFaqs] = useState<{ question: string; answer: string }[]>([]);
 
   function addRoom() { setRooms((r) => [...r, { name: "", price: 0, capacity: 2, size: "", bed: "", image: "" }]); }
   function updateRoom(i: number, key: keyof Room, value: string | number) {
     setRooms((r) => r.map((room, idx) => (idx === i ? { ...room, [key]: value } : room)));
   }
   function removeRoom(i: number) { setRooms((r) => r.filter((_, idx) => idx !== i)); }
+
+  function addFaq() { setFaqs((p) => [...p, { question: "", answer: "" }]); }
+  function updateFaq(i: number, key: "question" | "answer", value: string) {
+    setFaqs((p) => p.map((f, idx) => (idx === i ? { ...f, [key]: value } : f)));
+  }
+  function removeFaq(i: number) { setFaqs((p) => p.filter((_, idx) => idx !== i)); }
 
   function field(key: string, val: any) { setForm((f) => ({ ...f, [key]: val })); }
 
@@ -50,7 +57,7 @@ export default function NewHotelPage() {
     const res = await fetch("/api/hotels", {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeaders() },
-      body: JSON.stringify({ ...form, images, rooms, pricePerNight: Number(form.pricePerNight) }),
+      body: JSON.stringify({ ...form, images, rooms, faqs, pricePerNight: Number(form.pricePerNight) }),
     });
     const data = await res.json();
     if (res.ok) { router.push("/admin/hotels"); }
@@ -161,6 +168,24 @@ export default function NewHotelPage() {
                 <input value={room.bed} onChange={(e) => updateRoom(i, "bed", e.target.value)} placeholder="Bed (e.g. 1 King bed)" className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#01b7f2] col-span-2" />
               </div>
               {token && <ImageUpload value={room.image} onChange={(url) => updateRoom(i, "image", url)} token={token} folder="newglobaltourlife/hotels" />}
+            </div>
+          ))}
+        </div>
+
+        {/* FAQs */}
+        <div className="bg-slate-800 rounded-xl p-5 border border-slate-700 space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-white font-medium">FAQs</h2>
+            <button type="button" onClick={addFaq} className="bg-[#01b7f2] text-white px-3 py-1.5 rounded-lg hover:bg-[#0299cc] flex items-center gap-1 text-sm font-medium"><Plus size={14} /> Add FAQ</button>
+          </div>
+          {faqs.length === 0 && <p className="text-gray-500 text-sm">No FAQs added yet.</p>}
+          {faqs.map((f, i) => (
+            <div key={i} className="border border-slate-700 rounded-lg p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <input value={f.question} onChange={(e) => updateFaq(i, "question", e.target.value)} placeholder="Question" className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#01b7f2]" />
+                <button type="button" onClick={() => removeFaq(i)} className="text-gray-500 hover:text-red-400"><X size={16} /></button>
+              </div>
+              <textarea value={f.answer} onChange={(e) => updateFaq(i, "answer", e.target.value)} rows={2} placeholder="Answer" className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-[#01b7f2] resize-none" />
             </div>
           ))}
         </div>
