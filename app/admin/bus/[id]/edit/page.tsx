@@ -40,7 +40,7 @@ export default function EditBus() {
       .catch(() => setFetching(false));
   }, [loading, id]);
 
-  function set(field: string, value: any) { setForm((p) => ({ ...p, [field]: value })); }
+  function set(field: string, value: unknown) { setForm((p) => ({ ...p, [field]: value })); }
   function handleImages(urls: string[]) { setForm((p) => ({ ...p, images: urls, image: urls[0] || p.image })); }
 
   function addHighlight() {
