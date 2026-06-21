@@ -124,29 +124,46 @@ export default function TirthYatraPage() {
 }
 
 function TYCard({ item }: { item: TY }) {
+  const available = item.available !== false;
+  const imageInner = (
+    <>
+      {item.image ? (
+        <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center text-7xl">🛕</div>
+      )}
+      {item.featured && (
+        <span className="absolute top-3 left-3 bg-[#0A65AB] text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+          <Star size={10} className="fill-white" /> Featured
+        </span>
+      )}
+      {!available && (
+        <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+          <span className="bg-red-600 text-white text-sm font-bold px-4 py-1.5 rounded-full">Currently Unavailable</span>
+        </div>
+      )}
+    </>
+  );
+
   return (
     <div className="bg-[#1e293b] rounded-2xl border border-slate-700 overflow-hidden hover:border-[#0A65AB]/40 transition-all group">
-      <Link href={`/tirth-yatra/${item._id}`} className="block relative h-48 bg-gradient-to-br from-[#0A65AB]/20 to-cyan-700/10 overflow-hidden">
-        {item.image ? (
-          <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-7xl">🛕</div>
-        )}
-        {item.featured && (
-          <span className="absolute top-3 left-3 bg-[#0A65AB] text-white text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
-            <Star size={10} className="fill-white" /> Featured
-          </span>
-        )}
-        {!item.available && (
-          <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-            <span className="bg-red-600 text-white text-sm font-bold px-4 py-1.5 rounded-full">Currently Unavailable</span>
-          </div>
-        )}
-      </Link>
-      <div className="p-5">
-        <Link href={`/tirth-yatra/${item._id}`}>
-          <h3 className="text-white font-extrabold text-lg mb-1 group-hover:text-[#01b7f2] transition-colors">{item.name}</h3>
+      {available ? (
+        <Link href={`/tirth-yatra/${item._id}`} className="block relative h-48 bg-gradient-to-br from-[#0A65AB]/20 to-cyan-700/10 overflow-hidden">
+          {imageInner}
         </Link>
+      ) : (
+        <div className="block relative h-48 bg-gradient-to-br from-[#0A65AB]/20 to-cyan-700/10 overflow-hidden">
+          {imageInner}
+        </div>
+      )}
+      <div className="p-5">
+        {available ? (
+          <Link href={`/tirth-yatra/${item._id}`}>
+            <h3 className="text-white font-extrabold text-lg mb-1 group-hover:text-[#01b7f2] transition-colors">{item.name}</h3>
+          </Link>
+        ) : (
+          <h3 className="text-white font-extrabold text-lg mb-1">{item.name}</h3>
+        )}
         <div className="flex items-center gap-4 text-xs text-gray-400 mb-3">
           {item.location && <span className="flex items-center gap-1"><MapPin size={11} className="text-[#0A65AB]" /> {item.location}{item.state ? `, ${item.state}` : ""}</span>}
           {item.duration && <span className="flex items-center gap-1"><Clock size={11} className="text-[#0A65AB]" /> {item.duration}</span>}
@@ -167,12 +184,16 @@ function TYCard({ item }: { item: TY }) {
               <span className="text-gray-500 text-xs ml-1">/ person</span>
             </div>
           )}
-          <Link
-            href={`/tirth-yatra/${item._id}`}
-            className="flex items-center gap-1.5 bg-[#0A65AB] hover:bg-[#0a1120] text-white font-bold px-4 py-2 rounded-xl text-sm transition-colors ml-auto"
-          >
-            View Details <ArrowRight size={14} />
-          </Link>
+          {available ? (
+            <Link
+              href={`/tirth-yatra/${item._id}`}
+              className="flex items-center gap-1.5 bg-[#0A65AB] hover:bg-[#0a1120] text-white font-bold px-4 py-2 rounded-xl text-sm transition-colors ml-auto"
+            >
+              View Details <ArrowRight size={14} />
+            </Link>
+          ) : (
+            <span className="flex items-center gap-1.5 bg-gray-600/40 text-gray-300 font-bold px-4 py-2 rounded-xl text-sm ml-auto cursor-not-allowed">Unavailable</span>
+          )}
         </div>
       </div>
     </div>
