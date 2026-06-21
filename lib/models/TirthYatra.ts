@@ -1,5 +1,10 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+export interface IFaq {
+  question: string;
+  answer: string;
+}
+
 export interface ITirthYatra extends Document {
   name: string;
   description: string;
@@ -11,6 +16,7 @@ export interface ITirthYatra extends Document {
   highlights: string[];
   featured: boolean;
   available: boolean;
+  faqs: IFaq[];
   order: number;
   createdAt: Date;
   updatedAt: Date;
@@ -28,6 +34,15 @@ const TirthYatraSchema = new Schema<ITirthYatra>(
     highlights: { type: [String], default: [] },
     featured: { type: Boolean, default: false },
     available: { type: Boolean, default: true },
+    faqs: {
+      type: [
+        {
+          question: { type: String, default: "" },
+          answer: { type: String, default: "" },
+        },
+      ],
+      default: [],
+    },
     order: { type: Number, default: 0 },
   },
   { timestamps: true }
