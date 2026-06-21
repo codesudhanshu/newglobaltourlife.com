@@ -82,7 +82,7 @@ export default function TirthYatraPage() {
                 <div className="mb-10">
                   <h2 className="text-white font-bold text-xl mb-5">Featured Packages</h2>
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {featured.map((item) => <TYCard key={item._id} item={item} onBook={(s) => setModal({ open: true, subject: s })} />)}
+                    {featured.map((item) => <TYCard key={item._id} item={item} />)}
                   </div>
                 </div>
               )}
@@ -90,7 +90,7 @@ export default function TirthYatraPage() {
                 <div>
                   {featured.length > 0 && <h2 className="text-white font-bold text-xl mb-5">All Destinations</h2>}
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {rest.map((item) => <TYCard key={item._id} item={item} onBook={(s) => setModal({ open: true, subject: s })} />)}
+                    {rest.map((item) => <TYCard key={item._id} item={item} />)}
                   </div>
                 </div>
               )}
@@ -123,10 +123,10 @@ export default function TirthYatraPage() {
   );
 }
 
-function TYCard({ item, onBook }: { item: TY; onBook: (s: string) => void }) {
+function TYCard({ item }: { item: TY }) {
   return (
     <div className="bg-[#1e293b] rounded-2xl border border-slate-700 overflow-hidden hover:border-[#0A65AB]/40 transition-all group">
-      <div className="relative h-48 bg-gradient-to-br from-[#0A65AB]/20 to-cyan-700/10 overflow-hidden">
+      <Link href={`/tirth-yatra/${item._id}`} className="block relative h-48 bg-gradient-to-br from-[#0A65AB]/20 to-cyan-700/10 overflow-hidden">
         {item.image ? (
           <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
         ) : (
@@ -142,9 +142,11 @@ function TYCard({ item, onBook }: { item: TY; onBook: (s: string) => void }) {
             <span className="bg-red-600 text-white text-sm font-bold px-4 py-1.5 rounded-full">Currently Unavailable</span>
           </div>
         )}
-      </div>
+      </Link>
       <div className="p-5">
-        <h3 className="text-white font-extrabold text-lg mb-1">{item.name}</h3>
+        <Link href={`/tirth-yatra/${item._id}`}>
+          <h3 className="text-white font-extrabold text-lg mb-1 group-hover:text-[#01b7f2] transition-colors">{item.name}</h3>
+        </Link>
         <div className="flex items-center gap-4 text-xs text-gray-400 mb-3">
           {item.location && <span className="flex items-center gap-1"><MapPin size={11} className="text-[#0A65AB]" /> {item.location}{item.state ? `, ${item.state}` : ""}</span>}
           {item.duration && <span className="flex items-center gap-1"><Clock size={11} className="text-[#0A65AB]" /> {item.duration}</span>}
@@ -165,13 +167,12 @@ function TYCard({ item, onBook }: { item: TY; onBook: (s: string) => void }) {
               <span className="text-gray-500 text-xs ml-1">/ person</span>
             </div>
           )}
-          <button
-            onClick={() => onBook(item.name)}
-            disabled={!item.available}
-            className="flex items-center gap-1.5 bg-[#0A65AB] hover:bg-[#0a1120] disabled:opacity-40 text-white font-bold px-4 py-2 rounded-xl text-sm transition-colors ml-auto"
+          <Link
+            href={`/tirth-yatra/${item._id}`}
+            className="flex items-center gap-1.5 bg-[#0A65AB] hover:bg-[#0a1120] text-white font-bold px-4 py-2 rounded-xl text-sm transition-colors ml-auto"
           >
-            Book Now <ArrowRight size={14} />
-          </button>
+            View Details <ArrowRight size={14} />
+          </Link>
         </div>
       </div>
     </div>
