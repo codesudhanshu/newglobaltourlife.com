@@ -17,6 +17,7 @@ export default function NewTirthYatra() {
     name: "", description: "", location: "", state: "",
     image: "", price: 0, duration: "", highlights: [] as string[],
     featured: false, available: true, order: 0,
+    faqs: [] as { question: string; answer: string }[],
   });
 
   function set(field: string, value: any) {
@@ -32,6 +33,12 @@ export default function NewTirthYatra() {
   function removeHighlight(i: number) {
     setForm((prev) => ({ ...prev, highlights: prev.highlights.filter((_, idx) => idx !== i) }));
   }
+
+  function addFaq() { setForm((p) => ({ ...p, faqs: [...p.faqs, { question: "", answer: "" }] })); }
+  function updateFaq(i: number, key: "question" | "answer", value: string) {
+    setForm((p) => ({ ...p, faqs: p.faqs.map((f, idx) => (idx === i ? { ...f, [key]: value } : f)) }));
+  }
+  function removeFaq(i: number) { setForm((p) => ({ ...p, faqs: p.faqs.filter((_, idx) => idx !== i) })); }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -117,6 +124,26 @@ export default function NewTirthYatra() {
                 </span>
               ))}
               {form.highlights.length === 0 && <p className="text-gray-500 text-sm">No highlights added yet</p>}
+            </div>
+          </div>
+
+          {/* FAQs */}
+          <div className="bg-[#1e293b] rounded-xl border border-slate-700 p-6">
+            <div className="flex items-center justify-between mb-3">
+              <label className="label mb-0">FAQs (shown on the detail page)</label>
+              <button type="button" onClick={addFaq} className="bg-[#01b7f2] text-white px-3 py-1.5 rounded-lg hover:bg-[#0299cc] flex items-center gap-1 text-sm font-semibold"><Plus size={14} /> Add FAQ</button>
+            </div>
+            <div className="space-y-3">
+              {form.faqs.map((f, i) => (
+                <div key={i} className="border border-slate-700 rounded-lg p-3 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <input value={f.question} onChange={(e) => updateFaq(i, "question", e.target.value)} placeholder="Question" className="input flex-1" />
+                    <button type="button" onClick={() => removeFaq(i)} className="text-gray-500 hover:text-red-400 p-1"><X size={16} /></button>
+                  </div>
+                  <textarea value={f.answer} onChange={(e) => updateFaq(i, "answer", e.target.value)} rows={2} placeholder="Answer" className="input resize-none" />
+                </div>
+              ))}
+              {form.faqs.length === 0 && <p className="text-gray-500 text-sm">No FAQs added yet.</p>}
             </div>
           </div>
 
