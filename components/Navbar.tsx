@@ -39,7 +39,7 @@ const navItems: NavItem[] = [
     href: "/services",
     children: [
       { label: "Tour Packages", href: "/packages" },
-      { label: "Visa",          href: "/#contact" },
+      { label: "Visa",          href: "/visa" },
       { label: "Bus Booking",   href: "/bus" },
       { label: "Tirth Yatra",   href: "/tirth-yatra" },
     ],
