@@ -8,7 +8,11 @@ type Params = { params: Promise<{ id: string }> };
 export async function GET(_req: Request, { params }: Params) {
   await connectDB();
   const { id } = await params;
-  const blog = await Blog.findById(id);
+  let blog = null;
+  if (id.match(/^[a-f\d]{24}$/i)) {
+    blog = await Blog.findById(id);
+  }
+  if (!blog) blog = await Blog.findOne({ slug: id });
   if (!blog) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json(blog);
 }
