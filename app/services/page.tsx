@@ -5,13 +5,14 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
 import BookingModal from "@/components/BookingModal";
-import { Car, Building2, Globe, Bus, Train, Landmark, ArrowRight, Phone } from "lucide-react";
+import { Car, Building2, Globe, Bus, Train, Landmark, ArrowRight, Phone, ChevronRight, Check } from "lucide-react";
 
 const services = [
   {
     icon: Car,
     title: "Car Rental",
     color: "#01b7f2",
+    href: "/cars",
     description: "Self-drive or chauffeur-driven cars across all of India. Economy to Luxury — all categories available.",
     features: ["City rides & outstation trips", "Airport transfers", "Corporate car hiring", "Event & conference fleet"],
     service: "Car Rental",
@@ -20,6 +21,7 @@ const services = [
     icon: Building2,
     title: "Hotel Booking",
     color: "#3b82f6",
+    href: "/hotels",
     description: "Budget to luxury hotels across India and internationally. Best price guaranteed with free cancellation options.",
     features: ["3★ to 5★ hotels", "Resort & villa stays", "Group bookings", "International properties"],
     service: "Hotel Booking",
@@ -28,7 +30,8 @@ const services = [
     icon: Globe,
     title: "Visa Services",
     color: "#10b981",
-    description: "Hassle-free visa assistance for Singapore, Thailand, Malaysia, Bali, Sri Lanka, Vietnam and more.",
+    href: "/visa",
+    description: "Hassle-free visa assistance for Dubai, Singapore, Thailand, Malaysia, Bali, Schengen, UK, USA and more.",
     features: ["Tourist & business visa", "Document assistance", "Application tracking", "Express processing"],
     service: "Visa Services",
   },
@@ -36,6 +39,7 @@ const services = [
     icon: Bus,
     title: "Bus Booking",
     color: "#8b5cf6",
+    href: "/bus",
     description: "Comfortable bus journeys for group tours, pilgrimages, corporate trips and intercity travel.",
     features: ["AC / Non-AC buses", "Sleeper coaches", "Group & charter buses", "Pan-India routes"],
     service: "Bus Booking",
@@ -44,6 +48,7 @@ const services = [
     icon: Train,
     title: "Train Booking",
     color: "#ec4899",
+    href: "/contact",
     description: "Hassle-free train ticket bookings for individuals and groups across all Indian Railway routes.",
     features: ["Tatkal & advance bookings", "Group quota", "All class bookings", "Pan-India coverage"],
     service: "Train Booking",
@@ -52,10 +57,10 @@ const services = [
     icon: Landmark,
     title: "Tirth Yatra",
     color: "#f59e0b",
-    description: "Sacred pilgrimage tours to Char Dham, Vaishno Devi, Tirupati, Shirdi and all major religious destinations.",
+    href: "/tirth-yatra",
+    description: "Sacred pilgrimage tours to Char Dham, Vaishno Devi, Mahakal, Shirdi and all major religious destinations.",
     features: ["All major pilgrimages", "Customised itineraries", "Comfortable transportation", "Darshan & stay arrangements"],
     service: "Tirth Yatra",
-    link: "/tirth-yatra",
   },
 ];
 
@@ -66,56 +71,68 @@ export default function ServicesPage() {
     <>
       <Navbar />
 
-      {/* Header */}
-      <div className="bg-[#0A65AB] py-14">
+      {/* Hero */}
+      <section className="bg-[#0A65AB] py-16 lg:py-20">
         <div className="container-custom">
-          <div className="flex items-center gap-2 text-sm text-gray-400 mb-6">
+          <div className="flex items-center gap-2 text-sm text-gray-300 mb-4">
             <Link href="/" className="hover:text-[#01b7f2]">Home</Link>
-            <span>/</span>
-            <span className="text-white">Services</span>
+            <ChevronRight size={14} />
+            <span className="text-gray-300">Services</span>
           </div>
-          <div className="max-w-2xl">
-            <span className="text-xs bg-[#01b7f2] text-white px-3 py-1 rounded-full font-semibold mb-4 inline-block">What We Offer</span>
-            <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-4 leading-tight">
-              Our <span className="text-[#01b7f2]">Services</span>
-            </h1>
-            <p className="text-gray-400 text-lg leading-relaxed">
-              Complete travel solutions — from car rentals and hotel bookings to international tours, pilgrimage packages, and visa assistance.
-            </p>
-          </div>
+          <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-3">
+            Our <span className="text-[#01b7f2]">Services</span>
+          </h1>
+          <p className="text-gray-300 max-w-xl">
+            Complete travel solutions — car rentals, hotel bookings, international tours, pilgrimage packages, and visa assistance.
+          </p>
         </div>
-      </div>
+      </section>
 
-      <main className="bg-[#0A65AB] pb-20 min-h-screen">
-        <div className="container-custom pt-10">
+      {/* Cards */}
+      <div className="bg-gray-50 min-h-screen">
+        <div className="container-custom py-10">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((s) => {
               const Icon = s.icon;
               return (
-                <div key={s.title} className="bg-[#1e293b] rounded-2xl border border-slate-700 overflow-hidden hover:border-slate-500 transition-all group">
+                <div key={s.title} className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-shadow overflow-hidden group">
                   {/* Top accent bar */}
                   <div className="h-1" style={{ backgroundColor: s.color }} />
                   <div className="p-6">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ backgroundColor: `${s.color}20` }}>
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                      style={{ backgroundColor: `${s.color}15` }}
+                    >
                       <Icon size={22} style={{ color: s.color }} />
                     </div>
-                    <h2 className="text-xl font-extrabold text-white mb-2">{s.title}</h2>
-                    <p className="text-gray-400 text-sm leading-relaxed mb-5">{s.description}</p>
+                    <h2 className="text-xl font-extrabold text-[#0A65AB] mb-2 group-hover:text-[#01b7f2] transition-colors">
+                      {s.title}
+                    </h2>
+                    <p className="text-gray-500 text-sm leading-relaxed mb-5">{s.description}</p>
                     <ul className="space-y-2 mb-6">
                       {s.features.map((f) => (
-                        <li key={f} className="flex items-center gap-2 text-gray-300 text-sm">
-                          <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: s.color }} />
+                        <li key={f} className="flex items-center gap-2 text-gray-600 text-sm">
+                          <Check size={14} className="flex-shrink-0" style={{ color: s.color }} />
                           {f}
                         </li>
                       ))}
                     </ul>
-                    <button
-                      onClick={() => setModal({ open: true, service: s.service })}
-                      className="w-full flex items-center justify-center gap-2 font-bold py-2.5 rounded-xl text-sm transition-all"
-                      style={{ backgroundColor: `${s.color}20`, color: s.color, border: `1px solid ${s.color}40` }}
-                    >
-                      Enquire Now <ArrowRight size={15} />
-                    </button>
+                    <div className="flex items-center gap-2 border-t border-gray-100 pt-4">
+                      <Link
+                        href={s.href}
+                        className="flex-1 flex items-center justify-center gap-1.5 text-sm font-semibold py-2.5 rounded-xl transition-all text-white"
+                        style={{ backgroundColor: s.color }}
+                      >
+                        View Details <ArrowRight size={14} />
+                      </Link>
+                      <button
+                        onClick={() => setModal({ open: true, service: s.service })}
+                        className="flex items-center justify-center gap-1.5 text-sm font-semibold py-2.5 px-4 rounded-xl border transition-all"
+                        style={{ borderColor: `${s.color}50`, color: s.color }}
+                      >
+                        Enquire
+                      </button>
+                    </div>
                   </div>
                 </div>
               );
@@ -123,25 +140,28 @@ export default function ServicesPage() {
           </div>
 
           {/* CTA strip */}
-          <div className="mt-12 bg-[#1e293b] rounded-2xl p-8 border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="mt-12 bg-[#0A65AB] rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
               <h3 className="text-xl font-extrabold text-white mb-1">Need a Custom Package?</h3>
-              <p className="text-gray-400 text-sm">Talk to our experts and we&apos;ll craft the perfect itinerary for you.</p>
+              <p className="text-blue-100 text-sm">Talk to our experts and we&apos;ll craft the perfect itinerary for you.</p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <a href="tel:+919131727811" className="flex items-center gap-2 bg-[#01b7f2] text-white font-bold px-6 py-3 rounded-xl hover:bg-[#0299cc] transition-colors text-sm">
+              <a
+                href="tel:+919131727811"
+                className="flex items-center gap-2 bg-white text-[#0A65AB] font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors text-sm"
+              >
                 <Phone size={16} /> Call Now
               </a>
               <button
                 onClick={() => setModal({ open: true, service: "Tour Package" })}
-                className="border border-[#01b7f2]/50 text-[#01b7f2] hover:border-[#01b7f2] font-bold px-6 py-3 rounded-xl transition-all text-sm"
+                className="border border-white/50 text-white hover:border-white font-bold px-6 py-3 rounded-xl transition-all text-sm"
               >
                 Send Enquiry
               </button>
             </div>
           </div>
         </div>
-      </main>
+      </div>
 
       <Footer />
 
