@@ -75,10 +75,14 @@ function CarsContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const activeSlug = searchParams.get("category") || "";
+  const qParam = searchParams.get("q") || "";
 
   const [cars, setCars] = useState<Car[]>(STATIC_CARS);
   const [cats, setCats] = useState<Category[]>(STATIC_CATS as any);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(qParam);
+
+  // Sync search box when ?q= param changes (e.g. mega menu click)
+  useEffect(() => { setSearch(qParam); }, [qParam]);
   const [loading, setLoading] = useState(true);
   const [maxPrice, setMaxPrice] = useState(50000);
   const [showFilters, setShowFilters] = useState(false);

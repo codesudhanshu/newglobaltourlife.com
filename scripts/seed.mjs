@@ -52,6 +52,9 @@ const Destination = mongoose.models.Destination || mongoose.model("Destination",
 const Package = mongoose.models.Package || mongoose.model("Package", PackageSchema);
 const Offer = mongoose.models.Offer || mongoose.model("Offer", OfferSchema);
 
+const HeroSlideSchema = new mongoose.Schema({ image: String, heading: String, sub: String, order: Number, active: Boolean }, { timestamps: true });
+const HeroSlide = mongoose.models.HeroSlide || mongoose.model("HeroSlide", HeroSlideSchema);
+
 const TirthYatraSchema = new mongoose.Schema({ name: String, description: String, location: String, state: String, image: String, price: Number, duration: String, highlights: [String], featured: Boolean, available: Boolean, faqs: [{ question: String, answer: String }], order: Number }, { timestamps: true });
 const VisaSchema = new mongoose.Schema({ title: String, image: String, images: [String], description: String, longContent: String, price: Number, highlights: [String], faqs: [{ question: String, answer: String }], featured: Boolean, available: Boolean, order: Number }, { timestamps: true });
 const BusSchema = new mongoose.Schema({ title: String, image: String, images: [String], description: String, longContent: String, price: Number, highlights: [String], faqs: [{ question: String, answer: String }], featured: Boolean, available: Boolean, order: Number }, { timestamps: true });
@@ -301,6 +304,30 @@ const OFFERS = [
   { title: "HDFC Holiday Fest",     category: "Holidays", partner: "HDFC Bank",  discountText: "Up to ₹15,000 OFF", subText: "On Holiday Packages",  terms: "Offer valid on HDFC Bank Cards only.",                 code: "HDFCHOLI",  img: `${UNS}1488646953014-85cb44e25828${Q}` },
   { title: "Kotak Flight Deal",     category: "Flights",  partner: "Kotak",      discountText: "Up to ₹2,500 OFF",  subText: "On Domestic Flights",  terms: "Offer valid on Kotak Credit Card transactions only.",  code: "KOTAKFLY",  img: `${UNS}1583416750470-965b2707b355${Q}` },
   { title: "Amex Bus Saver",        category: "Buses",    partner: "Amex",       discountText: "Up to ₹250 OFF",    subText: "On Bus Tickets",       terms: "Offer valid on American Express Cards only.",          code: "AMEXBUS",   img: `${UNS}1544620347-c4fd4a3d5957${Q}` },
+];
+
+// ── Hero Slides ───────────────────────────────────────────────
+const HERO_SLIDES = [
+  {
+    heading: "Sacred Tirth Yatra Packages",
+    sub: "Experience spiritual journeys to India's most revered pilgrimage shrines — Mahakal, Kedarnath, Vaishno Devi & more.",
+    img: `${BASE}/Ujjain Mahakal Jyotirlinga.jpg`,
+  },
+  {
+    heading: "Premium Cab & Bus Rentals",
+    sub: "Travel in comfort with our modern Force Urbania fleet — perfect for group tours, pilgrimages and outstation trips.",
+    img: `${BASE}/force-urbania-banner.jpg`,
+  },
+  {
+    heading: "Easy Cab Booking",
+    sub: "Hassle-free cab booking for airport transfers, city rides, outstation journeys and corporate travel.",
+    img: `${BASE}/Cabi-taxi-booking.jpg`,
+  },
+  {
+    heading: "Your Complete Travel Partner",
+    sub: "Tours, visa services, hotel bookings, flights and pilgrimages — New Global Tour Life handles it all.",
+    img: `${BASE}/newbg.jpg`,
+  },
 ];
 
 // ── Tirth Yatra packages ──────────────────────────────────────
@@ -903,6 +930,25 @@ async function run() {
   }
   console.log(`  ${ofN} created, ${ofS} skipped\n`);
 
+  // ── Hero Slides ──────────────────────────────────────────────
+  console.log("── Hero Slides ──");
+  let hsN = 0, hsS = 0;
+  for (let i = 0; i < HERO_SLIDES.length; i++) {
+    const s = HERO_SLIDES[i];
+    const exists = await HeroSlide.findOne({ heading: s.heading });
+    if (exists) {
+      if (!exists.image) { const img = await upload(s.img, "newglobaltourlife/hero"); await HeroSlide.findByIdAndUpdate(exists._id, { image: img }); console.log(`  ~ ${s.heading} (image fixed)`); }
+      else { hsS++; console.log(`  = ${s.heading} (skip)`); }
+      continue;
+    }
+    console.log(`  + ${s.heading}`);
+    const img = await upload(s.img, "newglobaltourlife/hero");
+    const { img: _img, ...data } = s;
+    await HeroSlide.create({ ...data, image: img, order: i, active: true });
+    hsN++;
+  }
+  console.log(`  ${hsN} created, ${hsS} skipped\n`);
+
   // ── Tirth Yatra ──────────────────────────────────────────────
   console.log("── Tirth Yatra ──");
   let tyN = 0, tyS = 0;
@@ -971,6 +1017,7 @@ async function run() {
   console.log(`  Destinations: ${dN} new`);
   console.log(`  Packages:     ${pN} new`);
   console.log(`  Offers:       ${ofN} new`);
+  console.log(`  HeroSlides:   ${hsN} new`);
   console.log(`  TirthYatra:   ${tyN} new`);
   console.log(`  Visas:        ${vN} new`);
   console.log(`  Buses:        ${bN} new\n`);
