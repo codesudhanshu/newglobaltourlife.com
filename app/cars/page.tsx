@@ -136,7 +136,7 @@ function CarsContent() {
           <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(#01b7f2 1px, transparent 1px), linear-gradient(90deg, #01b7f2 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
         </div>
         <div className="container-custom py-16 lg:py-20 relative z-10">
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
+          <div className="flex items-center gap-2 text-sm text-gray-300 mb-4">
             <Link href="/" className="hover:text-[#01b7f2] transition-colors">Home</Link>
             <ChevronRight size={14} />
             <span className="text-gray-300">
@@ -149,7 +149,7 @@ function CarsContent() {
               : <>Our <span className="text-[#01b7f2]">Vehicle Fleet</span></>
             }
           </h1>
-          <p className="text-gray-400 max-w-xl">
+          <p className="text-gray-300 max-w-xl">
             {filtered.length} vehicle{filtered.length !== 1 ? "s" : ""} available
             {activeSlug ? ` in ${activeCatName}` : " across all categories"}.
             Book online and get 15% off.
