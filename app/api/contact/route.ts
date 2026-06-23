@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import Contact from "@/lib/models/Contact";
 import { isAdminRequest } from "@/lib/auth";
+import { sendContactEmail } from "@/lib/mailer";
 
 // Public: user submits contact form
 export async function POST(request: Request) {
@@ -13,6 +14,8 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Name, message, and either email or phone are required" }, { status: 400 });
     }
     const contact = await Contact.create({ name, email, phone, message });
+    // Fire-and-forget — don't fail the request if email fails
+    sendContactEmail({ name, email, phone, message }).catch(() => {});
     return NextResponse.json({ success: true, id: contact._id });
   } catch {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
