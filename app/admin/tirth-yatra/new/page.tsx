@@ -66,13 +66,13 @@ export default function NewTirthYatra() {
   return (
     <div>
       <div className="flex items-center gap-4 mb-8">
-        <Link href="/admin/tirth-yatra" className="text-gray-400 hover:text-white"><ArrowLeft size={20} /></Link>
-        <h1 className="text-2xl font-extrabold text-white">Add Tirth Yatra Destination</h1>
+        <Link href="/admin/tirth-yatra" className="text-gray-500 hover:text-gray-800"><ArrowLeft size={20} /></Link>
+        <h1 className="text-2xl font-extrabold text-gray-900">Add Tirth Yatra Destination</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-5">
-          <div className="bg-[#1e293b] rounded-xl border border-slate-700 p-6 space-y-5">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-5">
             <div>
               <label className="label">Destination Name *</label>
               <input required value={form.name} onChange={(e) => set("name", e.target.value)} placeholder="e.g. Vaishno Devi, Char Dham, Tirupati" className="input" />
@@ -104,7 +104,7 @@ export default function NewTirthYatra() {
           </div>
 
           {/* Highlights */}
-          <div className="bg-[#1e293b] rounded-xl border border-slate-700 p-6">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6">
             <label className="label mb-3 block">Highlights</label>
             <div className="flex gap-2 mb-3">
               <input
@@ -114,43 +114,43 @@ export default function NewTirthYatra() {
                 placeholder="e.g. Darshan included, AC bus, Prasad"
                 className="input flex-1"
               />
-              <button type="button" onClick={addHighlight} className="bg-[#01b7f2] text-white px-4 rounded-lg hover:bg-[#0299cc] flex items-center gap-1 text-sm font-semibold">
+              <button type="button" onClick={addHighlight} className="bg-[#0A65AB] text-white px-4 rounded-lg hover:bg-[#0852a0] flex items-center gap-1 text-sm font-semibold">
                 <Plus size={15} /> Add
               </button>
             </div>
             <div className="flex flex-wrap gap-2">
               {form.highlights.map((h, i) => (
-                <span key={i} className="flex items-center gap-1.5 bg-slate-800 text-gray-300 text-sm px-3 py-1.5 rounded-lg">
+                <span key={i} className="flex items-center gap-1.5 bg-gray-100 text-gray-700 text-sm px-3 py-1.5 rounded-lg">
                   {h}
-                  <button type="button" onClick={() => removeHighlight(i)} className="text-gray-500 hover:text-red-400 ml-0.5"><X size={12} /></button>
+                  <button type="button" onClick={() => removeHighlight(i)} className="text-gray-400 hover:text-red-500 ml-0.5"><X size={12} /></button>
                 </span>
               ))}
-              {form.highlights.length === 0 && <p className="text-gray-500 text-sm">No highlights added yet</p>}
+              {form.highlights.length === 0 && <p className="text-gray-400 text-sm">No highlights added yet</p>}
             </div>
           </div>
 
           {/* FAQs */}
-          <div className="bg-[#1e293b] rounded-xl border border-slate-700 p-6">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6">
             <div className="flex items-center justify-between mb-3">
               <label className="label mb-0">FAQs (shown on the detail page)</label>
-              <button type="button" onClick={addFaq} className="bg-[#01b7f2] text-white px-3 py-1.5 rounded-lg hover:bg-[#0299cc] flex items-center gap-1 text-sm font-semibold"><Plus size={14} /> Add FAQ</button>
+              <button type="button" onClick={addFaq} className="bg-[#0A65AB] text-white px-3 py-1.5 rounded-lg hover:bg-[#0852a0] flex items-center gap-1 text-sm font-semibold"><Plus size={14} /> Add FAQ</button>
             </div>
             <div className="space-y-3">
               {form.faqs.map((f, i) => (
-                <div key={i} className="border border-slate-700 rounded-lg p-3 space-y-2">
+                <div key={i} className="border border-gray-200 rounded-xl p-3 space-y-2">
                   <div className="flex items-center gap-2">
                     <input value={f.question} onChange={(e) => updateFaq(i, "question", e.target.value)} placeholder="Question" className="input flex-1" />
-                    <button type="button" onClick={() => removeFaq(i)} className="text-gray-500 hover:text-red-400 p-1"><X size={16} /></button>
+                    <button type="button" onClick={() => removeFaq(i)} className="text-gray-400 hover:text-red-500 p-1"><X size={16} /></button>
                   </div>
                   <textarea value={f.answer} onChange={(e) => updateFaq(i, "answer", e.target.value)} rows={2} placeholder="Answer" className="input resize-none" />
                 </div>
               ))}
-              {form.faqs.length === 0 && <p className="text-gray-500 text-sm">No FAQs added yet.</p>}
+              {form.faqs.length === 0 && <p className="text-gray-400 text-sm">No FAQs added yet.</p>}
             </div>
           </div>
 
           {/* Image */}
-          <div className="bg-[#1e293b] rounded-xl border border-slate-700 p-6">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6">
             <label className="label mb-3 block">Cover Image</label>
             {token && (
               <ImageUpload
@@ -170,24 +170,24 @@ export default function NewTirthYatra() {
         </div>
 
         <div className="space-y-5">
-          <div className="bg-[#1e293b] rounded-xl border border-slate-700 p-6 space-y-5">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-5">
             <div>
               <label className="label">Display Order</label>
               <input type="number" value={form.order} onChange={(e) => set("order", +e.target.value)} className="input" />
             </div>
             <div className="flex items-center gap-3">
-              <input type="checkbox" id="featured" checked={form.featured} onChange={(e) => set("featured", e.target.checked)} className="w-4 h-4 accent-cyan-500" />
-              <label htmlFor="featured" className="text-gray-300 text-sm">Featured destination</label>
+              <input type="checkbox" id="featured" checked={form.featured} onChange={(e) => set("featured", e.target.checked)} className="w-4 h-4 accent-[#0A65AB]" />
+              <label htmlFor="featured" className="text-gray-600 text-sm">Featured destination</label>
             </div>
             <div className="flex items-center gap-3">
-              <input type="checkbox" id="available" checked={form.available} onChange={(e) => set("available", e.target.checked)} className="w-4 h-4 accent-cyan-500" />
-              <label htmlFor="available" className="text-gray-300 text-sm">Available for booking</label>
+              <input type="checkbox" id="available" checked={form.available} onChange={(e) => set("available", e.target.checked)} className="w-4 h-4 accent-[#0A65AB]" />
+              <label htmlFor="available" className="text-gray-600 text-sm">Available for booking</label>
             </div>
           </div>
 
-          {error && <div className="bg-red-900/30 border border-red-800 rounded-lg p-3 text-red-400 text-sm">{error}</div>}
+          {error && <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-sm">{error}</div>}
 
-          <button type="submit" disabled={saving} className="w-full bg-[#01b7f2] text-white font-bold py-3 rounded-lg hover:bg-[#0299cc] disabled:opacity-60 flex items-center justify-center gap-2">
+          <button type="submit" disabled={saving} className="w-full bg-[#0A65AB] text-white font-bold py-3 rounded-xl hover:bg-[#0852a0] disabled:opacity-60 flex items-center justify-center gap-2 transition-colors">
             {saving && <Loader size={16} className="animate-spin" />}
             {saving ? "Saving..." : "Add Destination"}
           </button>
@@ -195,10 +195,10 @@ export default function NewTirthYatra() {
       </form>
 
       <style jsx>{`
-        .label { display: block; font-size: 0.875rem; font-weight: 500; color: #cbd5e1; margin-bottom: 0.375rem; }
-        .input { width: 100%; background: #0A65AB; border: 1px solid #475569; border-radius: 0.5rem; padding: 0.625rem 0.875rem; color: white; font-size: 0.875rem; outline: none; transition: border-color 0.15s; }
-        .input:focus { border-color: #01b7f2; }
-        .input::placeholder { color: #64748b; }
+        .label { display: block; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.375rem; }
+        .input { width: 100%; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 0.625rem 1rem; color: #1f2937; font-size: 0.875rem; outline: none; transition: all 0.15s; }
+        .input:focus { border-color: #0A65AB; box-shadow: 0 0 0 2px rgba(10,101,171,0.10); }
+        .input::placeholder { color: #9ca3af; }
       `}</style>
     </div>
   );

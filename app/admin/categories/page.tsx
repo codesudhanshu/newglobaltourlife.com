@@ -74,64 +74,64 @@ export default function AdminCategories() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-extrabold text-white">Vehicle Categories</h1>
-          <p className="text-gray-400 text-sm mt-1">Manage categories shown on the homepage</p>
+          <h1 className="text-2xl font-extrabold text-gray-900">Vehicle Categories</h1>
+          <p className="text-gray-500 text-sm mt-1">Manage categories shown on the homepage</p>
         </div>
-        <Link href="/admin/categories/new" className="btn-primary flex items-center gap-2 text-sm py-2 px-4">
+        <Link href="/admin/categories/new" className="flex items-center gap-2 bg-[#0A65AB] text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-[#0852a0] transition-colors text-sm shadow-sm">
           <Plus size={15} /> New Category
         </Link>
       </div>
 
       {fetching ? (
-        <div className="text-gray-400">Loading...</div>
+        <div className="text-gray-500">Loading...</div>
       ) : cats.length === 0 ? (
         <div className="text-center py-20 text-gray-500">
           No categories yet.{" "}
-          <Link href="/admin/categories/new" className="text-[#01b7f2] hover:underline">Create one</Link>
+          <Link href="/admin/categories/new" className="text-[#0A65AB] hover:underline">Create one</Link>
         </div>
       ) : (
         <>
-        <div className="bg-[#1e293b] rounded-xl border border-slate-700 overflow-hidden">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-slate-700">
-                <th className="text-left px-5 py-3 text-gray-400 font-medium w-16">Order</th>
-                <th className="text-left px-5 py-3 text-gray-400 font-medium">Category</th>
-                <th className="hidden md:table-cell text-left px-5 py-3 text-gray-400 font-medium">Slug</th>
-                <th className="hidden md:table-cell text-left px-5 py-3 text-gray-400 font-medium">Description</th>
-                <th className="text-left px-5 py-3 text-gray-400 font-medium">Status</th>
-                <th className="text-right px-5 py-3 text-gray-400 font-medium">Actions</th>
+              <tr className="border-b border-gray-100">
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide w-16">Order</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Category</th>
+                <th className="hidden md:table-cell text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Slug</th>
+                <th className="hidden md:table-cell text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Description</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Status</th>
+                <th className="text-right px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-100">
               {paged.map((cat, i) => (
-                <tr key={cat._id} className="border-b border-slate-800 hover:bg-slate-800/50 transition-colors">
+                <tr key={cat._id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-5 py-4">
                     <div className="flex flex-col items-center gap-1">
-                      <button onClick={() => reorder(cat._id, "up")} className="text-gray-500 hover:text-white"><ArrowUp size={13} /></button>
-                      <span className="text-gray-300 text-xs">{(page - 1) * PAGE_SIZE + i + 1}</span>
-                      <button onClick={() => reorder(cat._id, "down")} className="text-gray-500 hover:text-white"><ArrowDown size={13} /></button>
+                      <button onClick={() => reorder(cat._id, "up")} className="text-gray-400 hover:text-gray-900"><ArrowUp size={13} /></button>
+                      <span className="text-gray-500 text-xs">{(page - 1) * PAGE_SIZE + i + 1}</span>
+                      <button onClick={() => reorder(cat._id, "down")} className="text-gray-400 hover:text-gray-900"><ArrowDown size={13} /></button>
                     </div>
                   </td>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
                       {cat.image ? (
-                        <div className="relative w-12 h-10 rounded-lg overflow-hidden flex-shrink-0 border border-slate-600">
+                        <div className="relative w-12 h-10 rounded-lg overflow-hidden flex-shrink-0 border border-gray-200">
                           <Image src={cat.image} alt={cat.name} fill className="object-cover" />
                         </div>
                       ) : (
-                        <div className="w-12 h-10 rounded-lg bg-slate-700 flex items-center justify-center flex-shrink-0">
-                          <span className="text-gray-400 text-xs font-bold">{cat.name[0]}</span>
+                        <div className="w-12 h-10 rounded-lg bg-gray-100 flex items-center justify-center flex-shrink-0">
+                          <span className="text-gray-500 text-xs font-bold">{cat.name[0]}</span>
                         </div>
                       )}
-                      <span className="text-white font-semibold">{cat.name}</span>
+                      <span className="text-gray-900 font-semibold">{cat.name}</span>
                     </div>
                   </td>
                   <td className="hidden md:table-cell px-5 py-4 text-gray-500 font-mono text-xs">{cat.slug}</td>
-                  <td className="hidden md:table-cell px-5 py-4 text-gray-400 max-w-xs truncate">{cat.description || "—"}</td>
+                  <td className="hidden md:table-cell px-5 py-4 text-gray-500 max-w-xs truncate">{cat.description || "—"}</td>
                   <td className="px-5 py-4">
                     <button onClick={() => toggleActive(cat)}>
-                      <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${cat.active ? "bg-green-900/50 text-green-400" : "bg-gray-800 text-gray-500"}`}>
+                      <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${cat.active ? "bg-green-50 text-green-700 border-green-200" : "bg-gray-100 text-gray-500 border-transparent"}`}>
                         {cat.active ? "Active" : "Inactive"}
                       </span>
                     </button>
@@ -141,11 +141,11 @@ export default function AdminCategories() {
                       <button onClick={() => toggleActive(cat)} title={cat.active ? "Deactivate" : "Activate"} className="p-1.5 text-gray-400 hover:text-[#0A65AB]">
                         {cat.active ? <EyeOff size={15} /> : <Eye size={15} />}
                       </button>
-                      <Link href={`/admin/categories/${cat._id}/edit`} className="p-1.5 text-gray-400 hover:text-[#01b7f2]">
-                        <Pencil size={15} />
+                      <Link href={`/admin/categories/${cat._id}/edit`} className="bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors">
+                        <Pencil size={13} className="inline mr-1" />Edit
                       </Link>
-                      <button onClick={() => deletecat(cat._id)} className="p-1.5 text-gray-400 hover:text-red-400">
-                        <Trash2 size={15} />
+                      <button onClick={() => deletecat(cat._id)} className="bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors">
+                        <Trash2 size={13} className="inline mr-1" />Delete
                       </button>
                     </div>
                   </td>

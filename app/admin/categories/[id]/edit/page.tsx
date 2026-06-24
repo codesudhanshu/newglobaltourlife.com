@@ -49,18 +49,18 @@ export default function EditCategory() {
     }
   }
 
-  if (loading || fetching) return <div className="text-gray-400 p-8">Loading...</div>;
+  if (loading || fetching) return <div className="text-gray-500 p-8">Loading...</div>;
 
   return (
     <div>
       <div className="flex items-center gap-4 mb-8">
-        <Link href="/admin/categories" className="text-gray-400 hover:text-white"><ArrowLeft size={20} /></Link>
-        <h1 className="text-2xl font-extrabold text-white">Edit Category</h1>
+        <Link href="/admin/categories" className="text-gray-500 hover:text-gray-800"><ArrowLeft size={20} /></Link>
+        <h1 className="text-2xl font-extrabold text-gray-900">Edit Category</h1>
       </div>
 
       <form onSubmit={handleSubmit} className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <div className="bg-[#1e293b] rounded-xl border border-slate-700 p-6 space-y-5">
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-5">
             <div>
               <label className="label">Category Name *</label>
               <input required value={form.name} onChange={(e) => set("name", e.target.value)} className="input" />
@@ -68,7 +68,7 @@ export default function EditCategory() {
             <div>
               <label className="label">Slug (URL key)</label>
               <input value={form.slug} onChange={(e) => set("slug", e.target.value)} className="input font-mono" />
-              <p className="text-xs text-gray-500 mt-1">Filter URL: /cars?category=<span className="text-gray-400">{form.slug}</span></p>
+              <p className="text-xs text-gray-400 mt-1">Filter URL: /cars?category=<span className="text-gray-500">{form.slug}</span></p>
             </div>
             <div>
               <label className="label">Description</label>
@@ -79,21 +79,21 @@ export default function EditCategory() {
               <input type="number" value={form.order} onChange={(e) => set("order", +e.target.value)} className="input w-32" />
             </div>
             <div className="flex items-center gap-3">
-              <input type="checkbox" id="active" checked={form.active} onChange={(e) => set("active", e.target.checked)} className="w-4 h-4 accent-cyan-500" />
-              <label htmlFor="active" className="text-gray-300 text-sm">Active — visible on homepage</label>
+              <input type="checkbox" id="active" checked={form.active} onChange={(e) => set("active", e.target.checked)} className="w-4 h-4 accent-[#0A65AB]" />
+              <label htmlFor="active" className="text-gray-600 text-sm">Active — visible on homepage</label>
             </div>
           </div>
         </div>
 
         <div className="space-y-5">
-          <div className="bg-[#1e293b] rounded-xl border border-slate-700 p-6 space-y-4">
-            <label className="label text-base font-bold text-white">Category Image</label>
+          <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-4">
+            <label className="label text-sm font-bold text-gray-800">Category Image</label>
             {token && <ImageUpload value={form.image} onChange={(url) => set("image", url)} token={token} folder="new-global-tour-life/categories" />}
           </div>
 
-          {error && <div className="bg-red-900/30 border border-red-800 rounded-lg p-3 text-red-400 text-sm">{error}</div>}
+          {error && <div className="bg-red-50 border border-red-200 rounded-xl p-3 text-red-600 text-sm">{error}</div>}
 
-          <button type="submit" disabled={saving} className="w-full bg-[#01b7f2] text-white font-bold py-3 rounded-lg hover:bg-[#0299cc] disabled:opacity-60 flex items-center justify-center gap-2">
+          <button type="submit" disabled={saving} className="w-full bg-[#0A65AB] text-white font-bold py-3 rounded-xl hover:bg-[#0852a0] disabled:opacity-60 flex items-center justify-center gap-2 transition-colors">
             {saving && <Loader size={16} className="animate-spin" />}
             {saving ? "Saving..." : "Update Category"}
           </button>
@@ -101,9 +101,9 @@ export default function EditCategory() {
       </form>
 
       <style jsx>{`
-        .label { display: block; font-size: 0.875rem; font-weight: 500; color: #cbd5e1; margin-bottom: 0.375rem; }
-        .input { width: 100%; background: #0A65AB; border: 1px solid #475569; border-radius: 0.5rem; padding: 0.625rem 0.875rem; color: white; font-size: 0.875rem; outline: none; transition: border-color 0.15s; }
-        .input:focus { border-color: #01b7f2; }
+        .label { display: block; font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.375rem; }
+        .input { width: 100%; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 0.75rem; padding: 0.625rem 1rem; color: #1f2937; font-size: 0.875rem; outline: none; transition: all 0.15s; }
+        .input:focus { border-color: #0A65AB; box-shadow: 0 0 0 2px rgba(10,101,171,0.10); }
       `}</style>
     </div>
   );

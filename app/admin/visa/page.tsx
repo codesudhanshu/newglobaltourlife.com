@@ -73,41 +73,41 @@ export default function AdminVisa() {
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-extrabold text-white">Visa</h1>
-        <Link href="/admin/visa/new" className="btn-primary flex items-center gap-2 text-sm py-2 px-4">
+        <h1 className="text-2xl font-extrabold text-gray-900">Visa</h1>
+        <Link href="/admin/visa/new" className="flex items-center gap-2 bg-[#0A65AB] text-white font-semibold px-4 py-2.5 rounded-xl hover:bg-[#0852a0] transition-colors text-sm shadow-sm">
           <Plus size={15} /> New Visa Service
         </Link>
       </div>
 
       {fetching ? (
-        <div className="text-gray-400">Loading...</div>
+        <div className="text-gray-500">Loading...</div>
       ) : items.length === 0 ? (
         <div className="text-center py-20 text-gray-500">
           No visa services yet.{" "}
-          <Link href="/admin/visa/new" className="text-[#01b7f2] hover:underline">Add one</Link>
+          <Link href="/admin/visa/new" className="text-[#0A65AB] hover:underline">Add one</Link>
         </div>
       ) : (
         <>
-          <div className="bg-[#1e293b] rounded-xl border border-slate-700 overflow-hidden">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-slate-700">
-                  <th className="text-left px-5 py-3 text-gray-400 font-medium">Order</th>
-                  <th className="text-left px-5 py-3 text-gray-400 font-medium">Service</th>
-                  <th className="hidden md:table-cell text-left px-5 py-3 text-gray-400 font-medium">Price</th>
-                  <th className="text-left px-5 py-3 text-gray-400 font-medium">Featured</th>
-                  <th className="text-left px-5 py-3 text-gray-400 font-medium">Status</th>
-                  <th className="text-right px-5 py-3 text-gray-400 font-medium">Actions</th>
+                <tr className="border-b border-gray-100">
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Order</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Service</th>
+                  <th className="hidden md:table-cell text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Price</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Featured</th>
+                  <th className="text-left px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Status</th>
+                  <th className="text-right px-5 py-3 text-xs font-semibold text-gray-400 uppercase tracking-wide">Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-gray-100">
                 {paged.map((v, i) => (
-                  <tr key={v._id} className="border-b border-slate-800 hover:bg-slate-800/50 transition-colors">
+                  <tr key={v._id} className="hover:bg-gray-50 transition-colors">
                     <td className="px-5 py-4">
                       <div className="flex flex-col gap-1">
-                        <button onClick={() => reorder(v._id, "up")} className="text-gray-500 hover:text-white"><ArrowUp size={13} /></button>
-                        <span className="text-gray-300 text-xs text-center">{(page - 1) * PAGE_SIZE + i + 1}</span>
-                        <button onClick={() => reorder(v._id, "down")} className="text-gray-500 hover:text-white"><ArrowDown size={13} /></button>
+                        <button onClick={() => reorder(v._id, "up")} className="text-gray-400 hover:text-gray-900"><ArrowUp size={13} /></button>
+                        <span className="text-gray-500 text-xs text-center">{(page - 1) * PAGE_SIZE + i + 1}</span>
+                        <button onClick={() => reorder(v._id, "down")} className="text-gray-400 hover:text-gray-900"><ArrowDown size={13} /></button>
                       </div>
                     </td>
                     <td className="px-5 py-4">
@@ -117,29 +117,29 @@ export default function AdminVisa() {
                             <Image src={v.image} alt={v.title} fill className="object-cover" />
                           </div>
                         )}
-                        <div className="text-white font-medium">{v.title}</div>
+                        <div className="text-gray-900 font-medium">{v.title}</div>
                       </div>
                     </td>
-                    <td className="hidden md:table-cell px-5 py-4 text-[#01b7f2] font-bold">{v.price > 0 ? `₹${v.price.toLocaleString("en-IN")}` : "—"}</td>
+                    <td className="hidden md:table-cell px-5 py-4 text-[#0A65AB] font-bold">{v.price > 0 ? `₹${v.price.toLocaleString("en-IN")}` : "—"}</td>
                     <td className="px-5 py-4">
                       <button onClick={() => toggle(v, "featured")}>
-                        {v.featured ? <ToggleRight size={22} className="text-[#01b7f2]" /> : <ToggleLeft size={22} className="text-gray-500" />}
+                        {v.featured ? <ToggleRight size={22} className="text-[#0A65AB]" /> : <ToggleLeft size={22} className="text-gray-400" />}
                       </button>
                     </td>
                     <td className="px-5 py-4">
                       <button onClick={() => toggle(v, "available")}>
-                        <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${v.available ? "bg-green-900/50 text-green-400" : "bg-gray-800 text-gray-400"}`}>
+                        <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${v.available ? "bg-green-50 text-green-700 border-green-200" : "bg-gray-100 text-gray-500 border-transparent"}`}>
                           {v.available ? "Available" : "Hidden"}
                         </span>
                       </button>
                     </td>
                     <td className="px-5 py-4">
                       <div className="flex items-center justify-end gap-2">
-                        <Link href={`/admin/visa/${v._id}/edit`} className="p-1.5 text-gray-400 hover:text-[#01b7f2]">
-                          <Pencil size={15} />
+                        <Link href={`/admin/visa/${v._id}/edit`} className="bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors">
+                          <Pencil size={13} className="inline mr-1" />Edit
                         </Link>
-                        <button onClick={() => deleteItem(v._id)} className="p-1.5 text-gray-400 hover:text-red-400">
-                          <Trash2 size={15} />
+                        <button onClick={() => deleteItem(v._id)} className="bg-red-50 text-red-600 hover:bg-red-100 border border-red-200 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors">
+                          <Trash2 size={13} className="inline mr-1" />Delete
                         </button>
                       </div>
                     </td>
