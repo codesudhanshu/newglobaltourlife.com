@@ -235,11 +235,11 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
       {/* ── Desktop nav ── */}
-      <nav className="hidden lg:flex items-center justify-between px-6 xl:px-10 h-[85px]">
+      <nav className="hidden lg:flex items-center justify-between px-6 xl:px-10 h-[78px]">
 
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0 mr-4">
-          <Image src="/logo.png" alt="New Global Tour Life" width={180} height={70} className="h-[64px] w-auto object-contain" priority />
+          <Image src="/logo.png" alt="New Global Tour Life" width={170} height={66} className="h-[58px] w-auto object-contain" priority />
         </Link>
 
         {/* Icon-tab nav — Goibibo style */}
@@ -263,11 +263,11 @@ export default function Navbar() {
                 >
                   {/* Icon */}
                   <Icon
-                    size={19}
+                    size={22}
                     className={`transition-colors flex-shrink-0 ${isOpen ? "text-[#0A65AB]" : "text-gray-400 group-hover:text-[#0A65AB]"}`}
                   />
                   {/* Label */}
-                  <span className="text-[10.5px] font-semibold whitespace-nowrap leading-none">
+                  <span className="text-[12px] font-semibold whitespace-nowrap leading-none">
                     {item.label}
                     {hasPanel && (
                       <ChevronDown
