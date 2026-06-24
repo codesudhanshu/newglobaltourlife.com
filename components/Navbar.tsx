@@ -8,33 +8,8 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 
-// ── Static mega menu data (destinations, services, blog) ──────
+// ── Static mega menu data (services, blog) ───────────────────
 
-const DEST_INDIA = [
-  { label: "Goa",             slug: "goa" },
-  { label: "Agra",            slug: "agra" },
-  { label: "Rajasthan",       slug: "rajasthan" },
-  { label: "Rishikesh",       slug: "rishikesh" },
-  { label: "Andaman Nicobar", slug: "andaman" },
-  { label: "Kerala",          slug: "kerala" },
-  { label: "Shimla & Manali", slug: "shimla-manali" },
-  { label: "Jammu Kashmir",   slug: "kashmir" },
-  { label: "Sikkim",          slug: "sikkim" },
-  { label: "Leh Ladakh",      slug: "leh-ladakh" },
-];
-const DEST_WORLD = [
-  { label: "Sri Lanka", slug: "sri-lanka" },
-  { label: "Thailand",  slug: "thailand" },
-  { label: "Dubai",     slug: "dubai" },
-  { label: "Maldives",  slug: "maldives" },
-  { label: "Malaysia",  slug: "malaysia" },
-  { label: "Singapore", slug: "singapore" },
-  { label: "Bali",      slug: "bali" },
-  { label: "France",    slug: "france" },
-  { label: "Spain",     slug: "spain" },
-  { label: "USA",       slug: "usa" },
-  { label: "UK London", slug: "uk-london" },
-];
 const SERVICES_ITEMS = [
   { label: "VISA",         href: "/visa" },
   { label: "Bus Booking",  href: "/bus" },
@@ -53,8 +28,9 @@ const LUXURY_CATS = new Set(["Luxury", "Business"]);
 const VAN_CATS = new Set(["Van", "Van / Tempo Traveller", "Tempo Traveller", "Bus"]);
 
 type NavLink = { label: string; href: string };
-type CarCol = { services: NavLink[]; models: NavLink[]; luxury: NavLink[]; vans: NavLink[] };
-type PkgCol = { tours: NavLink[]; honeymoon: NavLink[]; tirth: NavLink[] };
+type CarCol  = { services: NavLink[]; models: NavLink[]; luxury: NavLink[]; vans: NavLink[] };
+type PkgCol  = { tours: NavLink[]; honeymoon: NavLink[]; tirth: NavLink[] };
+type DestCol = { india: NavLink[]; world: NavLink[] };
 
 // ── Types ─────────────────────────────────────────────────────
 
@@ -118,34 +94,18 @@ function MegaCars({ cols, close }: { cols: CarCol; close: () => void }) {
   );
 }
 
-function MegaDestinations({ close }: { close: () => void }) {
+function MegaDestinations({ cols, close }: { cols: DestCol; close: () => void }) {
+  const hasAny = cols.india.length > 0 || cols.world.length > 0;
+  if (!hasAny) return null;
   return (
     <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 w-[480px] grid grid-cols-2 gap-0 py-5 mt-1">
       <div className="px-5 border-r border-gray-100">
         <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#0A65AB] mb-3">India</div>
-        <ul className="space-y-2">
-          {DEST_INDIA.map((d) => (
-            <li key={d.slug}>
-              <Link href={`/destinations/${d.slug}`} onClick={close} className="text-[13px] text-gray-600 hover:text-[#0A65AB] transition-colors flex items-center gap-1.5 group">
-                <span className="w-1 h-1 bg-gray-300 rounded-full group-hover:bg-[#0A65AB] transition-colors flex-shrink-0" />
-                {d.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <MegaColList items={cols.india} close={close} />
       </div>
       <div className="px-5">
         <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#0A65AB] mb-3">International</div>
-        <ul className="space-y-2">
-          {DEST_WORLD.map((d) => (
-            <li key={d.slug}>
-              <Link href={`/destinations/${d.slug}`} onClick={close} className="text-[13px] text-gray-600 hover:text-[#0A65AB] transition-colors flex items-center gap-1.5 group">
-                <span className="w-1 h-1 bg-gray-300 rounded-full group-hover:bg-[#0A65AB] transition-colors flex-shrink-0" />
-                {d.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <MegaColList items={cols.world} close={close} />
       </div>
     </div>
   );
@@ -180,8 +140,9 @@ export default function Navbar() {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Dynamic data fetched from DB
-  const [carCols, setCarCols] = useState<CarCol>({ services: [], models: [], luxury: [], vans: [] });
-  const [pkgCols, setPkgCols] = useState<PkgCol>({ tours: [], honeymoon: [], tirth: [] });
+  const [carCols,  setCarCols]  = useState<CarCol>({ services: [], models: [], luxury: [], vans: [] });
+  const [pkgCols,  setPkgCols]  = useState<PkgCol>({ tours: [], honeymoon: [], tirth: [] });
+  const [destCols, setDestCols] = useState<DestCol>({ india: [], world: [] });
 
   useEffect(() => {
     // Fetch cars and bucket by category
@@ -228,6 +189,22 @@ export default function Navbar() {
           ...prev,
           tirth: items.map((t) => ({ label: t.name, href: `/tirth-yatra/${t.slug || t._id}` })),
         }));
+      })
+      .catch(() => {});
+
+    // Fetch destinations and bucket by region
+    fetch("/api/destinations")
+      .then((r) => r.json())
+      .then((data) => {
+        const dests: { name: string; slug?: string; _id: string; region: string }[] = Array.isArray(data) ? data : [];
+        const toLink = (d: { name: string; slug?: string; _id: string }): NavLink => ({
+          label: d.name,
+          href: `/destinations/${d.slug || d._id}`,
+        });
+        setDestCols({
+          india: dests.filter((d) => d.region === "India").map(toLink),
+          world: dests.filter((d) => d.region === "World").map(toLink),
+        });
       })
       .catch(() => {});
   }, []);
@@ -292,7 +269,7 @@ export default function Navbar() {
 
                 {/* Mega panels */}
                 {isOpen && item.mega === "cars"         && <MegaCars cols={carCols} close={closeMega} />}
-                {isOpen && item.mega === "destinations" && <MegaDestinations close={closeMega} />}
+                {isOpen && item.mega === "destinations" && <MegaDestinations cols={destCols} close={closeMega} />}
                 {isOpen && item.mega === "packages"     && <MegaPackages cols={pkgCols} close={closeMega} />}
 
                 {/* Simple dropdown */}
@@ -386,8 +363,8 @@ export default function Navbar() {
                 ];
               } else if (item.mega === "destinations") {
                 mobileGroups = [
-                  { title: "India",         items: DEST_INDIA.map((d) => ({ label: d.label, href: `/destinations/${d.slug}` })) },
-                  { title: "International", items: DEST_WORLD.map((d) => ({ label: d.label, href: `/destinations/${d.slug}` })) },
+                  { title: "India",         items: destCols.india },
+                  { title: "International", items: destCols.world },
                 ];
               } else if (item.mega === "packages") {
                 mobileGroups = [
