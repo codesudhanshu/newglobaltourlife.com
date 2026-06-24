@@ -125,8 +125,20 @@ export default function NewPackage() {
               </div>
             </div>
             <div>
-              <label className="label">Category</label>
-              <input value={form.category} onChange={(e) => set("category", e.target.value)} placeholder="e.g. Honeymoon, Family, Adventure" className="input" />
+              <label className="label">Category (navbar column)</label>
+              <select value={form.category} onChange={(e) => set("category", e.target.value)} className="input">
+                <optgroup label="── Tour Packages col ──">
+                  {["Hill Station", "Adventure", "Beach", "International", "Nature", "Family", "Cultural", "Pilgrimage"].map((c) => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </optgroup>
+                <optgroup label="── Honeymoon Packages col ──">
+                  <option value="Honeymoon">Honeymoon</option>
+                </optgroup>
+              </select>
+              <p className="text-gray-400 text-xs mt-1">
+                <strong>Honeymoon</strong> → Honeymoon col &nbsp;|&nbsp; Everything else → Tour Packages col
+              </p>
             </div>
             <div>
               <label className="label">Overview / Itinerary Text</label>

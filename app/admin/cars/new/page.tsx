@@ -8,7 +8,17 @@ import SeoSection from "@/components/admin/SeoSection";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
-const CATEGORIES = ["Economy", "Family", "Business", "SUV", "Luxury", "Electric", "Sports", "Convertible", "Sedan", "Minivan", "Pickup"];
+// Navbar column mapping:
+// Cab Services → Cab Service, Car Rental, Taxi Service, Outstation
+// Cars         → Sedan, Economy, Hatchback, SUV, Family
+// Luxury Cars  → Luxury, Business
+// Van          → Van, Tempo Traveller, Bus
+const CAR_CATEGORY_GROUPS = [
+  { group: "Cab Services col",  opts: ["Cab Service", "Car Rental", "Taxi Service", "Outstation"] },
+  { group: "Cars col",          opts: ["Sedan", "Economy", "Hatchback", "SUV", "Family"] },
+  { group: "Luxury Cars col",   opts: ["Luxury", "Business"] },
+  { group: "Van col",           opts: ["Van", "Tempo Traveller", "Bus"] },
+];
 const TRANSMISSIONS = ["Automatic", "Manual"];
 
 export default function NewCar() {
@@ -18,7 +28,7 @@ export default function NewCar() {
   const [error, setError] = useState("");
   const [form, setForm] = useState({
     name: "", year: 2024, transmission: "Automatic", capacity: 5,
-    category: "Economy", price: 0, description: "", longContent: "", image: "", images: [] as string[], order: 0, available: true,
+    category: "Cab Service", price: 0, description: "", longContent: "", image: "", images: [] as string[], order: 0, available: true,
     faqs: [] as { question: string; answer: string }[],
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
   });
@@ -149,10 +159,15 @@ export default function NewCar() {
         <div className="space-y-5">
           <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-5">
             <div>
-              <label className="label">Category</label>
+              <label className="label">Category (navbar column)</label>
               <select value={form.category} onChange={(e) => set("category", e.target.value)} className="input">
-                {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
+                {CAR_CATEGORY_GROUPS.map((g) => (
+                  <optgroup key={g.group} label={`── ${g.group} ──`}>
+                    {g.opts.map((o) => <option key={o} value={o}>{o}</option>)}
+                  </optgroup>
+                ))}
               </select>
+              <p className="text-gray-400 text-xs mt-1">Category decides which column this car appears in on the navbar.</p>
             </div>
             <div>
               <label className="label">Display Order</label>
