@@ -15,8 +15,16 @@ const quickLinks = [
 ];
 
 const destinations = [
-  "Goa", "Rajasthan", "Kerala", "Shimla & Manali",
-  "Leh Ladakh", "Dubai", "Thailand", "Maldives", "Singapore", "Bali",
+  { label: "Goa",            href: "/packages/goa-beach-holiday" },
+  { label: "Rajasthan",      href: "/packages/rajasthan-royal-heritage" },
+  { label: "Kerala",         href: "/packages/kerala-backwater-bliss" },
+  { label: "Shimla & Manali", href: "/packages?destination=Shimla" },
+  { label: "Leh Ladakh",     href: "/packages/leh-ladakh-adventure" },
+  { label: "Dubai",          href: "/packages/dubai-luxury-escape" },
+  { label: "Thailand",       href: "/packages/thailand-island-hopper" },
+  { label: "Maldives",       href: "/packages/maldives-honeymoon" },
+  { label: "Singapore",      href: "/packages/singapore-family-fun" },
+  { label: "Bali",           href: "/packages/bali-honeymoon-special" },
 ];
 
 export default function Footer() {
@@ -96,14 +104,14 @@ export default function Footer() {
             <h4 className="text-[#0A65AB] font-bold text-base mb-5">Popular Destinations</h4>
             <ul className="space-y-2.5">
               {destinations.map((dest) => (
-                <li key={dest}>
-                  <a
-                    href="#blog"
+                <li key={dest.label}>
+                  <Link
+                    href={dest.href}
                     className="text-sm hover:text-[#01b7f2] transition-colors flex items-center gap-2 group"
                   >
                     <span className="w-1 h-1 rounded-full bg-[#01b7f2] opacity-0 group-hover:opacity-100 transition-opacity" />
-                    {dest}
-                  </a>
+                    {dest.label}
+                  </Link>
                 </li>
               ))}
             </ul>

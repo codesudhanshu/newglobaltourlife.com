@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronRight, ArrowRight, MapPin, Clock, Star } from "lucide-react";
@@ -22,9 +23,13 @@ interface TY {
   description: string;
 }
 
-export default function TirthYatraPage() {
+function TirthYatraContent() {
+  const params = useSearchParams();
+  const qParam = params.get("q") || "";
+
   const [items, setItems] = useState<TY[]>([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState(qParam);
   const [modal, setModal] = useState<{ open: boolean; subject: string }>({ open: false, subject: "" });
 
   useEffect(() => {
@@ -33,6 +38,19 @@ export default function TirthYatraPage() {
       .then((data) => { setItems(Array.isArray(data) ? data : []); setLoading(false); })
       .catch(() => setLoading(false));
   }, []);
+
+  useEffect(() => { setSearch(qParam); }, [qParam]);
+
+  const filtered = items.filter((item) => {
+    if (!search.trim()) return true;
+    const q = search.toLowerCase();
+    return (
+      item.name.toLowerCase().includes(q) ||
+      item.location.toLowerCase().includes(q) ||
+      item.state.toLowerCase().includes(q) ||
+      item.description?.toLowerCase().includes(q)
+    );
+  });
 
   return (
     <>
@@ -55,28 +73,50 @@ export default function TirthYatraPage() {
 
       <div className="bg-gray-50 min-h-screen">
         <div className="container-custom py-10">
+          {/* Search bar */}
+          <div className="mb-6">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search pilgrimage (e.g. Mahakal, Kedarnath...)"
+              className="w-full max-w-sm border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-[#01b7f2]"
+            />
+          </div>
+
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {[...Array(6)].map((_, i) => (
                 <div key={i} className="bg-white rounded-2xl h-72 animate-pulse border border-gray-100" />
               ))}
             </div>
-          ) : items.length === 0 ? (
+          ) : filtered.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-4xl mb-4">🛕</div>
-              <h3 className="font-bold text-[#0A65AB] text-xl mb-2">Packages Coming Soon</h3>
-              <p className="text-gray-500 text-sm mb-5">We&apos;re adding exciting pilgrimage packages. Enquire now to plan ahead.</p>
-              <button
-                onClick={() => setModal({ open: true, subject: "Tirth Yatra" })}
-                className="btn-primary"
-              >
-                Enquire Now
-              </button>
+              <h3 className="font-bold text-[#0A65AB] text-xl mb-2">
+                {search ? `No results for "${search}"` : "Packages Coming Soon"}
+              </h3>
+              <p className="text-gray-500 text-sm mb-5">
+                {search ? "Try a different search term." : "We're adding exciting pilgrimage packages. Enquire now to plan ahead."}
+              </p>
+              {search ? (
+                <button onClick={() => setSearch("")} className="btn-primary">Clear Search</button>
+              ) : (
+                <button onClick={() => setModal({ open: true, subject: "Tirth Yatra" })} className="btn-primary">
+                  Enquire Now
+                </button>
+              )}
             </div>
           ) : (
             <>
+              {search && (
+                <p className="text-sm text-gray-500 mb-4">
+                  {filtered.length} result{filtered.length !== 1 ? "s" : ""} for &ldquo;{search}&rdquo;
+                  <button onClick={() => setSearch("")} className="ml-2 text-[#01b7f2] underline text-xs">Clear</button>
+                </p>
+              )}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {items.map((item) => (
+                {filtered.map((item) => (
                   <div key={item._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-shadow overflow-hidden group">
                     <Link href={`/tirth-yatra/${item._id}`} className="block relative h-48 overflow-hidden">
                       {item.image ? (
@@ -175,5 +215,13 @@ export default function TirthYatraPage() {
         prefillService="Tirth Yatra"
       />
     </>
+  );
+}
+
+export default function TirthYatraPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#0A65AB] flex items-center justify-center text-white">Loading...</div>}>
+      <TirthYatraContent />
+    </Suspense>
   );
 }

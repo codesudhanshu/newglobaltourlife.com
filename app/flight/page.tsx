@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Plane, ChevronRight, Phone } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import BookingModal from "@/components/BookingModal";
 import { FLIGHT_DEALS, type FlightDeal } from "@/lib/placeholders";
 
 function FlightContent() {
@@ -15,6 +16,7 @@ function FlightContent() {
   const to = params.get("to")?.toLowerCase() || "";
 
   const [deals, setDeals] = useState<FlightDeal[]>(FLIGHT_DEALS);
+  const [modal, setModal] = useState<{ open: boolean; subject: string }>({ open: false, subject: "" });
 
   useEffect(() => {
     fetch("/api/flights")
@@ -34,14 +36,14 @@ function FlightContent() {
 
       <section className="bg-[#0A65AB] py-16 lg:py-20">
         <div className="container-custom">
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
+          <div className="flex items-center gap-2 text-sm text-gray-300 mb-4">
             <Link href="/" className="hover:text-[#01b7f2] transition-colors">Home</Link>
             <ChevronRight size={14} /> <span className="text-gray-300">Flights</span>
           </div>
           <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-3">
             Flight <span className="text-[#01b7f2]">Deals</span>
           </h1>
-          <p className="text-gray-400 max-w-xl">
+          <p className="text-gray-300 max-w-xl">
             {filtered.length} fare{filtered.length !== 1 ? "s" : ""} available
             {from || to ? ` for ${from || "any"} → ${to || "any"}` : ""}. Call us to book at the best price.
           </p>
@@ -89,9 +91,12 @@ function FlightContent() {
                         <div className="text-[11px] text-gray-400">Starting from</div>
                         <div className="text-xl font-extrabold text-[#01b7f2]">₹{f.price.toLocaleString("en-IN")}</div>
                       </div>
-                      <a href="tel:+919131727811" className="flex items-center gap-1.5 text-sm font-bold text-white bg-[#01b7f2] hover:bg-[#0299cc] px-4 py-2 rounded-lg transition-colors">
-                        <Phone size={14} /> Enquire
-                      </a>
+                      <button
+                        onClick={() => setModal({ open: true, subject: `Flight: ${f.from} → ${f.to}` })}
+                        className="flex items-center gap-1.5 text-sm font-bold text-white bg-[#01b7f2] hover:bg-[#0299cc] px-4 py-2 rounded-lg transition-colors"
+                      >
+                        <Phone size={14} /> Enquire Now
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -102,6 +107,14 @@ function FlightContent() {
       </div>
 
       <Footer />
+
+      <BookingModal
+        isOpen={modal.open}
+        onClose={() => setModal({ open: false, subject: "" })}
+        subject={modal.subject}
+        type="general"
+        prefillService="Flight Booking"
+      />
     </>
   );
 }

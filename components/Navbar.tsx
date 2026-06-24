@@ -12,29 +12,29 @@ const CAR_SERVICES = [
   { label: "Car Rental Services in Indore", href: "/cars" },
   { label: "Taxi Service in Indore",        href: "/cars" },
   { label: "Cab Service in Indore",         href: "/cars?q=Cab" },
-  { label: "Ujjain to Omkareshwar Cab",     href: "/cars?q=Innova" },
+  { label: "Ujjain to Omkareshwar Cab",     href: "/cars/toyota-innova-crysta" },
 ];
 const CAR_MODELS = [
-  { label: "Swift Dzire Car", href: "/cars?q=Swift" },
-  { label: "Innova Crysta",   href: "/cars?q=Innova" },
-  { label: "Maruti Ciaz",     href: "/cars?q=Ciaz" },
-  { label: "Maruti Ertiga",   href: "/cars?q=Ertiga" },
-  { label: "Maruti XL6",      href: "/cars?q=XL6" },
+  { label: "Swift Dzire Car", href: "/cars/maruti-suzuki-swift" },
+  { label: "Innova Crysta",   href: "/cars/toyota-innova-crysta" },
+  { label: "Maruti Ciaz",     href: "/cars/maruti-suzuki-ciaz" },
+  { label: "Maruti Ertiga",   href: "/cars/maruti-suzuki-ertiga" },
+  { label: "Maruti XL6",      href: "/cars/maruti-suzuki-xl6" },
 ];
 const CAR_LUXURY = [
-  { label: "BMW",         href: "/cars?q=BMW" },
-  { label: "Audi",        href: "/cars?q=Audi" },
-  { label: "Honda City",  href: "/cars?q=Honda" },
-  { label: "Range Rover", href: "/cars?q=Range+Rover" },
-  { label: "Jaguar",      href: "/cars?q=Jaguar" },
-  { label: "Mercedes",    href: "/cars?q=Mercedes" },
+  { label: "BMW",         href: "/cars/bmw-5-series" },
+  { label: "Audi",        href: "/cars/audi-a6" },
+  { label: "Honda City",  href: "/cars/honda-city" },
+  { label: "Range Rover", href: "/cars/range-rover-sport" },
+  { label: "Jaguar",      href: "/cars/jaguar-xf" },
+  { label: "Mercedes",    href: "/cars/mercedes-benz-e-class" },
 ];
 const CAR_VANS = [
-  { label: "Force Urbania Indore",    href: "/cars?q=Urbania" },
-  { label: "Urbania Tempo Traveller", href: "/cars?q=Urbania" },
-  { label: "Urbania Ujjain",          href: "/cars?q=Urbania" },
-  { label: "Urbania Omkareshwar",     href: "/cars?q=Urbania" },
-  { label: "Urbania Dewas",           href: "/cars?q=Urbania" },
+  { label: "Force Urbania Indore",    href: "/cars/force-urbania" },
+  { label: "Urbania Tempo Traveller", href: "/cars/force-urbania" },
+  { label: "Urbania Ujjain",          href: "/cars/force-urbania" },
+  { label: "Urbania Omkareshwar",     href: "/cars/force-urbania" },
+  { label: "Urbania Dewas",           href: "/cars/force-urbania" },
 ];
 
 const DEST_INDIA = [
@@ -64,35 +64,35 @@ const DEST_WORLD = [
 ];
 
 const PKG_TOURS = [
-  { label: "Jammu Kashmir",   href: "/packages?destination=Kashmir" },
-  { label: "Shimla & Manali", href: "/packages?destination=Shimla+%26+Manali" },
-  { label: "Goa",             href: "/packages?destination=Goa" },
+  { label: "Jammu Kashmir",   href: "/packages/kashmir-valley-dream" },
+  { label: "Shimla & Manali", href: "/packages?destination=Shimla" },
+  { label: "Goa",             href: "/packages/goa-beach-holiday" },
   { label: "Andaman Nicobar", href: "/packages?destination=Andaman" },
-  { label: "Kerala",          href: "/packages?destination=Kerala" },
+  { label: "Kerala",          href: "/packages/kerala-backwater-bliss" },
   { label: "Sikkim",          href: "/packages?destination=Sikkim" },
-  { label: "Leh Ladakh",      href: "/packages?destination=Leh+Ladakh" },
-  { label: "Dubai",           href: "/packages?destination=Dubai" },
-  { label: "Maldives",        href: "/packages?destination=Maldives" },
+  { label: "Leh Ladakh",      href: "/packages/leh-ladakh-adventure" },
+  { label: "Dubai",           href: "/packages/dubai-luxury-escape" },
+  { label: "Maldives",        href: "/packages/maldives-honeymoon" },
 ];
 const PKG_HONEYMOON = [
-  { label: "Shimla & Manali", href: "/packages?destination=Shimla+%26+Manali" },
-  { label: "Maldives",        href: "/packages?destination=Maldives" },
+  { label: "Shimla & Manali", href: "/packages?destination=Shimla" },
+  { label: "Maldives",        href: "/packages/maldives-honeymoon" },
   { label: "Malaysia",        href: "/packages?destination=Malaysia" },
-  { label: "Singapore",       href: "/packages?destination=Singapore" },
-  { label: "Bali",            href: "/packages?destination=Bali" },
+  { label: "Singapore",       href: "/packages/singapore-family-fun" },
+  { label: "Bali",            href: "/packages/bali-honeymoon-special" },
 ];
 const PKG_TIRTH = [
-  { label: "Ujjain Mahakal", href: "/tirth-yatra" },
-  { label: "Omkareshwar",    href: "/tirth-yatra" },
-  { label: "Kedarnath",      href: "/tirth-yatra" },
-  { label: "Vaishno Devi",   href: "/tirth-yatra" },
-  { label: "Badrinath",      href: "/tirth-yatra" },
+  { label: "Ujjain Mahakal", href: "/tirth-yatra/mahakal-omkareshwar-yatra" },
+  { label: "Omkareshwar",    href: "/tirth-yatra/mahakal-omkareshwar-yatra" },
+  { label: "Kedarnath",      href: "/tirth-yatra/kedarnath-dham-yatra" },
+  { label: "Vaishno Devi",   href: "/tirth-yatra/vaishno-devi-yatra" },
+  { label: "Badrinath",      href: "/tirth-yatra/badrinath-dham-yatra" },
 ];
 
 const SERVICES_ITEMS = [
   { label: "VISA",         href: "/visa" },
   { label: "Bus Booking",  href: "/bus" },
-  { label: "Travel Guide", href: "/services" },
+  { label: "Travel Guide", href: "/travel-guide" },
 ];
 const BLOG_ITEMS = [
   { label: "Kashmir", href: "/blogs/jammu-kashmir-tour" },

@@ -6,7 +6,9 @@ import { isAdminRequest } from "@/lib/auth";
 export async function GET(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   await connectDB();
   const { id } = await params;
-  const item = await TirthYatra.findById(id);
+  let item = null;
+  if (id.match(/^[a-f\d]{24}$/i)) item = await TirthYatra.findById(id);
+  if (!item) item = await TirthYatra.findOne({ slug: id });
   if (!item) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json(item);
 }
