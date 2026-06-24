@@ -58,21 +58,37 @@ export default function BookingModal({
       document.body.style.overflow = "hidden";
       setSuccess(false);
       setError("");
+
+      // Parse subject for flight: "Flight: Delhi → Goa"
+      let parsedFrom = "", parsedTo = "", parsedDest = "";
+      if (type === "flight" && subject) {
+        const clean = subject.replace(/^Flight:\s*/i, "");
+        const parts = clean.split(/→|->|to /i);
+        if (parts.length >= 2) { parsedFrom = parts[0].trim(); parsedTo = parts[1].trim(); }
+      }
+      // Parse subject for package/tirth: "Shimla & Manali Package", "Kedarnath Yatra" etc.
+      if ((type === "package" || type === "tirth") && subject) {
+        parsedDest = subject.replace(/package|tour|yatra|enquiry/gi, "").trim();
+      }
+
       setForm((p) => ({
         ...p,
         name: "", phone: "", email: "", message: "",
         pickup: "", dropoff: "", fromDate: "", toDate: "",
         city: "", checkin: "", checkout: "",
-        destination: "", travelFrom: "", travelTo: "",
+        destination: parsedDest || "",
+        travelFrom: "", travelTo: "",
         guideLocations: "", guideDate: "",
-        fromCity: "", toCity: "", departDate: "", returnDate: "",
+        fromCity: parsedFrom,
+        toCity: parsedTo,
+        departDate: "", returnDate: "",
         serviceType: prefillService || "Tour Package",
       }));
     } else {
       document.body.style.overflow = "";
     }
     return () => { document.body.style.overflow = ""; };
-  }, [isOpen, prefillService]);
+  }, [isOpen, prefillService, type, subject]);
 
   function set(field: string, value: string) {
     setForm((p) => ({ ...p, [field]: value }));
@@ -294,7 +310,13 @@ export default function BookingModal({
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className={lbl}><MapPin size={12} /> Destination</label>
-                      <input value={form.destination} onChange={(e) => set("destination", e.target.value)} placeholder="e.g. Goa, Thailand" className={inp} />
+                      <input
+                        value={form.destination}
+                        onChange={(e) => set("destination", e.target.value)}
+                        placeholder="e.g. Goa, Thailand"
+                        readOnly={!!form.destination}
+                        className={`${inp} ${form.destination ? "bg-blue-50 border-blue-200 text-[#0A65AB] font-semibold cursor-default" : ""}`}
+                      />
                     </div>
                     <div>
                       <label className={lbl}><Users size={12} /> No. of Persons</label>
@@ -347,11 +369,25 @@ export default function BookingModal({
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className={lbl}><Plane size={12} /> From City *</label>
-                      <input required value={form.fromCity} onChange={(e) => set("fromCity", e.target.value)} placeholder="e.g. Delhi, Mumbai" className={inp} />
+                      <input
+                        required
+                        value={form.fromCity}
+                        onChange={(e) => set("fromCity", e.target.value)}
+                        placeholder="e.g. Delhi, Mumbai"
+                        readOnly={!!form.fromCity && form.fromCity === (subject.replace(/^Flight:\s*/i,"").split(/→|->/)[0]?.trim())}
+                        className={`${inp} ${form.fromCity && form.fromCity === (subject.replace(/^Flight:\s*/i,"").split(/→|->/)[0]?.trim()) ? "bg-blue-50 border-blue-200 text-[#0A65AB] font-semibold cursor-default" : ""}`}
+                      />
                     </div>
                     <div>
                       <label className={lbl}><Plane size={12} /> To City *</label>
-                      <input required value={form.toCity} onChange={(e) => set("toCity", e.target.value)} placeholder="e.g. Goa, Bangkok" className={inp} />
+                      <input
+                        required
+                        value={form.toCity}
+                        onChange={(e) => set("toCity", e.target.value)}
+                        placeholder="e.g. Goa, Bangkok"
+                        readOnly={!!form.toCity && form.toCity === (subject.replace(/^Flight:\s*/i,"").split(/→|->/)[1]?.trim())}
+                        className={`${inp} ${form.toCity && form.toCity === (subject.replace(/^Flight:\s*/i,"").split(/→|->/)[1]?.trim()) ? "bg-blue-50 border-blue-200 text-[#0A65AB] font-semibold cursor-default" : ""}`}
+                      />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-3">

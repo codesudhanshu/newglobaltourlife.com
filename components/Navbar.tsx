@@ -68,7 +68,7 @@ const DEST_WORLD = [
 
 const PKG_TOURS = [
   { label: "Jammu Kashmir",   href: "/packages/kashmir-valley-dream" },
-  { label: "Shimla & Manali", href: "/packages?destination=Shimla" },
+  { label: "Shimla & Manali", href: "/packages/shimla-manali-package" },
   { label: "Goa",             href: "/packages/goa-beach-holiday" },
   { label: "Andaman Nicobar", href: "/packages?destination=Andaman" },
   { label: "Kerala",          href: "/packages/kerala-backwater-bliss" },
@@ -78,7 +78,7 @@ const PKG_TOURS = [
   { label: "Maldives",        href: "/packages/maldives-honeymoon" },
 ];
 const PKG_HONEYMOON = [
-  { label: "Shimla & Manali", href: "/packages?destination=Shimla" },
+  { label: "Shimla & Manali", href: "/packages/shimla-manali-package" },
   { label: "Maldives",        href: "/packages/maldives-honeymoon" },
   { label: "Malaysia",        href: "/packages?destination=Malaysia" },
   { label: "Singapore",       href: "/packages/singapore-family-fun" },
