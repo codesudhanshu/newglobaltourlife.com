@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye, EyeOff, Loader } from "lucide-react";
+import Image from "next/image";
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -41,8 +42,8 @@ export default function AdminLogin() {
     <div className="min-h-screen bg-[#0A65AB] flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="text-3xl font-extrabold text-white mb-1">
-            AUTO<span className="text-[#01b7f2]">VIA</span>
+          <div className="flex justify-center mb-3">
+            <Image src="/logo.png" alt="New Global Tour Life" width={200} height={76} className="h-16 w-auto object-contain" priority />
           </div>
           <p className="text-gray-400 text-sm">Admin Panel — Sign in to continue</p>
         </div>
