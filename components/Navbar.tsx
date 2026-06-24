@@ -221,12 +221,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openKey, setOpenKey] = useState<string | null>(null);
   const [mobileOpen2, setMobileOpen2] = useState<string | null>(null);
-  const [announcement, setAnnouncement] = useState<{ text: string; active: boolean; emoji: string } | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    fetch("/api/announcement").then((r) => r.json()).then(setAnnouncement).catch(() => {});
-  }, []);
 
   function onEnter(label: string) {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -239,19 +234,12 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
-      {/* Announcement bar */}
-      {announcement?.active && announcement.text && (
-        <div className="bg-[#0A65AB] py-1.5 px-6 text-center text-xs font-semibold text-white tracking-wide">
-          {announcement.emoji} {announcement.text}
-        </div>
-      )}
-
       {/* ── Desktop nav ── */}
-      <nav className="hidden lg:flex items-center justify-between px-6 xl:px-10 h-[62px]">
+      <nav className="hidden lg:flex items-center justify-between px-6 xl:px-10 h-[72px]">
 
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0 mr-4">
-          <Image src="/logo.png" alt="New Global Tour Life" width={130} height={50} className="h-10 w-auto object-contain" priority />
+          <Image src="/logo.png" alt="New Global Tour Life" width={160} height={62} className="h-[52px] w-auto object-contain" priority />
         </Link>
 
         {/* Icon-tab nav — Goibibo style */}
@@ -342,7 +330,7 @@ export default function Navbar() {
       {/* ── Mobile nav ── */}
       <div className="lg:hidden flex items-center justify-between px-4 py-3">
         <Link href="/">
-          <Image src="/logo.png" alt="New Global Tour Life" width={120} height={46} className="h-9 w-auto object-contain" priority />
+          <Image src="/logo.png" alt="New Global Tour Life" width={140} height={52} className="h-11 w-auto object-contain" priority />
         </Link>
         <div className="flex items-center gap-3">
           <a href="tel:+919131727811" className="text-[#0A65AB]">
