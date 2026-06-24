@@ -99,7 +99,7 @@ function MegaColList({ items, close }: { items: NavLink[]; close: () => void }) 
 
 function MegaCars({ cols, close }: { cols: CarCol; close: () => void }) {
   const columns = [
-    { title: "Cab Services", items: cols.services },
+    { title: "Cab",          items: cols.services },
     { title: "Cars",         items: cols.models },
     { title: "Luxury Cars",  items: cols.luxury },
     { title: "Van",          items: cols.vans },
