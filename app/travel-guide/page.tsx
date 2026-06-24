@@ -233,8 +233,7 @@ export default function TravelGuidePage() {
         isOpen={modal.open}
         onClose={() => setModal({ open: false, subject: "" })}
         subject={modal.subject}
-        type="general"
-        prefillService="Tour Guide"
+        type="guide"
       />
     </>
   );

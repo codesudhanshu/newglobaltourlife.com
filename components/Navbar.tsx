@@ -8,11 +8,11 @@ import Image from "next/image";
 // ── Static mega menu data ─────────────────────────────────────
 
 const CAR_SERVICES = [
-  { label: "Cab Booking in Indore",         href: "/cars?q=Cab" },
-  { label: "Car Rental Services in Indore", href: "/cars" },
-  { label: "Taxi Service in Indore",        href: "/cars" },
-  { label: "Cab Service in Indore",         href: "/cars?q=Cab" },
-  { label: "Ujjain to Omkareshwar Cab",     href: "/cars/toyota-innova-crysta" },
+  { label: "Cab Booking in Indore",         href: "/cars/cab-booking-in-indore" },
+  { label: "Car Rental Services in Indore", href: "/cars/car-rental-services-indore" },
+  { label: "Taxi Service in Indore",        href: "/cars/taxi-service-indore" },
+  { label: "Cab Service in Indore",         href: "/cars/cab-service-indore" },
+  { label: "Ujjain to Omkareshwar Cab",     href: "/cars/ujjain-to-omkareshwar-cab" },
 ];
 const CAR_MODELS = [
   { label: "Swift Dzire Car", href: "/cars/maruti-suzuki-swift" },

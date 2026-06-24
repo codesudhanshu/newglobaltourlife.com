@@ -112,8 +112,7 @@ function FlightContent() {
         isOpen={modal.open}
         onClose={() => setModal({ open: false, subject: "" })}
         subject={modal.subject}
-        type="general"
-        prefillService="Flight Booking"
+        type="flight"
       />
     </>
   );

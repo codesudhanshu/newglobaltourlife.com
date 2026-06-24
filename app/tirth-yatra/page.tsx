@@ -211,8 +211,7 @@ function TirthYatraContent() {
         isOpen={modal.open}
         onClose={() => setModal({ open: false, subject: "" })}
         subject={modal.subject}
-        type="general"
-        prefillService="Tirth Yatra"
+        type="tirth"
       />
     </>
   );

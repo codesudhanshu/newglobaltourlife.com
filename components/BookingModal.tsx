@@ -1,30 +1,54 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { X, Send, CheckCircle, Loader, Phone, Mail, User, MessageSquare, MapPin, Calendar, Car, Building2, Users } from "lucide-react";
+import {
+  X, Send, CheckCircle, Loader, Phone, Mail, User, MessageSquare,
+  MapPin, Calendar, Car, Building2, Users, Plane, Compass, Star,
+} from "lucide-react";
+
+type ModalType = "car" | "hotel" | "package" | "guide" | "flight" | "tirth" | "general";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   subject?: string;
-  type?: "car" | "hotel" | "general";
+  type?: ModalType;
   prefillService?: string;
 }
 
-const CAR_CATEGORIES = ["Economy", "Family", "Business", "SUV", "Luxury", "Electric", "Sports", "Convertible", "Sedan", "Minivan", "Pickup"];
-const SERVICE_TYPES = ["Car Rental", "Hotel Booking", "Visa Services", "Bus Booking", "Train Booking", "Tirth Yatra", "Tour Package", "Other"];
+const CAR_CATEGORIES = ["Sedan", "SUV", "Hatchback", "Luxury", "Van / Tempo Traveller", "Bus"];
+const FLIGHT_CLASSES = ["Economy", "Business", "First Class"];
+const PKG_TYPES = ["Domestic Tour", "International Tour", "Honeymoon Package", "Family Package", "Group Tour"];
 
-export default function BookingModal({ isOpen, onClose, subject = "", type = "general", prefillService = "" }: Props) {
+const TYPE_META: Record<ModalType, { title: string; icon: React.ReactNode; color: string }> = {
+  car:     { title: "Car Booking Enquiry",      icon: <Car size={18} />,     color: "#0A65AB" },
+  hotel:   { title: "Hotel Booking Enquiry",    icon: <Building2 size={18} />, color: "#0A65AB" },
+  package: { title: "Tour Package Enquiry",     icon: <Compass size={18} />, color: "#0A65AB" },
+  guide:   { title: "Tour Guide Enquiry",       icon: <Star size={18} />,    color: "#0A65AB" },
+  flight:  { title: "Flight Booking Enquiry",   icon: <Plane size={18} />,   color: "#0A65AB" },
+  tirth:   { title: "Tirth Yatra Enquiry",      icon: <MapPin size={18} />,  color: "#0A65AB" },
+  general: { title: "Send Enquiry",             icon: <Send size={18} />,    color: "#0A65AB" },
+};
+
+export default function BookingModal({
+  isOpen, onClose, subject = "", type = "general", prefillService = "",
+}: Props) {
   const [form, setForm] = useState({
     name: "", phone: "", email: "", message: "",
-    // car fields
-    carCategory: "", pickup: "", fromDate: "", toDate: "",
-    // hotel fields
-    city: "", checkin: "", checkout: "", guests: "2",
-    // general/service fields
-    serviceType: prefillService || SERVICE_TYPES[0],
-    destination: "", travelFrom: "", travelTo: "", persons: "2",
+    // car
+    carCategory: "", pickup: "", dropoff: "", fromDate: "", toDate: "", persons: "2",
+    // hotel
+    city: "", checkin: "", checkout: "", guests: "2", roomType: "",
+    // package / tirth
+    destination: "", travelFrom: "", travelTo: "", pax: "2", pkgType: "",
+    // guide
+    guideLocations: "", guideDate: "", guidePax: "2",
+    // flight
+    fromCity: "", toCity: "", departDate: "", returnDate: "", flightPax: "1", flightClass: "Economy",
+    // general
+    serviceType: prefillService || "Tour Package",
   });
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
@@ -34,7 +58,16 @@ export default function BookingModal({ isOpen, onClose, subject = "", type = "ge
       document.body.style.overflow = "hidden";
       setSuccess(false);
       setError("");
-      setForm((prev) => ({ ...prev, name: "", phone: "", email: "", message: "", fromDate: "", toDate: "", checkin: "", checkout: "", pickup: "", city: "", travelFrom: "", travelTo: "", serviceType: prefillService || SERVICE_TYPES[0] }));
+      setForm((p) => ({
+        ...p,
+        name: "", phone: "", email: "", message: "",
+        pickup: "", dropoff: "", fromDate: "", toDate: "",
+        city: "", checkin: "", checkout: "",
+        destination: "", travelFrom: "", travelTo: "",
+        guideLocations: "", guideDate: "",
+        fromCity: "", toCity: "", departDate: "", returnDate: "",
+        serviceType: prefillService || "Tour Package",
+      }));
     } else {
       document.body.style.overflow = "";
     }
@@ -42,28 +75,51 @@ export default function BookingModal({ isOpen, onClose, subject = "", type = "ge
   }, [isOpen, prefillService]);
 
   function set(field: string, value: string) {
-    setForm((prev) => ({ ...prev, [field]: value }));
+    setForm((p) => ({ ...p, [field]: value }));
   }
 
   function buildMessage(): string {
     const lines: string[] = [];
-    if (subject) lines.push(`[${type === "car" ? "Car Booking" : type === "hotel" ? "Hotel Booking" : "Service Enquiry"}: ${subject}]`);
+    if (subject) lines.push(`[${TYPE_META[type].title}: ${subject}]`);
     if (type === "car") {
-      if (form.carCategory) lines.push(`Category: ${form.carCategory}`);
-      if (form.pickup) lines.push(`Pickup Location: ${form.pickup}`);
-      if (form.fromDate) lines.push(`From: ${form.fromDate}`);
-      if (form.toDate) lines.push(`To: ${form.toDate}`);
+      if (form.carCategory) lines.push(`Car Category: ${form.carCategory}`);
+      if (form.pickup)      lines.push(`Pickup: ${form.pickup}`);
+      if (form.dropoff)     lines.push(`Drop: ${form.dropoff}`);
+      if (form.fromDate)    lines.push(`From: ${form.fromDate}`);
+      if (form.toDate)      lines.push(`To: ${form.toDate}`);
+      if (form.persons)     lines.push(`Persons: ${form.persons}`);
     } else if (type === "hotel") {
-      if (form.city) lines.push(`City/Location: ${form.city}`);
-      if (form.checkin) lines.push(`Check-in: ${form.checkin}`);
+      if (form.city)     lines.push(`Location: ${form.city}`);
+      if (form.checkin)  lines.push(`Check-in: ${form.checkin}`);
       if (form.checkout) lines.push(`Check-out: ${form.checkout}`);
-      if (form.guests) lines.push(`Guests: ${form.guests}`);
+      if (form.guests)   lines.push(`Guests: ${form.guests}`);
+    } else if (type === "package") {
+      if (form.destination) lines.push(`Destination: ${form.destination}`);
+      if (form.pkgType)     lines.push(`Package Type: ${form.pkgType}`);
+      if (form.travelFrom)  lines.push(`Travel From: ${form.travelFrom}`);
+      if (form.travelTo)    lines.push(`Travel To: ${form.travelTo}`);
+      if (form.pax)         lines.push(`Persons: ${form.pax}`);
+    } else if (type === "guide") {
+      if (form.guideLocations) lines.push(`Locations: ${form.guideLocations}`);
+      if (form.guideDate)      lines.push(`Travel Date: ${form.guideDate}`);
+      if (form.guidePax)       lines.push(`Persons: ${form.guidePax}`);
+    } else if (type === "flight") {
+      if (form.fromCity)    lines.push(`From: ${form.fromCity}`);
+      if (form.toCity)      lines.push(`To: ${form.toCity}`);
+      if (form.departDate)  lines.push(`Departure: ${form.departDate}`);
+      if (form.returnDate)  lines.push(`Return: ${form.returnDate}`);
+      if (form.flightPax)   lines.push(`Passengers: ${form.flightPax}`);
+      if (form.flightClass) lines.push(`Class: ${form.flightClass}`);
+    } else if (type === "tirth") {
+      if (form.destination) lines.push(`Destination: ${form.destination}`);
+      if (form.travelFrom)  lines.push(`Travel Date: ${form.travelFrom}`);
+      if (form.pax)         lines.push(`Persons: ${form.pax}`);
     } else {
       if (form.serviceType) lines.push(`Service: ${form.serviceType}`);
       if (form.destination) lines.push(`Destination: ${form.destination}`);
-      if (form.travelFrom) lines.push(`Travel From: ${form.travelFrom}`);
-      if (form.travelTo) lines.push(`Travel To: ${form.travelTo}`);
-      if (form.persons) lines.push(`No. of Persons: ${form.persons}`);
+      if (form.travelFrom)  lines.push(`Travel From: ${form.travelFrom}`);
+      if (form.travelTo)    lines.push(`Travel To: ${form.travelTo}`);
+      if (form.persons)     lines.push(`Persons: ${form.persons}`);
     }
     if (form.message) lines.push(`\nMessage:\n${form.message}`);
     return lines.join("\n");
@@ -90,168 +146,311 @@ export default function BookingModal({ isOpen, onClose, subject = "", type = "ge
 
   if (!isOpen) return null;
 
-  const inputCls = "w-full bg-[#1e293b] border border-slate-600 rounded-xl px-4 py-2.5 text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#01b7f2] transition-colors";
-  const labelCls = "block text-sm font-medium text-gray-300 mb-1.5 flex items-center gap-1.5";
+  const inp = "w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:border-[#0A65AB] focus:ring-2 focus:ring-[#0A65AB]/10 transition-all";
+  const lbl = "block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5 flex items-center gap-1.5";
+  const meta = TYPE_META[type];
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative bg-[#0A65AB] rounded-2xl border border-slate-700 w-full max-w-lg shadow-2xl z-10 max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-[999] flex items-end sm:items-center justify-center p-0 sm:p-4">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+
+      <div className="relative bg-white w-full sm:max-w-lg rounded-t-3xl sm:rounded-2xl shadow-2xl z-10 max-h-[95vh] flex flex-col overflow-hidden">
+
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-slate-800 flex-shrink-0">
-          <div>
-            <h2 className="text-white font-bold text-lg">
-              {success ? "Thank You!" : type === "car" ? "Book This Car" : type === "hotel" ? "Book This Hotel" : "Send Enquiry"}
-            </h2>
-            {!success && subject && <p className="text-[#01b7f2] text-sm mt-0.5 font-medium">{subject}</p>}
+        <div className="bg-[#0A65AB] px-6 py-5 flex-shrink-0">
+          <div className="flex items-start justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 bg-white/15 rounded-xl flex items-center justify-center text-white flex-shrink-0">
+                {meta.icon}
+              </div>
+              <div>
+                <h2 className="text-white font-bold text-base leading-tight">
+                  {success ? "Enquiry Received!" : meta.title}
+                </h2>
+                {!success && subject && (
+                  <p className="text-blue-200 text-xs mt-0.5 font-medium truncate max-w-[280px]">{subject}</p>
+                )}
+              </div>
+            </div>
+            <button onClick={onClose} className="text-white/70 hover:text-white transition-colors p-1 rounded-lg hover:bg-white/10 ml-2 flex-shrink-0">
+              <X size={20} />
+            </button>
           </div>
-          <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-slate-800">
-            <X size={20} />
-          </button>
         </div>
 
         {/* Body */}
-        <div className="p-5 overflow-y-auto">
+        <div className="overflow-y-auto flex-1 p-5">
           {success ? (
-            <div className="text-center py-6">
-              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle size={32} className="text-green-400" />
+            <div className="text-center py-8">
+              <div className="w-16 h-16 bg-green-50 border-2 border-green-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle size={32} className="text-green-500" />
               </div>
-              <h3 className="text-white font-bold text-xl mb-2">Enquiry Received!</h3>
-              <p className="text-gray-400 text-sm mb-2">
-                Thank you, we&apos;ll contact you within <span className="text-white font-semibold">2–4 hours</span>.
+              <h3 className="text-gray-800 font-bold text-xl mb-1">Thank You!</h3>
+              <p className="text-gray-500 text-sm mb-1">
+                Our team will call you within <span className="text-gray-800 font-semibold">2–4 hours</span>.
               </p>
-              <p className="text-gray-500 text-xs mb-6">
-                For urgent bookings call us at{" "}
-                <a href="tel:+919131727811" className="text-[#01b7f2] hover:underline font-medium">+91-9131727811</a>
+              <p className="text-gray-400 text-xs mb-6">
+                Urgent? Call us at{" "}
+                <a href="tel:+919131727811" className="text-[#0A65AB] font-semibold hover:underline">+91-9131727811</a>
               </p>
               <div className="flex flex-col gap-2">
-                <a href="tel:+919131727811" className="flex items-center justify-center gap-2 bg-[#01b7f2] text-white font-semibold py-2.5 rounded-xl text-sm hover:bg-[#0299cc] transition-colors">
+                <a href="tel:+919131727811" className="flex items-center justify-center gap-2 bg-[#0A65AB] text-white font-semibold py-3 rounded-xl text-sm hover:bg-[#0852a0] transition-colors">
                   <Phone size={15} /> Call Now
                 </a>
-                <button onClick={onClose} className="text-gray-400 hover:text-white text-sm transition-colors py-2">Close</button>
+                <button onClick={onClose} className="text-gray-400 hover:text-gray-600 text-sm transition-colors py-2">
+                  Close
+                </button>
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-3">
-              {/* Name + Phone */}
+            <form onSubmit={handleSubmit} className="space-y-3.5">
+
+              {/* Name + Phone — always */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={labelCls}><User size={13} /> Full Name *</label>
-                  <input required value={form.name} onChange={(e) => set("name", e.target.value)} placeholder="Your name" className={inputCls} />
+                  <label className={lbl}><User size={12} /> Full Name *</label>
+                  <input required value={form.name} onChange={(e) => set("name", e.target.value)} placeholder="Your name" className={inp} />
                 </div>
                 <div>
-                  <label className={labelCls}><Phone size={13} /> Phone *</label>
-                  <input required value={form.phone} onChange={(e) => set("phone", e.target.value)} placeholder="+91 XXXXX XXXXX" className={inputCls} />
+                  <label className={lbl}><Phone size={12} /> Phone *</label>
+                  <input required value={form.phone} onChange={(e) => set("phone", e.target.value)} placeholder="+91 XXXXX XXXXX" className={inp} />
                 </div>
               </div>
 
+              {/* Email — always */}
               <div>
-                <label className={labelCls}><Mail size={13} /> Email</label>
-                <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="you@example.com" className={inputCls} />
+                <label className={lbl}><Mail size={12} /> Email</label>
+                <input type="email" value={form.email} onChange={(e) => set("email", e.target.value)} placeholder="you@example.com" className={inp} />
               </div>
 
-              {/* Car-specific fields */}
+              {/* ── CAR ── */}
               {type === "car" && (
                 <>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className={labelCls}><Car size={13} /> Car Category</label>
-                      <select value={form.carCategory} onChange={(e) => set("carCategory", e.target.value)} className={inputCls}>
-                        <option value="">Any Category</option>
+                      <label className={lbl}><Car size={12} /> Car Type</label>
+                      <select value={form.carCategory} onChange={(e) => set("carCategory", e.target.value)} className={inp}>
+                        <option value="">Any</option>
                         {CAR_CATEGORIES.map((c) => <option key={c}>{c}</option>)}
                       </select>
                     </div>
                     <div>
-                      <label className={labelCls}><MapPin size={13} /> Pickup Location *</label>
-                      <input required value={form.pickup} onChange={(e) => set("pickup", e.target.value)} placeholder="City / Address" className={inputCls} />
+                      <label className={lbl}><Users size={12} /> No. of Persons</label>
+                      <input type="number" min={1} max={50} value={form.persons} onChange={(e) => set("persons", e.target.value)} className={inp} />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className={labelCls}><Calendar size={13} /> From Date *</label>
-                      <input required type="date" value={form.fromDate} onChange={(e) => set("fromDate", e.target.value)} className={inputCls} />
+                      <label className={lbl}><MapPin size={12} /> Pickup Location *</label>
+                      <input required value={form.pickup} onChange={(e) => set("pickup", e.target.value)} placeholder="City / Address" className={inp} />
                     </div>
                     <div>
-                      <label className={labelCls}><Calendar size={13} /> To Date *</label>
-                      <input required type="date" value={form.toDate} onChange={(e) => set("toDate", e.target.value)} className={inputCls} />
+                      <label className={lbl}><MapPin size={12} /> Drop Location</label>
+                      <input value={form.dropoff} onChange={(e) => set("dropoff", e.target.value)} placeholder="City / Address" className={inp} />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className={lbl}><Calendar size={12} /> From Date *</label>
+                      <input required type="date" value={form.fromDate} onChange={(e) => set("fromDate", e.target.value)} className={inp} />
+                    </div>
+                    <div>
+                      <label className={lbl}><Calendar size={12} /> To Date</label>
+                      <input type="date" value={form.toDate} onChange={(e) => set("toDate", e.target.value)} className={inp} />
                     </div>
                   </div>
                 </>
               )}
 
-              {/* Hotel-specific fields */}
+              {/* ── HOTEL ── */}
               {type === "hotel" && (
                 <>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className={labelCls}><MapPin size={13} /> City / Location *</label>
-                      <input required value={form.city} onChange={(e) => set("city", e.target.value)} placeholder="e.g. Goa, Bali" className={inputCls} />
+                      <label className={lbl}><MapPin size={12} /> City / Destination *</label>
+                      <input required value={form.city} onChange={(e) => set("city", e.target.value)} placeholder="e.g. Goa, Shimla" className={inp} />
                     </div>
                     <div>
-                      <label className={labelCls}><Users size={13} /> No. of Guests</label>
-                      <input type="number" min={1} max={20} value={form.guests} onChange={(e) => set("guests", e.target.value)} className={inputCls} />
+                      <label className={lbl}><Users size={12} /> No. of Guests</label>
+                      <input type="number" min={1} max={20} value={form.guests} onChange={(e) => set("guests", e.target.value)} className={inp} />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className={labelCls}><Calendar size={13} /> Check-in *</label>
-                      <input required type="date" value={form.checkin} onChange={(e) => set("checkin", e.target.value)} className={inputCls} />
+                      <label className={lbl}><Calendar size={12} /> Check-in *</label>
+                      <input required type="date" value={form.checkin} onChange={(e) => set("checkin", e.target.value)} className={inp} />
                     </div>
                     <div>
-                      <label className={labelCls}><Calendar size={13} /> Check-out *</label>
-                      <input required type="date" value={form.checkout} onChange={(e) => set("checkout", e.target.value)} className={inputCls} />
+                      <label className={lbl}><Calendar size={12} /> Check-out *</label>
+                      <input required type="date" value={form.checkout} onChange={(e) => set("checkout", e.target.value)} className={inp} />
                     </div>
                   </div>
                 </>
               )}
 
-              {/* General/Service-specific fields */}
+              {/* ── PACKAGE ── */}
+              {type === "package" && (
+                <>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className={lbl}><MapPin size={12} /> Destination</label>
+                      <input value={form.destination} onChange={(e) => set("destination", e.target.value)} placeholder="e.g. Goa, Thailand" className={inp} />
+                    </div>
+                    <div>
+                      <label className={lbl}><Users size={12} /> No. of Persons</label>
+                      <input type="number" min={1} max={100} value={form.pax} onChange={(e) => set("pax", e.target.value)} className={inp} />
+                    </div>
+                  </div>
+                  <div>
+                    <label className={lbl}><Compass size={12} /> Package Type</label>
+                    <select value={form.pkgType} onChange={(e) => set("pkgType", e.target.value)} className={inp}>
+                      <option value="">Select type</option>
+                      {PKG_TYPES.map((p) => <option key={p}>{p}</option>)}
+                    </select>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className={lbl}><Calendar size={12} /> Travel From *</label>
+                      <input required type="date" value={form.travelFrom} onChange={(e) => set("travelFrom", e.target.value)} className={inp} />
+                    </div>
+                    <div>
+                      <label className={lbl}><Calendar size={12} /> Travel To</label>
+                      <input type="date" value={form.travelTo} onChange={(e) => set("travelTo", e.target.value)} className={inp} />
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* ── TOUR GUIDE ── */}
+              {type === "guide" && (
+                <>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className={lbl}><MapPin size={12} /> Tour Locations</label>
+                      <input value={form.guideLocations} onChange={(e) => set("guideLocations", e.target.value)} placeholder="e.g. Jaipur, Agra" className={inp} />
+                    </div>
+                    <div>
+                      <label className={lbl}><Users size={12} /> No. of Persons</label>
+                      <input type="number" min={1} max={50} value={form.guidePax} onChange={(e) => set("guidePax", e.target.value)} className={inp} />
+                    </div>
+                  </div>
+                  <div>
+                    <label className={lbl}><Calendar size={12} /> Preferred Travel Date *</label>
+                    <input required type="date" value={form.guideDate} onChange={(e) => set("guideDate", e.target.value)} className={inp} />
+                  </div>
+                </>
+              )}
+
+              {/* ── FLIGHT ── */}
+              {type === "flight" && (
+                <>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className={lbl}><Plane size={12} /> From City *</label>
+                      <input required value={form.fromCity} onChange={(e) => set("fromCity", e.target.value)} placeholder="e.g. Delhi, Mumbai" className={inp} />
+                    </div>
+                    <div>
+                      <label className={lbl}><Plane size={12} /> To City *</label>
+                      <input required value={form.toCity} onChange={(e) => set("toCity", e.target.value)} placeholder="e.g. Goa, Bangkok" className={inp} />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className={lbl}><Calendar size={12} /> Departure *</label>
+                      <input required type="date" value={form.departDate} onChange={(e) => set("departDate", e.target.value)} className={inp} />
+                    </div>
+                    <div>
+                      <label className={lbl}><Calendar size={12} /> Return Date</label>
+                      <input type="date" value={form.returnDate} onChange={(e) => set("returnDate", e.target.value)} className={inp} />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className={lbl}><Users size={12} /> Passengers</label>
+                      <input type="number" min={1} max={100} value={form.flightPax} onChange={(e) => set("flightPax", e.target.value)} className={inp} />
+                    </div>
+                    <div>
+                      <label className={lbl}><Star size={12} /> Class</label>
+                      <select value={form.flightClass} onChange={(e) => set("flightClass", e.target.value)} className={inp}>
+                        {FLIGHT_CLASSES.map((c) => <option key={c}>{c}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* ── TIRTH YATRA ── */}
+              {type === "tirth" && (
+                <>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className={lbl}><MapPin size={12} /> Destination</label>
+                      <input value={form.destination} onChange={(e) => set("destination", e.target.value)} placeholder="e.g. Kedarnath, Ujjain" className={inp} />
+                    </div>
+                    <div>
+                      <label className={lbl}><Users size={12} /> No. of Persons</label>
+                      <input type="number" min={1} max={200} value={form.pax} onChange={(e) => set("pax", e.target.value)} className={inp} />
+                    </div>
+                  </div>
+                  <div>
+                    <label className={lbl}><Calendar size={12} /> Preferred Travel Date *</label>
+                    <input required type="date" value={form.travelFrom} onChange={(e) => set("travelFrom", e.target.value)} className={inp} />
+                  </div>
+                </>
+              )}
+
+              {/* ── GENERAL ── */}
               {type === "general" && (
                 <>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className={labelCls}><Building2 size={13} /> Service Type</label>
-                      <select value={form.serviceType} onChange={(e) => set("serviceType", e.target.value)} className={inputCls}>
-                        {SERVICE_TYPES.map((s) => <option key={s}>{s}</option>)}
+                      <label className={lbl}><Building2 size={12} /> Service Type</label>
+                      <select value={form.serviceType} onChange={(e) => set("serviceType", e.target.value)} className={inp}>
+                        {["Tour Package", "Car Rental", "Hotel Booking", "Flight Booking", "Tirth Yatra", "Visa Services", "Bus Booking", "Other"].map((s) => <option key={s}>{s}</option>)}
                       </select>
                     </div>
                     <div>
-                      <label className={labelCls}><Users size={13} /> No. of Persons</label>
-                      <input type="number" min={1} max={100} value={form.persons} onChange={(e) => set("persons", e.target.value)} className={inputCls} />
+                      <label className={lbl}><Users size={12} /> No. of Persons</label>
+                      <input type="number" min={1} max={200} value={form.persons} onChange={(e) => set("persons", e.target.value)} className={inp} />
                     </div>
                   </div>
                   <div>
-                    <label className={labelCls}><MapPin size={13} /> Destination</label>
-                    <input value={form.destination} onChange={(e) => set("destination", e.target.value)} placeholder="e.g. Goa, Bangkok, Vaishno Devi" className={inputCls} />
+                    <label className={lbl}><MapPin size={12} /> Destination</label>
+                    <input value={form.destination} onChange={(e) => set("destination", e.target.value)} placeholder="e.g. Goa, Bangkok, Vaishno Devi" className={inp} />
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className={labelCls}><Calendar size={13} /> Travel From *</label>
-                      <input required type="date" value={form.travelFrom} onChange={(e) => set("travelFrom", e.target.value)} className={inputCls} />
+                      <label className={lbl}><Calendar size={12} /> Travel From *</label>
+                      <input required type="date" value={form.travelFrom} onChange={(e) => set("travelFrom", e.target.value)} className={inp} />
                     </div>
                     <div>
-                      <label className={labelCls}><Calendar size={13} /> Travel To *</label>
-                      <input required type="date" value={form.travelTo} onChange={(e) => set("travelTo", e.target.value)} className={inputCls} />
+                      <label className={lbl}><Calendar size={12} /> Travel To</label>
+                      <input type="date" value={form.travelTo} onChange={(e) => set("travelTo", e.target.value)} className={inp} />
                     </div>
                   </div>
                 </>
               )}
 
+              {/* Message — always */}
               <div>
-                <label className={labelCls}><MessageSquare size={13} /> Additional Message</label>
-                <textarea value={form.message} onChange={(e) => set("message", e.target.value)} rows={2} placeholder="Any special requirements..." className={`${inputCls} resize-none`} />
+                <label className={lbl}><MessageSquare size={12} /> Additional Message</label>
+                <textarea value={form.message} onChange={(e) => set("message", e.target.value)} rows={2} placeholder="Any special requirements or questions..." className={`${inp} resize-none`} />
               </div>
 
-              {error && <p className="text-red-400 text-sm bg-red-900/20 rounded-lg px-3 py-2">{error}</p>}
+              {error && (
+                <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-2.5">
+                  <p className="text-red-600 text-sm">{error}</p>
+                </div>
+              )}
 
-              <button type="submit" disabled={loading} className="w-full bg-[#01b7f2] hover:bg-[#0299cc] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-60">
+              <button type="submit" disabled={loading} className="w-full bg-[#0A65AB] hover:bg-[#0852a0] text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-colors disabled:opacity-60 text-sm shadow-lg shadow-[#0A65AB]/20">
                 {loading ? <Loader size={16} className="animate-spin" /> : <Send size={16} />}
                 {loading ? "Sending..." : "Send Enquiry"}
               </button>
 
-              <p className="text-center text-gray-500 text-xs">
-                Or call: <a href="tel:+919131727811" className="text-[#01b7f2] hover:underline">+91-9131727811</a>
+              <p className="text-center text-gray-400 text-xs pb-1">
+                Or call us directly:{" "}
+                <a href="tel:+919131727811" className="text-[#0A65AB] font-semibold hover:underline">+91-9131727811</a>
               </p>
             </form>
           )}
