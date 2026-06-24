@@ -328,25 +328,6 @@ export default function Navbar() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100 pb-6 max-h-[80vh] overflow-y-auto">
-          {/* Icon grid for quick access */}
-          <div className="grid grid-cols-4 gap-0 border-b border-gray-100 px-2 py-2">
-            {NAV.slice(0, 8).map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => { if (!item.mega && !item.children) setMobileOpen(false); }}
-                  className="flex flex-col items-center gap-1 py-3 px-1 text-gray-500 hover:text-[#0A65AB] transition-colors rounded-xl hover:bg-blue-50"
-                >
-                  <Icon size={22} />
-                  <span className="text-[10px] font-semibold text-center leading-tight">{item.label}</span>
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Full list with dropdowns */}
           <div className="px-4 pt-2">
             {NAV.map((item) => {
               const isOpen = mobileOpen2 === item.label;

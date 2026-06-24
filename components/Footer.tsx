@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Phone, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,31 +8,37 @@ import Image from "next/image";
 const quickLinks = [
   { label: "Home", href: "/" },
   { label: "Car Collection", href: "/cars" },
-  { label: "Hotels", href: "#hotels" },
-  { label: "Services", href: "#services" },
-  { label: "About Us", href: "#about" },
-  { label: "Blog", href: "#blog" },
+  { label: "Hotels", href: "/hotels" },
+  { label: "Services", href: "/services" },
+  { label: "About Us", href: "/about" },
+  { label: "Blog", href: "/blogs" },
   { label: "Contact Us", href: "/contact" },
 ];
 
-const destinations = [
-  { label: "Goa",            href: "/packages/goa-beach-holiday" },
-  { label: "Rajasthan",      href: "/packages/rajasthan-royal-heritage" },
-  { label: "Kerala",         href: "/packages/kerala-backwater-bliss" },
-  { label: "Shimla & Manali", href: "/packages?destination=Shimla" },
-  { label: "Leh Ladakh",     href: "/packages/leh-ladakh-adventure" },
-  { label: "Dubai",          href: "/packages/dubai-luxury-escape" },
-  { label: "Thailand",       href: "/packages/thailand-island-hopper" },
-  { label: "Maldives",       href: "/packages/maldives-honeymoon" },
-  { label: "Singapore",      href: "/packages/singapore-family-fun" },
-  { label: "Bali",           href: "/packages/bali-honeymoon-special" },
-];
+type DestLink = { label: string; href: string };
 
 export default function Footer() {
+  const [india, setIndia] = useState<DestLink[]>([]);
+  const [world, setWorld] = useState<DestLink[]>([]);
+
+  useEffect(() => {
+    fetch("/api/destinations")
+      .then((r) => r.json())
+      .then((data: { name: string; slug: string; region: string }[]) => {
+        const toLink = (d: { name: string; slug: string }): DestLink => ({
+          label: d.name,
+          href: `/destinations/${d.slug}`,
+        });
+        setIndia(data.filter((d) => d.region === "India").map(toLink));
+        setWorld(data.filter((d) => d.region === "World").map(toLink));
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <footer className="bg-white text-gray-500 border-t border-gray-100">
       <div className="container-custom py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand */}
           <div>
             <div className="mb-4">
@@ -99,22 +106,39 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Popular Destinations */}
-          <div>
+          {/* Popular Destinations — 2 sub-cols */}
+          <div className="lg:col-span-2">
             <h4 className="text-[#0A65AB] font-bold text-base mb-5">Popular Destinations</h4>
-            <ul className="space-y-2.5">
-              {destinations.map((dest) => (
-                <li key={dest.label}>
-                  <Link
-                    href={dest.href}
-                    className="text-sm hover:text-[#01b7f2] transition-colors flex items-center gap-2 group"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-[#01b7f2] opacity-0 group-hover:opacity-100 transition-opacity" />
-                    {dest.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <div className="grid grid-cols-2 gap-x-6">
+              {/* India */}
+              <div>
+                <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#0A65AB] mb-3">India</div>
+                <ul className="space-y-2.5">
+                  {india.map((dest) => (
+                    <li key={dest.href}>
+                      <Link href={dest.href} className="text-sm hover:text-[#01b7f2] transition-colors flex items-center gap-2 group">
+                        <span className="w-1 h-1 rounded-full bg-[#01b7f2] opacity-0 group-hover:opacity-100 transition-opacity" />
+                        {dest.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* International */}
+              <div>
+                <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#0A65AB] mb-3">International</div>
+                <ul className="space-y-2.5">
+                  {world.map((dest) => (
+                    <li key={dest.href}>
+                      <Link href={dest.href} className="text-sm hover:text-[#01b7f2] transition-colors flex items-center gap-2 group">
+                        <span className="w-1 h-1 rounded-full bg-[#01b7f2] opacity-0 group-hover:opacity-100 transition-opacity" />
+                        {dest.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
 
           {/* Newsletter + Social */}
