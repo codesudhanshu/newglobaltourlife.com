@@ -235,11 +235,11 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
       {/* ── Desktop nav ── */}
-      <nav className="hidden lg:flex items-center justify-between px-6 xl:px-10 h-[72px]">
+      <nav className="hidden lg:flex items-center justify-between px-6 xl:px-10 h-[85px]">
 
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0 mr-4">
-          <Image src="/logo.png" alt="New Global Tour Life" width={160} height={62} className="h-[52px] w-auto object-contain" priority />
+          <Image src="/logo.png" alt="New Global Tour Life" width={180} height={70} className="h-[64px] w-auto object-contain" priority />
         </Link>
 
         {/* Icon-tab nav — Goibibo style */}
