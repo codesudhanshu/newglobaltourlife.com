@@ -3,42 +3,12 @@
 import { useState, useEffect, useRef } from "react";
 import {
   Menu, X, ChevronDown, Phone, Home, Info, Plane, Hotel,
-  Car, MapPin, Package, Wrench, FileText, Mail, Landmark, Users,
+  Car, MapPin, Package, Wrench, FileText, Mail,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
-// ── Static mega menu data ─────────────────────────────────────
-
-const CAR_SERVICES = [
-  { label: "Cab Booking in Indore",         href: "/cars/cab-booking-in-indore" },
-  { label: "Car Rental Services in Indore", href: "/cars/car-rental-services-indore" },
-  { label: "Taxi Service in Indore",        href: "/cars/taxi-service-indore" },
-  { label: "Cab Service in Indore",         href: "/cars/cab-service-indore" },
-  { label: "Ujjain to Omkareshwar Cab",     href: "/cars/ujjain-to-omkareshwar-cab" },
-];
-const CAR_MODELS = [
-  { label: "Swift Dzire Car", href: "/cars/maruti-suzuki-swift" },
-  { label: "Innova Crysta",   href: "/cars/toyota-innova-crysta" },
-  { label: "Maruti Ciaz",     href: "/cars/maruti-suzuki-ciaz" },
-  { label: "Maruti Ertiga",   href: "/cars/maruti-suzuki-ertiga" },
-  { label: "Maruti XL6",      href: "/cars/maruti-suzuki-xl6" },
-];
-const CAR_LUXURY = [
-  { label: "BMW",         href: "/cars/bmw-5-series" },
-  { label: "Audi",        href: "/cars/audi-a6" },
-  { label: "Honda City",  href: "/cars/honda-city" },
-  { label: "Range Rover", href: "/cars/range-rover-sport" },
-  { label: "Jaguar",      href: "/cars/jaguar-xf" },
-  { label: "Mercedes",    href: "/cars/mercedes-benz-e-class" },
-];
-const CAR_VANS = [
-  { label: "Force Urbania Indore",    href: "/cars/force-urbania" },
-  { label: "Urbania Tempo Traveller", href: "/cars/force-urbania" },
-  { label: "Urbania Ujjain",          href: "/cars/force-urbania" },
-  { label: "Urbania Omkareshwar",     href: "/cars/force-urbania" },
-  { label: "Urbania Dewas",           href: "/cars/force-urbania" },
-];
+// ── Static mega menu data (destinations, services, blog) ──────
 
 const DEST_INDIA = [
   { label: "Goa",             slug: "goa" },
@@ -65,32 +35,6 @@ const DEST_WORLD = [
   { label: "USA",       slug: "usa" },
   { label: "UK London", slug: "uk-london" },
 ];
-
-const PKG_TOURS = [
-  { label: "Jammu Kashmir",   href: "/packages/kashmir-valley-dream" },
-  { label: "Shimla & Manali", href: "/packages/shimla-manali-package" },
-  { label: "Goa",             href: "/packages/goa-beach-holiday" },
-  { label: "Andaman Nicobar", href: "/packages?destination=Andaman" },
-  { label: "Kerala",          href: "/packages/kerala-backwater-bliss" },
-  { label: "Sikkim",          href: "/packages?destination=Sikkim" },
-  { label: "Leh Ladakh",      href: "/packages/leh-ladakh-adventure" },
-  { label: "Dubai",           href: "/packages/dubai-luxury-escape" },
-  { label: "Maldives",        href: "/packages/maldives-honeymoon" },
-];
-const PKG_HONEYMOON = [
-  { label: "Shimla & Manali", href: "/packages/shimla-manali-package" },
-  { label: "Maldives",        href: "/packages/maldives-honeymoon" },
-  { label: "Malaysia",        href: "/packages?destination=Malaysia" },
-  { label: "Singapore",       href: "/packages/singapore-family-fun" },
-  { label: "Bali",            href: "/packages/bali-honeymoon-special" },
-];
-const PKG_TIRTH = [
-  { label: "Ujjain Mahakal", href: "/tirth-yatra/mahakal-omkareshwar-yatra" },
-  { label: "Omkareshwar",    href: "/tirth-yatra/mahakal-omkareshwar-yatra" },
-  { label: "Kedarnath",      href: "/tirth-yatra/kedarnath-dham-yatra" },
-  { label: "Vaishno Devi",   href: "/tirth-yatra/vaishno-devi-yatra" },
-  { label: "Badrinath",      href: "/tirth-yatra/badrinath-dham-yatra" },
-];
 const SERVICES_ITEMS = [
   { label: "VISA",         href: "/visa" },
   { label: "Bus Booking",  href: "/bus" },
@@ -102,13 +46,25 @@ const BLOG_ITEMS = [
   { label: "Goa",     href: "/blogs/goa-beach-holiday" },
 ];
 
+// ── Category bucketing helpers ────────────────────────────────
+
+const CAB_CATS = new Set(["Cab Service", "Car Rental", "Taxi Service", "Outstation"]);
+const LUXURY_CATS = new Set(["Luxury", "Business"]);
+const VAN_CATS = new Set(["Van", "Van / Tempo Traveller", "Tempo Traveller", "Bus"]);
+
+type NavLink = { label: string; href: string };
+type CarCol = { services: NavLink[]; models: NavLink[]; luxury: NavLink[]; vans: NavLink[] };
+type PkgCol = { tours: NavLink[]; honeymoon: NavLink[]; tirth: NavLink[] };
+
+// ── Types ─────────────────────────────────────────────────────
+
 type MegaKey = "cars" | "destinations" | "packages";
 type NavItem = {
   label: string;
   href: string;
   icon: React.ElementType;
   mega?: MegaKey;
-  children?: { label: string; href: string }[];
+  children?: NavLink[];
 };
 
 const NAV: NavItem[] = [
@@ -119,7 +75,6 @@ const NAV: NavItem[] = [
   { label: "Cars",         href: "/cars",        icon: Car,      mega: "cars" },
   { label: "Destinations", href: "/destinations",icon: MapPin,   mega: "destinations" },
   { label: "Packages",     href: "/packages",    icon: Package,  mega: "packages" },
-  { label: "Tirth Yatra",  href: "/tirth-yatra", icon: Landmark },
   { label: "Services",     href: "/services",    icon: Wrench,   children: SERVICES_ITEMS },
   { label: "Blog",         href: "/blogs",       icon: FileText, children: BLOG_ITEMS },
   { label: "Contact",      href: "/contact",     icon: Mail },
@@ -127,28 +82,36 @@ const NAV: NavItem[] = [
 
 // ── Mega panels ───────────────────────────────────────────────
 
-function MegaCars({ close }: { close: () => void }) {
-  const cols = [
-    { title: "Cab Services", items: CAR_SERVICES },
-    { title: "Cars",         items: CAR_MODELS },
-    { title: "Luxury Cars",  items: CAR_LUXURY },
-    { title: "Van",          items: CAR_VANS },
+function MegaColList({ items, close }: { items: NavLink[]; close: () => void }) {
+  return (
+    <ul className="space-y-2">
+      {items.map((it) => (
+        <li key={it.href}>
+          <Link href={it.href} onClick={close} className="text-[13px] text-gray-600 hover:text-[#0A65AB] transition-colors flex items-center gap-1.5 group">
+            <span className="w-1 h-1 bg-gray-300 rounded-full group-hover:bg-[#0A65AB] transition-colors flex-shrink-0" />
+            {it.label}
+          </Link>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function MegaCars({ cols, close }: { cols: CarCol; close: () => void }) {
+  const columns = [
+    { title: "Cab Services", items: cols.services },
+    { title: "Cars",         items: cols.models },
+    { title: "Luxury Cars",  items: cols.luxury },
+    { title: "Van",          items: cols.vans },
   ];
+  const hasAny = columns.some((c) => c.items.length > 0);
+  if (!hasAny) return null;
   return (
     <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 w-[760px] grid grid-cols-4 gap-0 py-5 mt-1">
-      {cols.map((col, ci) => (
-        <div key={col.title} className={`px-5 ${ci < cols.length - 1 ? "border-r border-gray-100" : ""}`}>
+      {columns.map((col, ci) => (
+        <div key={col.title} className={`px-5 ${ci < columns.length - 1 ? "border-r border-gray-100" : ""}`}>
           <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#0A65AB] mb-3">{col.title}</div>
-          <ul className="space-y-2">
-            {col.items.map((it) => (
-              <li key={it.label}>
-                <Link href={it.href} onClick={close} className="text-[13px] text-gray-600 hover:text-[#0A65AB] transition-colors flex items-center gap-1.5 group">
-                  <span className="w-1 h-1 bg-gray-300 rounded-full group-hover:bg-[#0A65AB] transition-colors flex-shrink-0" />
-                  {it.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <MegaColList items={col.items} close={close} />
         </div>
       ))}
     </div>
@@ -188,27 +151,20 @@ function MegaDestinations({ close }: { close: () => void }) {
   );
 }
 
-function MegaPackages({ close }: { close: () => void }) {
-  const cols = [
-    { title: "Tour Packages",        items: PKG_TOURS },
-    { title: "Honeymoon Packages",   items: PKG_HONEYMOON },
-    { title: "Tirth Yatra Packages", items: PKG_TIRTH },
+function MegaPackages({ cols, close }: { cols: PkgCol; close: () => void }) {
+  const columns = [
+    { title: "Tour Packages",        items: cols.tours },
+    { title: "Honeymoon Packages",   items: cols.honeymoon },
+    { title: "Tirth Yatra Packages", items: cols.tirth },
   ];
+  const hasAny = columns.some((c) => c.items.length > 0);
+  if (!hasAny) return null;
   return (
     <div className="absolute top-full left-1/2 -translate-x-1/2 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 w-[600px] grid grid-cols-3 gap-0 py-5 mt-1">
-      {cols.map((col, ci) => (
-        <div key={col.title} className={`px-5 ${ci < cols.length - 1 ? "border-r border-gray-100" : ""}`}>
+      {columns.map((col, ci) => (
+        <div key={col.title} className={`px-5 ${ci < columns.length - 1 ? "border-r border-gray-100" : ""}`}>
           <div className="text-[10px] font-extrabold uppercase tracking-widest text-[#0A65AB] mb-3">{col.title}</div>
-          <ul className="space-y-2">
-            {col.items.map((it) => (
-              <li key={it.label}>
-                <Link href={it.href} onClick={close} className="text-[13px] text-gray-600 hover:text-[#0A65AB] transition-colors flex items-center gap-1.5 group">
-                  <span className="w-1 h-1 bg-gray-300 rounded-full group-hover:bg-[#0A65AB] transition-colors flex-shrink-0" />
-                  {it.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <MegaColList items={col.items} close={close} />
         </div>
       ))}
     </div>
@@ -222,6 +178,59 @@ export default function Navbar() {
   const [openKey, setOpenKey] = useState<string | null>(null);
   const [mobileOpen2, setMobileOpen2] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Dynamic data fetched from DB
+  const [carCols, setCarCols] = useState<CarCol>({ services: [], models: [], luxury: [], vans: [] });
+  const [pkgCols, setPkgCols] = useState<PkgCol>({ tours: [], honeymoon: [], tirth: [] });
+
+  useEffect(() => {
+    // Fetch cars and bucket by category
+    fetch("/api/cars")
+      .then((r) => r.json())
+      .then((data) => {
+        const cars: { name: string; slug?: string; _id: string; category: string }[] = Array.isArray(data) ? data : (data.cars ?? []);
+        const toLink = (c: { name: string; slug?: string; _id: string }): NavLink => ({
+          label: c.name,
+          href: `/cars/${c.slug || c._id}`,
+        });
+        setCarCols({
+          services: cars.filter((c) => CAB_CATS.has(c.category)).map(toLink),
+          luxury:   cars.filter((c) => LUXURY_CATS.has(c.category)).map(toLink),
+          vans:     cars.filter((c) => VAN_CATS.has(c.category)).map(toLink),
+          models:   cars.filter((c) => !CAB_CATS.has(c.category) && !LUXURY_CATS.has(c.category) && !VAN_CATS.has(c.category)).map(toLink),
+        });
+      })
+      .catch(() => {});
+
+    // Fetch packages and bucket by category
+    fetch("/api/packages")
+      .then((r) => r.json())
+      .then((data) => {
+        const pkgs: { title: string; slug?: string; _id: string; category: string }[] = Array.isArray(data) ? data : (data.packages ?? []);
+        const toLink = (p: { title: string; slug?: string; _id: string }): NavLink => ({
+          label: p.title,
+          href: `/packages/${p.slug || p._id}`,
+        });
+        setPkgCols((prev) => ({
+          ...prev,
+          tours:     pkgs.filter((p) => p.category !== "Honeymoon").map(toLink),
+          honeymoon: pkgs.filter((p) => p.category === "Honeymoon").map(toLink),
+        }));
+      })
+      .catch(() => {});
+
+    // Fetch tirth yatra
+    fetch("/api/tirth-yatra")
+      .then((r) => r.json())
+      .then((data) => {
+        const items: { name: string; slug?: string; _id: string }[] = Array.isArray(data) ? data : (data.items ?? []);
+        setPkgCols((prev) => ({
+          ...prev,
+          tirth: items.map((t) => ({ label: t.name, href: `/tirth-yatra/${t.slug || t._id}` })),
+        }));
+      })
+      .catch(() => {});
+  }, []);
 
   function onEnter(label: string) {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -261,12 +270,10 @@ export default function Navbar() {
                     isOpen ? "text-[#0A65AB]" : "text-gray-500 hover:text-[#0A65AB]"
                   }`}
                 >
-                  {/* Icon */}
                   <Icon
                     size={22}
                     className={`transition-colors flex-shrink-0 ${isOpen ? "text-[#0A65AB]" : "text-gray-400 group-hover:text-[#0A65AB]"}`}
                   />
-                  {/* Label */}
                   <span className="text-[12px] font-semibold whitespace-nowrap leading-none">
                     {item.label}
                     {hasPanel && (
@@ -276,7 +283,6 @@ export default function Navbar() {
                       />
                     )}
                   </span>
-                  {/* Active underline */}
                   <span
                     className={`absolute bottom-0 left-2 right-2 h-[2.5px] rounded-t-full bg-[#0A65AB] transition-all duration-200 ${
                       isOpen ? "opacity-100 scale-x-100" : "opacity-0 scale-x-0"
@@ -285,9 +291,9 @@ export default function Navbar() {
                 </Link>
 
                 {/* Mega panels */}
-                {isOpen && item.mega === "cars"         && <MegaCars close={closeMega} />}
+                {isOpen && item.mega === "cars"         && <MegaCars cols={carCols} close={closeMega} />}
                 {isOpen && item.mega === "destinations" && <MegaDestinations close={closeMega} />}
-                {isOpen && item.mega === "packages"     && <MegaPackages close={closeMega} />}
+                {isOpen && item.mega === "packages"     && <MegaPackages cols={pkgCols} close={closeMega} />}
 
                 {/* Simple dropdown */}
                 {isOpen && !item.mega && item.children && (
@@ -370,13 +376,13 @@ export default function Navbar() {
               const hasPanel = !!(item.mega || (item.children && item.children.length > 0));
               const Icon = item.icon;
 
-              let mobileGroups: { title: string; items: { label: string; href: string }[] }[] = [];
+              let mobileGroups: { title: string; items: NavLink[] }[] = [];
               if (item.mega === "cars") {
                 mobileGroups = [
-                  { title: "Cab Services",  items: CAR_SERVICES },
-                  { title: "Cars",          items: CAR_MODELS },
-                  { title: "Luxury Cars",   items: CAR_LUXURY },
-                  { title: "Van",           items: CAR_VANS },
+                  { title: "Cab Services",  items: carCols.services },
+                  { title: "Cars",          items: carCols.models },
+                  { title: "Luxury Cars",   items: carCols.luxury },
+                  { title: "Van",           items: carCols.vans },
                 ];
               } else if (item.mega === "destinations") {
                 mobileGroups = [
@@ -385,9 +391,9 @@ export default function Navbar() {
                 ];
               } else if (item.mega === "packages") {
                 mobileGroups = [
-                  { title: "Tour Packages",        items: PKG_TOURS },
-                  { title: "Honeymoon Packages",   items: PKG_HONEYMOON },
-                  { title: "Tirth Yatra Packages", items: PKG_TIRTH },
+                  { title: "Tour Packages",        items: pkgCols.tours },
+                  { title: "Honeymoon Packages",   items: pkgCols.honeymoon },
+                  { title: "Tirth Yatra Packages", items: pkgCols.tirth },
                 ];
               } else if (item.children) {
                 mobileGroups = [{ title: "", items: item.children }];
@@ -441,18 +447,6 @@ export default function Navbar() {
                 </div>
               );
             })}
-          </div>
-
-          <div className="px-4 mt-3">
-            <a
-              href="tel:+919131727811"
-              className="flex items-center justify-center gap-2 py-3 border border-[#0A65AB]/30 rounded-xl text-[#0A65AB] font-semibold text-sm"
-            >
-              <Phone size={15} /> +91-9131727811
-            </a>
-            <Link href="/contact" className="mt-2 flex items-center justify-center bg-[#0A65AB] text-white font-bold text-sm py-3 rounded-xl hover:bg-[#0852a0] transition-colors" onClick={() => setMobileOpen(false)}>
-              Book Now
-            </Link>
           </div>
         </div>
       )}
