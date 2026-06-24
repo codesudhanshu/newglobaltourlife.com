@@ -153,11 +153,18 @@ export default function CarDetailPage() {
         <section className="section-padding bg-white">
           <div className="container-custom max-w-4xl">
             <h2 className="section-title mb-5">{car.name} Car Booking</h2>
-            <div className="text-gray-600 text-sm leading-relaxed space-y-4">
-              {(car.longContent || car.description).split(/\n{2,}/).map((para, i) => (
-                <p key={i} className="whitespace-pre-line">{para}</p>
-              ))}
-            </div>
+            {(car.longContent || car.description).trim().startsWith("<") ? (
+              <div
+                className="prose prose-sm max-w-none text-gray-600 leading-relaxed [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-gray-800 [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-gray-700 [&_h3]:mt-5 [&_h3]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_li]:text-gray-600 [&_p]:mb-3 [&_strong]:text-gray-800"
+                dangerouslySetInnerHTML={{ __html: car.longContent || car.description }}
+              />
+            ) : (
+              <div className="text-gray-600 text-sm leading-relaxed space-y-4">
+                {(car.longContent || car.description).split(/\n{2,}/).map((para, i) => (
+                  <p key={i} className="whitespace-pre-line">{para}</p>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       )}
