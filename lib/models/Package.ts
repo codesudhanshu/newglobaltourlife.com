@@ -14,6 +14,9 @@ export interface IItineraryDay {
 export interface IPackage extends Document {
   title: string;
   slug: string;
+  metaTitle: string;
+  metaKeywords: string;
+  metaDescription: string;
   destination: string;
   nights: number;
   days: number;
@@ -38,6 +41,9 @@ const PackageSchema = new Schema<IPackage>(
   {
     title: { type: String, required: true },
     slug: { type: String, unique: true },
+    metaTitle: { type: String, default: "" },
+    metaKeywords: { type: String, default: "" },
+    metaDescription: { type: String, default: "" },
     destination: { type: String, default: "" },
     nights: { type: Number, default: 0 },
     days: { type: Number, default: 0 },

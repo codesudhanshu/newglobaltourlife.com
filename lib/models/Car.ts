@@ -8,6 +8,9 @@ export interface IFaq {
 export interface ICar extends Document {
   name: string;
   slug: string;
+  metaTitle: string;
+  metaKeywords: string;
+  metaDescription: string;
   year: number;
   transmission: string;
   capacity: number;
@@ -28,6 +31,9 @@ const CarSchema = new Schema<ICar>(
   {
     name: { type: String, required: true },
     slug: { type: String, default: "" },
+    metaTitle: { type: String, default: "" },
+    metaKeywords: { type: String, default: "" },
+    metaDescription: { type: String, default: "" },
     year: { type: Number, default: 2024 },
     transmission: { type: String, default: "Automatic" },
     capacity: { type: Number, default: 5 },

@@ -3,47 +3,45 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { User, Calendar, ArrowRight, ChevronRight, MapPin } from "lucide-react";
+import { MapPin, Phone, ChevronRight, Globe, Star } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
 
-interface Guide {
+interface TourGuide {
   _id: string;
-  title: string;
+  name: string;
   slug: string;
-  excerpt: string;
   image: string;
-  category: string;
-  author: string;
-  createdAt: string;
+  phone: string;
+  experience: number;
+  languages: string[];
+  specializations: string[];
+  locations: string[];
+  description: string;
+  rating: number;
+  featured: boolean;
 }
 
-const FALLBACK: Guide[] = [
-  { _id: "jammu-kashmir-tour", slug: "jammu-kashmir-tour", title: "Jammu & Kashmir Valley Dream", excerpt: "Dal Lake houseboats, Mughal Gardens, Pahalgam, Gulmarg — discover paradise on Earth.", image: "https://images.unsplash.com/photo-1566837497312-7be4a47c5c7f?auto=format&fit=crop&w=800&q=80", category: "Hill Station", author: "New Global Tour Life", createdAt: "2026-01-01" },
-  { _id: "shimla-manali-package", slug: "shimla-manali-package", title: "Shimla & Manali Hill Station", excerpt: "Snow-capped peaks, apple orchards, adventure sports and colonial charm.", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80", category: "Hill Station", author: "New Global Tour Life", createdAt: "2026-01-02" },
-  { _id: "goa-beach-holiday", slug: "goa-beach-holiday", title: "Goa Beach Holiday", excerpt: "Sun-soaked beaches, Portuguese heritage, vibrant nightlife and fresh seafood.", image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80", category: "Beach", author: "New Global Tour Life", createdAt: "2026-01-03" },
-];
-
-const CAT_COLORS: Record<string, string> = {
-  Travel: "#3b82f6", "Hill Station": "#10b981", Beach: "#f59e0b",
-  Heritage: "#8b5cf6", Adventure: "#ef4444", General: "#64748b",
-};
-
 export default function TravelGuidePage() {
-  const [guides, setGuides] = useState<Guide[]>(FALLBACK);
+  const [guides, setGuides] = useState<TourGuide[]>([]);
+  const [loaded, setLoaded] = useState(false);
   const [modal, setModal] = useState<{ open: boolean; subject: string }>({ open: false, subject: "" });
 
   useEffect(() => {
-    fetch("/api/blogs")
+    fetch("/api/tour-guides")
       .then((r) => r.json())
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setGuides(data.filter((b: Guide) => b.title));
-        }
+        setGuides(Array.isArray(data) ? data : []);
+        setLoaded(true);
       })
-      .catch(() => {});
+      .catch(() => setLoaded(true));
   }, []);
+
+  function maskPhone(phone: string): string {
+    if (!phone) return "";
+    return phone.slice(0, 5) + "...";
+  }
 
   return (
     <>
@@ -55,13 +53,13 @@ export default function TravelGuidePage() {
           <div className="flex items-center gap-2 text-sm text-gray-300 mb-4">
             <Link href="/" className="hover:text-[#01b7f2]">Home</Link>
             <ChevronRight size={14} />
-            <span className="text-gray-300">Travel Guide</span>
+            <span className="text-gray-300">Tour Guides</span>
           </div>
           <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-3">
-            Travel <span className="text-[#01b7f2]">Guide</span>
+            Our Expert <span className="text-[#01b7f2]">Tour Guides</span>
           </h1>
           <p className="text-gray-300 max-w-xl">
-            Explore destination guides crafted by our travel experts. Plan your perfect trip with local insights, best routes, and insider tips.
+            Travel with confidence guided by our experienced professionals who know every destination inside out.
           </p>
         </div>
       </section>
@@ -69,84 +67,163 @@ export default function TravelGuidePage() {
       {/* Guides Grid */}
       <div className="bg-gray-50 min-h-screen py-12">
         <div className="container-custom">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {guides.map((guide) => {
-              const color = CAT_COLORS[guide.category] || "#01b7f2";
-              const dateStr = guide.createdAt
-                ? new Date(guide.createdAt).toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" })
-                : "";
-              const href = `/blogs/${guide.slug || guide._id}`;
-              return (
-                <div key={guide._id} className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-shadow group flex flex-col">
-                  {/* Image */}
-                  <div className="relative h-52 overflow-hidden flex-shrink-0">
-                    {guide.image ? (
-                      <Image src={guide.image} alt={guide.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-5xl" style={{ background: `${color}15` }}>🗺️</div>
-                    )}
-                    <span className="absolute top-4 left-4 text-xs font-bold px-2.5 py-1 rounded-full text-white" style={{ backgroundColor: color }}>
-                      {guide.category || "Travel"}
-                    </span>
+
+          {!loaded ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((n) => (
+                <div key={n} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 animate-pulse">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-20 h-20 rounded-full bg-gray-200 flex-shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 bg-gray-200 rounded w-3/4" />
+                      <div className="h-3 bg-gray-200 rounded w-1/2" />
+                    </div>
                   </div>
-
-                  {/* Content */}
-                  <div className="p-6 flex flex-col flex-1">
-                    <div className="flex items-center gap-4 text-xs text-gray-400 mb-3">
-                      <span className="flex items-center gap-1"><User size={11} /> {guide.author}</span>
-                      {dateStr && <span className="flex items-center gap-1"><Calendar size={11} /> {dateStr}</span>}
-                    </div>
-                    <h3 className="font-extrabold text-[#0A65AB] text-lg mb-2 leading-snug group-hover:text-[#01b7f2] transition-colors">
-                      {guide.title}
-                    </h3>
-                    {guide.excerpt && (
-                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4 flex-1">{guide.excerpt}</p>
-                    )}
-
-                    {/* Action buttons */}
-                    <div className="flex items-center gap-2 border-t border-gray-100 pt-4 mt-auto">
-                      <Link
-                        href={href}
-                        className="flex-1 flex items-center justify-center gap-1.5 text-sm font-semibold py-2.5 rounded-xl text-white transition-all"
-                        style={{ backgroundColor: "#0A65AB" }}
-                      >
-                        Read Guide <ArrowRight size={14} />
-                      </Link>
-                      <button
-                        onClick={() => setModal({ open: true, subject: `Travel Guide: ${guide.title}` })}
-                        className="flex items-center justify-center gap-1.5 text-sm font-semibold py-2.5 px-4 rounded-xl border transition-all"
-                        style={{ borderColor: `${color}50`, color }}
-                      >
-                        Enquire
-                      </button>
-                    </div>
+                  <div className="space-y-2">
+                    <div className="h-3 bg-gray-200 rounded" />
+                    <div className="h-3 bg-gray-200 rounded w-5/6" />
                   </div>
                 </div>
-              );
-            })}
-          </div>
-
-          {/* CTA */}
-          <div className="mt-12 bg-[#0A65AB] rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-extrabold text-white mb-1">Want a Custom Itinerary?</h3>
-              <p className="text-blue-100 text-sm">Our experts will craft a personalised travel plan just for you.</p>
+              ))}
             </div>
-            <div className="flex flex-wrap gap-3">
-              <a
-                href="tel:+919131727811"
-                className="flex items-center gap-2 bg-white text-[#0A65AB] font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors text-sm"
-              >
-                <MapPin size={16} /> Call Us
-              </a>
+          ) : guides.length === 0 ? (
+            <div className="text-center py-24">
+              <div className="text-6xl mb-4">🧭</div>
+              <h2 className="text-2xl font-bold text-gray-700 mb-2">Coming Soon</h2>
+              <p className="text-gray-500 mb-6">Our expert tour guides will be listed here shortly.</p>
               <button
-                onClick={() => setModal({ open: true, subject: "Custom Travel Itinerary" })}
-                className="border border-white/50 text-white hover:border-white font-bold px-6 py-3 rounded-xl transition-all text-sm"
+                onClick={() => setModal({ open: true, subject: "Tour Guide Enquiry" })}
+                className="bg-[#0A65AB] text-white font-bold px-8 py-3 rounded-xl hover:bg-[#0852a0] transition-colors"
               >
-                Send Enquiry
+                Enquire Now
               </button>
             </div>
-          </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {guides.map((guide) => (
+                <div key={guide._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-shadow flex flex-col">
+                  {/* Card Header */}
+                  <div className="p-6 pb-4">
+                    <div className="flex items-start gap-4">
+                      {guide.image ? (
+                        <div className="relative w-20 h-20 rounded-full overflow-hidden flex-shrink-0 border-2 border-[#0A65AB]/20">
+                          <Image src={guide.image} alt={guide.name} fill className="object-cover" />
+                        </div>
+                      ) : (
+                        <div className="w-20 h-20 rounded-full bg-[#0A65AB]/10 flex items-center justify-center flex-shrink-0 text-3xl border-2 border-[#0A65AB]/20">
+                          🧭
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-extrabold text-[#0A65AB] text-lg leading-snug truncate">{guide.name}</h3>
+                        {guide.experience > 0 && (
+                          <p className="text-gray-500 text-sm mt-0.5">{guide.experience} yr{guide.experience !== 1 ? "s" : ""} experience</p>
+                        )}
+                        {guide.rating > 0 && (
+                          <div className="flex items-center gap-1 mt-1">
+                            <Star size={12} className="fill-amber-400 text-amber-400" />
+                            <span className="text-xs font-semibold text-gray-600">{guide.rating.toFixed(1)}</span>
+                          </div>
+                        )}
+                        {guide.featured && (
+                          <span className="inline-block mt-1 text-[10px] bg-[#0A65AB]/10 text-[#0A65AB] px-2 py-0.5 rounded-full font-bold">FEATURED</span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Locations */}
+                    {guide.locations && guide.locations.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-3">
+                        {guide.locations.slice(0, 3).map((loc, i) => (
+                          <span key={i} className="flex items-center gap-1 text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
+                            <MapPin size={9} /> {loc}
+                          </span>
+                        ))}
+                        {guide.locations.length > 3 && (
+                          <span className="text-xs text-gray-400">+{guide.locations.length - 3} more</span>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Languages */}
+                    {guide.languages && guide.languages.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {guide.languages.map((lang, i) => (
+                          <span key={i} className="flex items-center gap-1 text-xs bg-blue-50 text-[#0A65AB] px-2 py-0.5 rounded-full font-medium">
+                            <Globe size={9} /> {lang}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Specializations */}
+                    {guide.specializations && guide.specializations.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {guide.specializations.slice(0, 3).map((sp, i) => (
+                          <span key={i} className="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full border border-amber-100 font-medium">
+                            {sp}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Description */}
+                    {guide.description && (
+                      <p className="text-gray-500 text-sm mt-3 line-clamp-2 leading-relaxed">{guide.description}</p>
+                    )}
+
+                    {/* Phone masked */}
+                    {guide.phone && (
+                      <div className="flex items-center gap-1.5 mt-3 text-sm text-gray-500">
+                        <Phone size={12} />
+                        <span>{maskPhone(guide.phone)}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-auto border-t border-gray-100 p-4 flex gap-2">
+                    <Link
+                      href={`/travel-guide/${guide.slug || guide._id}`}
+                      className="flex-1 flex items-center justify-center text-sm font-semibold py-2.5 rounded-xl text-white bg-[#0A65AB] hover:bg-[#0852a0] transition-colors"
+                    >
+                      View Profile
+                    </Link>
+                    <button
+                      onClick={() => setModal({ open: true, subject: `Tour Guide: ${guide.name}` })}
+                      className="flex items-center justify-center text-sm font-semibold py-2.5 px-4 rounded-xl border border-[#0A65AB]/30 text-[#0A65AB] hover:bg-[#0A65AB]/5 transition-colors"
+                    >
+                      Enquire
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* CTA */}
+          {loaded && (
+            <div className="mt-12 bg-[#0A65AB] rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div>
+                <h3 className="text-xl font-extrabold text-white mb-1">Need a Custom Tour Guide?</h3>
+                <p className="text-blue-100 text-sm">Tell us your destination and we'll match you with the perfect guide.</p>
+              </div>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href="tel:+919131727811"
+                  className="flex items-center gap-2 bg-white text-[#0A65AB] font-bold px-6 py-3 rounded-xl hover:bg-blue-50 transition-colors text-sm"
+                >
+                  <Phone size={16} /> Call Us
+                </a>
+                <button
+                  onClick={() => setModal({ open: true, subject: "Tour Guide Enquiry" })}
+                  className="border border-white/50 text-white hover:border-white font-bold px-6 py-3 rounded-xl transition-all text-sm"
+                >
+                  Send Enquiry
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -157,7 +234,7 @@ export default function TravelGuidePage() {
         onClose={() => setModal({ open: false, subject: "" })}
         subject={modal.subject}
         type="general"
-        prefillService="Travel Guide"
+        prefillService="Tour Guide"
       />
     </>
   );

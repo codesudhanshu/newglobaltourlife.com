@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { useRouter, useParams } from "next/navigation";
 import ImageUpload from "@/components/admin/ImageUpload";
+import SeoSection from "@/components/admin/SeoSection";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
@@ -20,6 +21,7 @@ export default function EditTirthYatra() {
     image: "", price: 0, duration: "", highlights: [] as string[],
     featured: false, available: true, order: 0,
     faqs: [] as { question: string; answer: string }[],
+    slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
   });
 
   useEffect(() => {
@@ -169,6 +171,12 @@ export default function EditTirthYatra() {
               />
             )}
           </div>
+
+          <SeoSection
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            onChange={(field, value) => set(field, value)}
+            autoSlugFrom={form.name}
+          />
         </div>
 
         <div className="space-y-5">

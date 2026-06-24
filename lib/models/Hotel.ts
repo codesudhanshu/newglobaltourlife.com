@@ -16,6 +16,10 @@ export interface IRoom {
 
 export interface IHotel extends Document {
   name: string;
+  slug: string;
+  metaTitle: string;
+  metaKeywords: string;
+  metaDescription: string;
   location: string;
   city: string;
   country: string;
@@ -36,6 +40,10 @@ export interface IHotel extends Document {
 const HotelSchema = new Schema<IHotel>(
   {
     name:          { type: String, required: true },
+    slug:          { type: String, default: "" },
+    metaTitle:     { type: String, default: "" },
+    metaKeywords:  { type: String, default: "" },
+    metaDescription: { type: String, default: "" },
     location:      { type: String, default: "" },
     city:          { type: String, default: "" },
     country:       { type: String, default: "India" },

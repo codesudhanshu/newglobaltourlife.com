@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
+import SeoSection from "@/components/admin/SeoSection";
 import Link from "next/link";
 import { ArrowLeft, Plus, X } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
@@ -24,6 +25,7 @@ export default function NewHotelPage() {
     description: "", stars: 4, pricePerNight: "",
     category: "Luxury", amenities: [] as string[],
     featured: false, available: true, order: 0,
+    slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
   });
   const [images, setImages] = useState<string[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -195,6 +197,12 @@ export default function NewHotelPage() {
           <h2 className="text-white font-medium mb-3">Images</h2>
           {token && <MultiImageUpload values={images} onChange={setImages} token={token} folder="newglobaltourlife/hotels" />}
         </div>
+
+        <SeoSection
+          data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+          onChange={(f, value) => field(f, value)}
+          autoSlugFrom={form.name}
+        />
 
         {error && <p className="text-red-400 text-sm bg-red-900/20 rounded-lg px-4 py-2">{error}</p>}
 

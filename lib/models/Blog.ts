@@ -3,6 +3,9 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface IBlog extends Document {
   title: string;
   slug: string;
+  metaTitle: string;
+  metaKeywords: string;
+  metaDescription: string;
   excerpt: string;
   content: string;
   image: string;
@@ -18,6 +21,9 @@ const BlogSchema = new Schema<IBlog>(
   {
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
+    metaTitle: { type: String, default: "" },
+    metaKeywords: { type: String, default: "" },
+    metaDescription: { type: String, default: "" },
     excerpt: { type: String, default: "" },
     content: { type: String, default: "" },
     image: { type: String, default: "" },

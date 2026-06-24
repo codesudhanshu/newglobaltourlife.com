@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { useRouter, useParams } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
+import SeoSection from "@/components/admin/SeoSection";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
@@ -29,6 +30,7 @@ export default function EditPackage() {
     inclusions: [] as string[], exclusions: [] as string[], highlights: [] as string[],
     itineraryDays: [] as Day[], images: [] as string[], image: "",
     faqs: [] as { question: string; answer: string }[],
+    metaTitle: "", metaKeywords: "", metaDescription: "",
   });
 
   useEffect(() => {
@@ -45,6 +47,7 @@ export default function EditPackage() {
             inclusions: data.inclusions || [], exclusions: data.exclusions || [], highlights: data.highlights || [],
             itineraryDays: data.itineraryDays || [], images: data.images || [], image: data.image || "",
             faqs: data.faqs || [],
+            metaTitle: data.metaTitle || "", metaKeywords: data.metaKeywords || "", metaDescription: data.metaDescription || "",
           });
         }
         setFetching(false);
@@ -227,6 +230,12 @@ export default function EditPackage() {
               <MultiImageUpload values={form.images} onChange={handleImages} token={token} folder="new-global-tour-life/packages" />
             )}
           </div>
+
+          <SeoSection
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            onChange={(field, value) => set(field, value)}
+            autoSlugFrom={form.title}
+          />
         </div>
 
         <div className="space-y-5">

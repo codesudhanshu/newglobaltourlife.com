@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
+import SeoSection from "@/components/admin/SeoSection";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
@@ -27,6 +28,7 @@ export default function NewPackage() {
     inclusions: [] as string[], exclusions: [] as string[], highlights: [] as string[],
     itineraryDays: [] as Day[], images: [] as string[], image: "",
     faqs: [] as { question: string; answer: string }[],
+    metaTitle: "", metaKeywords: "", metaDescription: "",
   });
 
   function set(field: string, value: unknown) {
@@ -211,6 +213,12 @@ export default function NewPackage() {
               <MultiImageUpload values={form.images} onChange={handleImages} token={token} folder="new-global-tour-life/packages" />
             )}
           </div>
+
+          <SeoSection
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            onChange={(field, value) => set(field, value)}
+            autoSlugFrom={form.title}
+          />
         </div>
 
         <div className="space-y-5">

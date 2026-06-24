@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import ImageUpload from "@/components/admin/ImageUpload";
+import SeoSection from "@/components/admin/SeoSection";
 import Link from "next/link";
 import { ArrowLeft, Loader } from "lucide-react";
 
@@ -24,6 +25,9 @@ export default function NewBlog() {
     author: "Admin",
     order: 0,
     published: true,
+    metaTitle: "",
+    metaKeywords: "",
+    metaDescription: "",
   });
 
   function set(field: string, value: any) {
@@ -87,6 +91,12 @@ export default function NewBlog() {
               <textarea required value={form.content} onChange={(e) => set("content", e.target.value)} rows={10} placeholder="Write your blog content here..." className="input resize-none" />
             </div>
           </div>
+
+          <SeoSection
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            onChange={(field, value) => set(field, value)}
+            autoSlugFrom={form.title}
+          />
         </div>
 
         {/* Sidebar */}

@@ -8,6 +8,9 @@ export interface IFaq {
 export interface ITirthYatra extends Document {
   name: string;
   slug: string;
+  metaTitle: string;
+  metaKeywords: string;
+  metaDescription: string;
   description: string;
   location: string;
   state: string;
@@ -27,6 +30,9 @@ const TirthYatraSchema = new Schema<ITirthYatra>(
   {
     name: { type: String, required: true },
     slug: { type: String, default: "" },
+    metaTitle: { type: String, default: "" },
+    metaKeywords: { type: String, default: "" },
+    metaDescription: { type: String, default: "" },
     description: { type: String, default: "" },
     location: { type: String, default: "" },
     state: { type: String, default: "" },

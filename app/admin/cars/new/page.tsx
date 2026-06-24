@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
+import SeoSection from "@/components/admin/SeoSection";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
@@ -19,6 +20,7 @@ export default function NewCar() {
     name: "", year: 2024, transmission: "Automatic", capacity: 5,
     category: "Economy", price: 0, description: "", longContent: "", image: "", images: [] as string[], order: 0, available: true,
     faqs: [] as { question: string; answer: string }[],
+    slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
   });
 
   function set(field: string, value: any) {
@@ -136,6 +138,12 @@ export default function NewCar() {
               {form.faqs.length === 0 && <p className="text-gray-500 text-sm">No FAQs added yet.</p>}
             </div>
           </div>
+
+          <SeoSection
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            onChange={(field, value) => set(field, value)}
+            autoSlugFrom={form.name}
+          />
         </div>
 
         <div className="space-y-5">
