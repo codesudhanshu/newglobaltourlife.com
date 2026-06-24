@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, FileText, Car, MessageSquare, LogOut, Menu, X,
-  Tag, Hotel, Settings, Landmark, IndianRupee, Package, Images, Bus,
+  Hotel, Settings, Landmark, IndianRupee, Package, Images, Bus,
   FileCheck, Users, ChevronRight, MapPin,
 } from "lucide-react";
 import { useState } from "react";
@@ -13,21 +13,20 @@ import { useState } from "react";
 interface Props { onLogout: () => void; }
 
 const links = [
-  { href: "/admin/dashboard",   label: "Dashboard",    icon: LayoutDashboard },
-  { href: "/admin/hero-slides", label: "Hero Slides",  icon: Images },
-  { href: "/admin/categories",  label: "Categories",   icon: Tag },
-  { href: "/admin/cars",        label: "Cars",         icon: Car },
-  { href: "/admin/pricing",     label: "Pricing",      icon: IndianRupee },
-  { href: "/admin/hotels",      label: "Hotels",       icon: Hotel },
-  { href: "/admin/destinations", label: "Destinations",  icon: MapPin },
-  { href: "/admin/packages",    label: "Packages",     icon: Package },
-  { href: "/admin/tirth-yatra", label: "Tirth Yatra",  icon: Landmark },
-  { href: "/admin/tour-guides", label: "Tour Guides",  icon: Users },
-  { href: "/admin/bus",         label: "Bus Booking",  icon: Bus },
-  { href: "/admin/visa",        label: "Visa",         icon: FileCheck },
-  { href: "/admin/blogs",       label: "Blogs",        icon: FileText },
-  { href: "/admin/contacts",    label: "Contacts",     icon: MessageSquare },
-  { href: "/admin/settings",    label: "Settings",     icon: Settings },
+  { href: "/admin/dashboard",    label: "Dashboard",    icon: LayoutDashboard },
+  { href: "/admin/hero-slides",  label: "Hero Slides",  icon: Images },
+  { href: "/admin/cars",         label: "Cars",         icon: Car },
+  { href: "/admin/pricing",      label: "Pricing",      icon: IndianRupee },
+  { href: "/admin/hotels",       label: "Hotels",       icon: Hotel },
+  { href: "/admin/destinations", label: "Destinations", icon: MapPin },
+  { href: "/admin/packages",     label: "Packages",     icon: Package },
+  { href: "/admin/tirth-yatra",  label: "Tirth Yatra",  icon: Landmark },
+  { href: "/admin/tour-guides",  label: "Tour Guides",  icon: Users },
+  { href: "/admin/bus",          label: "Bus Booking",  icon: Bus },
+  { href: "/admin/visa",         label: "Visa",         icon: FileCheck },
+  { href: "/admin/blogs",        label: "Blogs",        icon: FileText },
+  { href: "/admin/contacts",     label: "Enquiries",    icon: MessageSquare },
+  { href: "/admin/settings",     label: "Settings",     icon: Settings },
 ];
 
 export default function AdminNav({ onLogout }: Props) {
