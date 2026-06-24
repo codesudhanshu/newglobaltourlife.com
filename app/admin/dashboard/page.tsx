@@ -101,18 +101,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Info row */}
-      <div className="bg-gradient-to-r from-[#0A65AB] to-[#0891b2] rounded-2xl p-6 text-white">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <h3 className="font-bold text-lg">Need Help?</h3>
-            <p className="text-blue-100 text-sm mt-1">Contact your developer or check the documentation.</p>
-          </div>
-          <a href="tel:+919131727811" className="flex-shrink-0 bg-white text-[#0A65AB] font-bold text-sm px-5 py-2.5 rounded-xl hover:bg-blue-50 transition-colors">
-            Call Support
-          </a>
-        </div>
-      </div>
     </div>
   );
 }
