@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, FileText, Car, MessageSquare, LogOut, Menu, X,
   Tag, Hotel, Settings, Landmark, IndianRupee, Package, Images, Bus,
-  FileCheck, Users, ChevronRight,
+  FileCheck, Users, ChevronRight, MapPin,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -19,6 +19,7 @@ const links = [
   { href: "/admin/cars",        label: "Cars",         icon: Car },
   { href: "/admin/pricing",     label: "Pricing",      icon: IndianRupee },
   { href: "/admin/hotels",      label: "Hotels",       icon: Hotel },
+  { href: "/admin/destinations", label: "Destinations",  icon: MapPin },
   { href: "/admin/packages",    label: "Packages",     icon: Package },
   { href: "/admin/tirth-yatra", label: "Tirth Yatra",  icon: Landmark },
   { href: "/admin/tour-guides", label: "Tour Guides",  icon: Users },
