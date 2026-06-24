@@ -12,21 +12,24 @@ import { useState } from "react";
 
 interface Props { onLogout: () => void; }
 
+// ── Main Menu (0–2) ───────────────────────────────────────────
+// ── Services  (3–10) ──────────────────────────────────────────
+// ── Content   (11–) ───────────────────────────────────────────
 const links = [
-  { href: "/admin/dashboard",    label: "Dashboard",    icon: LayoutDashboard },
-  { href: "/admin/hero-slides",  label: "Hero Slides",  icon: Images },
-  { href: "/admin/cars",         label: "Cars",         icon: Car },
-  { href: "/admin/pricing",      label: "Pricing",      icon: IndianRupee },
-  { href: "/admin/hotels",       label: "Hotels",       icon: Hotel },
-  { href: "/admin/destinations", label: "Destinations", icon: MapPin },
-  { href: "/admin/packages",     label: "Packages",     icon: Package },
-  { href: "/admin/tirth-yatra",  label: "Tirth Yatra",  icon: Landmark },
-  { href: "/admin/tour-guides",  label: "Tour Guides",  icon: Users },
-  { href: "/admin/bus",          label: "Bus Booking",  icon: Bus },
-  { href: "/admin/visa",         label: "Visa",         icon: FileCheck },
-  { href: "/admin/blogs",        label: "Blogs",        icon: FileText },
-  { href: "/admin/contacts",     label: "Enquiries",    icon: MessageSquare },
-  { href: "/admin/settings",     label: "Settings",     icon: Settings },
+  { href: "/admin/dashboard",    label: "Dashboard",    icon: LayoutDashboard }, // 0
+  { href: "/admin/hero-slides",  label: "Hero Slides",  icon: Images },          // 1
+  { href: "/admin/contacts",     label: "Enquiries",    icon: MessageSquare },   // 2
+  { href: "/admin/cars",         label: "Cars",         icon: Car },             // 3
+  { href: "/admin/hotels",       label: "Hotels",       icon: Hotel },           // 4
+  { href: "/admin/destinations", label: "Destinations", icon: MapPin },          // 5
+  { href: "/admin/packages",     label: "Packages",     icon: Package },         // 6
+  { href: "/admin/tirth-yatra",  label: "Tirth Yatra",  icon: Landmark },        // 7
+  { href: "/admin/tour-guides",  label: "Tour Guides",  icon: Users },           // 8
+  { href: "/admin/bus",          label: "Bus Booking",  icon: Bus },             // 9
+  { href: "/admin/visa",         label: "Visa",         icon: FileCheck },       // 10
+  { href: "/admin/blogs",        label: "Blogs",        icon: FileText },        // 11
+  { href: "/admin/pricing",      label: "Pricing",      icon: IndianRupee },     // 12
+  { href: "/admin/settings",     label: "Settings",     icon: Settings },        // 13
 ];
 
 export default function AdminNav({ onLogout }: Props) {
@@ -68,11 +71,11 @@ export default function AdminNav({ onLogout }: Props) {
         {/* Nav */}
         <nav className="flex-1 py-4 px-3 space-y-0.5 overflow-y-auto">
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mb-2">Main Menu</p>
-          {links.slice(0, 4).map((l) => <NavLink key={l.href} {...l} />)}
+          {links.slice(0, 3).map((l) => <NavLink key={l.href} {...l} />)}
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mt-4 mb-2">Services</p>
-          {links.slice(4, 9).map((l) => <NavLink key={l.href} {...l} />)}
+          {links.slice(3, 11).map((l) => <NavLink key={l.href} {...l} />)}
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mt-4 mb-2">Content</p>
-          {links.slice(9).map((l) => <NavLink key={l.href} {...l} />)}
+          {links.slice(11).map((l) => <NavLink key={l.href} {...l} />)}
         </nav>
 
         {/* Logout */}
@@ -107,11 +110,11 @@ export default function AdminNav({ onLogout }: Props) {
             </div>
             <nav className="flex-1 py-4 px-3 space-y-0.5 overflow-y-auto">
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mb-2">Main Menu</p>
-              {links.slice(0, 4).map((l) => <NavLink key={l.href} {...l} />)}
+              {links.slice(0, 3).map((l) => <NavLink key={l.href} {...l} />)}
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mt-4 mb-2">Services</p>
-              {links.slice(4, 9).map((l) => <NavLink key={l.href} {...l} />)}
+              {links.slice(3, 11).map((l) => <NavLink key={l.href} {...l} />)}
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mt-4 mb-2">Content</p>
-              {links.slice(9).map((l) => <NavLink key={l.href} {...l} />)}
+              {links.slice(11).map((l) => <NavLink key={l.href} {...l} />)}
             </nav>
             <div className="p-4 border-t border-gray-100">
               <button
