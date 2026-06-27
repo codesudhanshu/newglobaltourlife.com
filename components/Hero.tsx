@@ -35,7 +35,7 @@ export default function Hero() {
 
   return (
     <section className="relative">
-      <div className="relative h-[56vw] min-h-[220px] md:h-[70vh] md:min-h-[480px] overflow-hidden">
+      <div className="relative h-[60vh] min-h-[360px] md:h-[70vh] md:min-h-[480px] overflow-hidden">
         {slides.map((s, idx) => (
           <div
             key={idx}
@@ -70,7 +70,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative z-20 container-custom -mt-10 md:-mt-20 pb-4">
+      <div className="relative z-20 container-custom -mt-6 md:-mt-20 pb-4">
         <SearchBar />
       </div>
     </section>
