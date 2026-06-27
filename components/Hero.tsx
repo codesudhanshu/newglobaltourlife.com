@@ -35,16 +35,14 @@ export default function Hero() {
 
   return (
     <section className="relative">
-      <div className="relative h-[60vh] min-h-[360px] md:h-[70vh] md:min-h-[480px] overflow-hidden">
+      <div className="relative h-[70vh] min-h-[480px] overflow-hidden">
         {slides.map((s, idx) => (
           <div
             key={idx}
             className={`absolute inset-0 transition-opacity duration-1000 ${idx === i ? "opacity-100" : "opacity-0"}`}
           >
-            {/* blurred fill behind contained image — hides black bars on mobile */}
-            <Image src={s.image} alt="" fill className="object-cover scale-110 blur-2xl brightness-50 md:hidden" sizes="100vw" aria-hidden="true" />
-            <Image src={s.image} alt={s.heading} fill priority={idx === 0} className="object-contain md:object-cover" sizes="100vw" />
-            <div className="absolute inset-0 bg-black/40" />
+            <Image src={s.image} alt={s.heading} fill priority={idx === 0} className="object-cover" sizes="100vw" />
+            <div className="absolute inset-0 bg-black/45" />
           </div>
         ))}
 
@@ -59,7 +57,7 @@ export default function Hero() {
         </div>
 
         {/* Slide dots */}
-        <div className="absolute bottom-16 md:bottom-32 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        <div className="absolute bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 z-10 flex gap-2">
           {slides.map((_, idx) => (
             <button
               key={idx}
@@ -72,7 +70,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative z-20 container-custom -mt-6 md:-mt-20 pb-4">
+      <div className="relative z-20 container-custom -mt-16 md:-mt-20 pb-4">
         <SearchBar />
       </div>
     </section>
