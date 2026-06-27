@@ -39,10 +39,12 @@ export default function Hero() {
         {slides.map((s, idx) => (
           <div
             key={idx}
-            className={`absolute inset-0 bg-gray-950 transition-opacity duration-1000 ${idx === i ? "opacity-100" : "opacity-0"}`}
+            className={`absolute inset-0 transition-opacity duration-1000 ${idx === i ? "opacity-100" : "opacity-0"}`}
           >
+            {/* blurred fill behind contained image — hides black bars on mobile */}
+            <Image src={s.image} alt="" fill className="object-cover scale-110 blur-2xl brightness-50 md:hidden" sizes="100vw" aria-hidden="true" />
             <Image src={s.image} alt={s.heading} fill priority={idx === 0} className="object-contain md:object-cover" sizes="100vw" />
-            <div className="absolute inset-0 bg-black/45" />
+            <div className="absolute inset-0 bg-black/40" />
           </div>
         ))}
 
