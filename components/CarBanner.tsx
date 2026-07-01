@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Car } from "lucide-react";
 
 const CARS = [
@@ -19,10 +18,7 @@ export default function CarBanner() {
       <div className="max-w-[1400px] mx-auto flex items-stretch min-h-[110px] md:min-h-[130px]">
 
         {/* Left info panel */}
-        <Link
-          href="/cars"
-          className="flex items-center gap-4 px-6 md:px-10 py-5 shrink-0 border-r border-blue-200 hover:bg-blue-50/50 transition-colors"
-        >
+        <div className="flex items-center gap-4 px-6 md:px-10 py-5 shrink-0 border-r border-blue-200">
           <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-[#0A65AB] flex items-center justify-center shrink-0 shadow-md">
             <Car size={28} className="text-white" />
           </div>
@@ -31,28 +27,24 @@ export default function CarBanner() {
             <p className="text-[#0A65AB] text-xl md:text-2xl font-extrabold leading-tight">Comfort &amp; Style</p>
             <p className="text-gray-500 text-xs md:text-sm mt-0.5">Wide range of cars for every journey</p>
           </div>
-        </Link>
+        </div>
 
         {/* Cars strip — horizontal scroll */}
         <div className="flex-1 overflow-x-auto scrollbar-hide">
           <div className="flex items-end gap-2 md:gap-4 px-4 md:px-6 py-3 h-full min-w-max">
             {CARS.map((car) => (
-              <Link
-                key={car.name}
-                href="/cars"
-                className="flex flex-col items-center gap-1 group shrink-0"
-              >
+              <div key={car.name} className="flex flex-col items-center gap-1 shrink-0">
                 <div className="relative w-[100px] md:w-[130px] h-[64px] md:h-[82px]">
                   <Image
                     src={car.img}
                     alt={car.name}
                     fill
-                    className="object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-200"
+                    className="object-contain drop-shadow-md"
                     sizes="130px"
                   />
                 </div>
                 <span className="text-[#0A65AB] text-[11px] md:text-xs font-semibold">{car.name}</span>
-              </Link>
+              </div>
             ))}
           </div>
         </div>

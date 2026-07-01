@@ -24,11 +24,11 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Reveal><AboutUs /></Reveal>
+      <CarBanner />
       <Reveal><SpecialOffers /></Reveal>
       <Reveal><TopCities /></Reveal>
       {/* <Reveal><FlightDeals /></Reveal> */}
       {/* <Reveal><HotelsSection /></Reveal> */}
-      <CarBanner />
       <Reveal><CarCollection /></Reveal>
       <Reveal><ExploreIndia /></Reveal>
       <Reveal><DestinationsWorld /></Reveal>
