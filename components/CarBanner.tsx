@@ -4,7 +4,7 @@ export default function CarBanner() {
   return (
     <section className="w-full">
       <Image
-        src="/ChatGPT Image Jul 2, 2026, 12_03_47 AM.png"
+        src="/car-banner.png"
         alt="Explore India with Comfort & Style"
         width={1600}
         height={200}
