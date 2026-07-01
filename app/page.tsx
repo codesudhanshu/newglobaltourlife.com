@@ -6,6 +6,7 @@ import TopCities from "@/components/TopCities";
 // import FlightDeals from "@/components/FlightDeals";   // commented per request
 // import HotelsSection from "@/components/HotelsSection"; // commented per request
 import CarCollection from "@/components/CarCollection";
+import CarBanner from "@/components/CarBanner";
 import ExploreIndia from "@/components/ExploreIndia";
 import DestinationsIndia from "@/components/DestinationsIndia";
 import DestinationsWorld from "@/components/DestinationsWorld";
@@ -27,6 +28,7 @@ export default function Home() {
       <Reveal><TopCities /></Reveal>
       {/* <Reveal><FlightDeals /></Reveal> */}
       {/* <Reveal><HotelsSection /></Reveal> */}
+      <CarBanner />
       <Reveal><CarCollection /></Reveal>
       <Reveal><ExploreIndia /></Reveal>
       <Reveal><DestinationsWorld /></Reveal>
