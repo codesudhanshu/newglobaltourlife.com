@@ -8,6 +8,7 @@ import { Plane, ChevronRight, Phone } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
+import FlightEnquiryForm from "@/components/FlightEnquiryForm";
 import { FLIGHT_DEALS, type FlightDeal } from "@/lib/placeholders";
 
 function FlightContent() {
@@ -106,6 +107,7 @@ function FlightContent() {
         </div>
       </div>
 
+      <FlightEnquiryForm />
       <Footer />
 
       <BookingModal

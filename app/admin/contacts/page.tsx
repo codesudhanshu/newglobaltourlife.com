@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useAdmin } from "@/lib/useAdmin";
-import { Mail, Phone, Calendar, CheckCircle } from "lucide-react";
+import { Mail, Phone, Calendar, CheckCircle, Globe } from "lucide-react";
 import AdminPagination from "@/components/admin/AdminPagination";
 
 interface Contact {
@@ -11,6 +11,7 @@ interface Contact {
   email: string;
   phone: string;
   message: string;
+  source: string;
   read: boolean;
   createdAt: string;
 }
@@ -79,6 +80,7 @@ export default function AdminContacts() {
                     <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-3">
                       <span className="flex items-center gap-1.5"><Mail size={13} /> {contact.email}</span>
                       {contact.phone && <span className="flex items-center gap-1.5"><Phone size={13} /> {contact.phone}</span>}
+                      {contact.source && <span className="flex items-center gap-1.5 text-[#0A65AB] font-medium"><Globe size={13} /> {contact.source}</span>}
                       <span className="flex items-center gap-1.5">
                         <Calendar size={13} /> {new Date(contact.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })}
                       </span>

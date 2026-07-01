@@ -9,11 +9,11 @@ export async function POST(request: Request) {
   try {
     await connectDB();
     const body = await request.json();
-    const { name, email, phone, message } = body;
+    const { name, email, phone, message, source } = body;
     if (!name || !message || (!email && !phone)) {
       return NextResponse.json({ error: "Name, message, and either email or phone are required" }, { status: 400 });
     }
-    const contact = await Contact.create({ name, email, phone, message });
+    const contact = await Contact.create({ name, email, phone, message, source: source || "Contact Page" });
     // Fire-and-forget — don't fail the request if email fails
     sendContactEmail({ name, email, phone, message }).catch(() => {});
     return NextResponse.json({ success: true, id: contact._id });

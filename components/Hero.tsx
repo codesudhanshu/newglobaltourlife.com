@@ -35,7 +35,7 @@ export default function Hero() {
 
   return (
     <section className="relative">
-      <div className="relative h-[70vh] min-h-[480px] overflow-hidden">
+      <div className="relative h-[45vh] min-h-[280px] md:h-[70vh] md:min-h-[480px] overflow-hidden">
         {slides.map((s, idx) => (
           <div
             key={idx}
@@ -52,12 +52,12 @@ export default function Hero() {
             <span className="text-[#01b7f2] text-sm font-semibold tracking-widest uppercase">New Global Tour Life</span>
             <span className="h-0.5 w-8 bg-[#01b7f2]" />
           </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold max-w-3xl leading-tight">{slides[i]?.heading}</h1>
-          <p className="mt-4 text-base md:text-lg text-gray-200 max-w-xl">{slides[i]?.sub}</p>
+          <h1 className="text-xl sm:text-3xl md:text-5xl font-extrabold max-w-3xl leading-tight">{slides[i]?.heading}</h1>
+          <p className="mt-2 md:mt-4 text-sm md:text-lg text-gray-200 max-w-xl hidden sm:block">{slides[i]?.sub}</p>
         </div>
 
         {/* Slide dots */}
-        <div className="absolute bottom-28 md:bottom-32 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        <div className="absolute bottom-14 md:bottom-32 left-1/2 -translate-x-1/2 z-10 flex gap-2">
           {slides.map((_, idx) => (
             <button
               key={idx}
@@ -70,7 +70,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <div className="relative z-20 container-custom -mt-16 md:-mt-20 pb-4">
+      <div className="relative z-20 container-custom -mt-8 md:-mt-20 pb-4">
         <SearchBar />
       </div>
     </section>

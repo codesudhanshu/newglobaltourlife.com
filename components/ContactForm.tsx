@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Send, CheckCircle, Loader } from "lucide-react";
 
-export default function ContactForm() {
+export default function ContactForm({ source = "Contact Page" }: { source?: string }) {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -21,7 +21,7 @@ export default function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, source }),
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error || "Failed to send"); setLoading(false); return; }

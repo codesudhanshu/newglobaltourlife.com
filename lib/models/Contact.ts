@@ -5,6 +5,7 @@ export interface IContact extends Document {
   email: string;
   phone: string;
   message: string;
+  source: string;
   read: boolean;
   createdAt: Date;
 }
@@ -15,6 +16,7 @@ const ContactSchema = new Schema<IContact>(
     email: { type: String, default: "" },
     phone: { type: String, default: "" },
     message: { type: String, required: true },
+    source: { type: String, default: "Contact Page" },
     read: { type: Boolean, default: false },
   },
   { timestamps: true }
