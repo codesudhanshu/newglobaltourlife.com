@@ -5,12 +5,14 @@ import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { OFFERS, type Offer } from "@/lib/placeholders";
 import Slider from "@/components/Slider";
+import BookingModal from "@/components/BookingModal";
 
 const TABS = ["All", "Flights", "Hotels", "Holidays", "Buses", "Rajasthan Attractions"] as const;
 
 export default function SpecialOffers() {
   const [offers, setOffers] = useState<Offer[]>(OFFERS);
   const [tab, setTab] = useState<(typeof TABS)[number]>("All");
+  const [modal, setModal] = useState<{ open: boolean; subject: string }>({ open: false, subject: "" });
 
   useEffect(() => {
     fetch("/api/offers")
@@ -77,9 +79,13 @@ export default function SpecialOffers() {
                         {o.code}
                       </span>
                     )}
-                    <a href="#contact" className="text-xs font-semibold text-[#0A65AB] hover:text-[#01b7f2] flex items-center gap-0.5">
+                    <button
+                      type="button"
+                      onClick={() => setModal({ open: true, subject: `${o.partner || o.title} — ${o.discountText}` })}
+                      className="text-xs font-semibold text-[#0A65AB] hover:text-[#01b7f2] flex items-center gap-0.5"
+                    >
                       View Details <ArrowUpRight size={12} />
-                    </a>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -87,6 +93,14 @@ export default function SpecialOffers() {
           </Slider>
         )}
       </div>
+
+      <BookingModal
+        isOpen={modal.open}
+        onClose={() => setModal({ open: false, subject: "" })}
+        subject={modal.subject}
+        type="general"
+        source="Special Offers"
+      />
     </section>
   );
 }

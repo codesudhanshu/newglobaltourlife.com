@@ -14,6 +14,7 @@ interface Props {
   subject?: string;
   type?: ModalType;
   prefillService?: string;
+  source?: string;
 }
 
 const CAR_CATEGORIES = ["Sedan", "SUV", "Hatchback", "Luxury", "Van / Tempo Traveller", "Bus"];
@@ -31,7 +32,7 @@ const TYPE_META: Record<ModalType, { title: string; icon: React.ReactNode; color
 };
 
 export default function BookingModal({
-  isOpen, onClose, subject = "", type = "general", prefillService = "",
+  isOpen, onClose, subject = "", type = "general", prefillService = "", source = "Website",
 }: Props) {
   const [form, setForm] = useState({
     name: "", phone: "", email: "", message: "",
@@ -149,7 +150,7 @@ export default function BookingModal({
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: form.name, phone: form.phone, email: form.email, message: buildMessage() }),
+        body: JSON.stringify({ name: form.name, phone: form.phone, email: form.email, message: buildMessage(), source }),
       });
       const data = await res.json();
       if (!res.ok) { setError(data.error || "Failed to send"); setLoading(false); return; }
