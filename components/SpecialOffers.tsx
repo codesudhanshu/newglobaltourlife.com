@@ -12,7 +12,15 @@ const TABS = ["All", "Flights", "Hotels", "Holidays", "Buses", "Rajasthan Attrac
 export default function SpecialOffers() {
   const [offers, setOffers] = useState<Offer[]>(OFFERS);
   const [tab, setTab] = useState<(typeof TABS)[number]>("All");
-  const [modal, setModal] = useState<{ open: boolean; subject: string }>({ open: false, subject: "" });
+  const [modal, setModal] = useState<{ open: boolean; subject: string; service: string }>({ open: false, subject: "", service: "" });
+
+  function categoryToService(cat: string): string {
+    if (cat === "Flights") return "Flight Booking";
+    if (cat === "Hotels") return "Hotel Booking";
+    if (cat === "Holidays") return "Tour Package";
+    if (cat === "Buses") return "Bus Booking";
+    return "Tour Package";
+  }
 
   useEffect(() => {
     fetch("/api/offers")
@@ -81,7 +89,7 @@ export default function SpecialOffers() {
                     )}
                     <button
                       type="button"
-                      onClick={() => setModal({ open: true, subject: `${o.partner || o.title} — ${o.discountText}` })}
+                      onClick={() => setModal({ open: true, subject: `${o.partner || o.title} — ${o.discountText}`, service: categoryToService(o.category) })}
                       className="text-xs font-semibold text-[#0A65AB] hover:text-[#01b7f2] flex items-center gap-0.5"
                     >
                       View Details <ArrowUpRight size={12} />
@@ -99,6 +107,7 @@ export default function SpecialOffers() {
         onClose={() => setModal({ open: false, subject: "" })}
         subject={modal.subject}
         type="general"
+        prefillService={modal.service}
         source="Special Offers"
       />
     </section>

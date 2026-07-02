@@ -442,9 +442,13 @@ export default function BookingModal({
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className={lbl}><Building2 size={12} /> Service Type</label>
-                      <select value={form.serviceType} onChange={(e) => set("serviceType", e.target.value)} className={inp}>
-                        {["Tour Package", "Car Rental", "Hotel Booking", "Flight Booking", "Tirth Yatra", "Visa Services", "Bus Booking", "Other"].map((s) => <option key={s}>{s}</option>)}
-                      </select>
+                      {prefillService ? (
+                        <input readOnly value={form.serviceType} className={`${inp} bg-blue-50 border-blue-200 text-[#0A65AB] font-semibold cursor-default`} />
+                      ) : (
+                        <select value={form.serviceType} onChange={(e) => set("serviceType", e.target.value)} className={inp}>
+                          {["Tour Package", "Car Rental", "Hotel Booking", "Flight Booking", "Tirth Yatra", "Visa Services", "Bus Booking", "Other"].map((s) => <option key={s}>{s}</option>)}
+                        </select>
+                      )}
                     </div>
                     <div>
                       <label className={lbl}><Users size={12} /> No. of Persons</label>
