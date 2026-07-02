@@ -104,7 +104,7 @@ export default function SpecialOffers() {
 
       <BookingModal
         isOpen={modal.open}
-        onClose={() => setModal({ open: false, subject: "" })}
+        onClose={() => setModal({ open: false, subject: "", service: "" })}
         subject={modal.subject}
         type="general"
         prefillService={modal.service}
