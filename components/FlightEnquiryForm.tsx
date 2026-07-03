@@ -1,18 +1,29 @@
 "use client";
 
-import { useState } from "react";
-import { Send, CheckCircle, Loader, Plane } from "lucide-react";
+import { useState, useRef } from "react";
+import { Send, CheckCircle, Loader, Plane, ChevronLeft, ChevronRight } from "lucide-react";
 
-const AIRLINES = [
-  "IndiGo", "Air India", "Vistara", "SpiceJet", "Akasa Air",
-  "GoAir", "Alliance Air", "Blue Dart Aviation", "IndiGo", "Air India",
-  "Vistara", "SpiceJet", "Akasa Air", "GoAir", "Alliance Air",
+const AIRLINE_DEALS = [
+  { name: "SpiceJet",  bg: "#fff",     color: "#e03b2e", dest: "Delhi → Mumbai",    price: "₹3,499",  type: "ONEWAY" },
+  { name: "Vistara",   bg: "#fff",     color: "#7b2d8b", dest: "Mumbai → Goa",      price: "₹4,999",  type: "ONEWAY" },
+  { name: "IndiGo",    bg: "#1a2f6e",  color: "#fff",    dest: "Indore → Delhi",    price: "₹2,999",  type: "ONEWAY" },
+  { name: "Air India", bg: "#fff",     color: "#c0392b", dest: "Delhi → London",    price: "₹45,000", type: "ONEWAY" },
+  { name: "Akasa Air", bg: "#ff6b35",  color: "#fff",    dest: "Mumbai → Bengaluru","price": "₹3,199",type: "ONEWAY" },
+  { name: "GoAir",     bg: "#fff",     color: "#00a651", dest: "Ahmedabad → Mumbai","price": "₹2,799",type: "ONEWAY" },
+  { name: "Air Arabia",bg: "#c8102e",  color: "#fff",    dest: "Dubai → Mumbai",    price: "₹18,500", type: "ONEWAY" },
+  { name: "Emirates",  bg: "#d71921",  color: "#fff",    dest: "Dubai → Delhi",     price: "₹35,000", type: "ONEWAY" },
 ];
 
 export default function FlightEnquiryForm() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", from: "", to: "", date: "", passengers: "1", message: "" });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  function scrollSlider(dir: "left" | "right") {
+    if (!sliderRef.current) return;
+    sliderRef.current.scrollBy({ left: dir === "right" ? 280 : -280, behavior: "smooth" });
+  }
   const [error, setError] = useState("");
 
   function set(field: string, value: string) {
@@ -42,7 +53,7 @@ export default function FlightEnquiryForm() {
   return (
     <>
       {/* Enquiry Form */}
-      <section className="bg-[#0A65AB] py-14">
+      <section id="flight-enquiry-form" className="bg-[#0A65AB] py-14">
         <div className="container-custom">
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-3">
@@ -109,38 +120,66 @@ export default function FlightEnquiryForm() {
         </div>
       </section>
 
-      {/* Airline companies marquee banner */}
-      <section className="bg-white border-t border-b border-gray-100 py-4 overflow-hidden">
-        <p className="text-center text-xs text-gray-400 uppercase tracking-widest font-semibold mb-3">Airlines We Work With</p>
-        <div className="relative flex overflow-hidden">
-          <div className="flex animate-marquee whitespace-nowrap">
-            {AIRLINES.map((a, i) => (
-              <span key={i} className="inline-flex items-center gap-2 mx-8 text-[#0A65AB] font-bold text-sm">
-                <Plane size={14} className="text-[#01b7f2]" />
-                {a}
-              </span>
-            ))}
+      {/* Airline card slider */}
+      <section className="bg-white py-10 px-4">
+        <div className="container-custom">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-800">Cheap Flights &amp; Air Tickets</h2>
+            <div className="flex gap-2">
+              <button
+                onClick={() => scrollSlider("left")}
+                className="w-9 h-9 bg-[#01b7f2] hover:bg-[#0299cc] rounded flex items-center justify-center text-white transition-colors"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button
+                onClick={() => scrollSlider("right")}
+                className="w-9 h-9 bg-[#01b7f2] hover:bg-[#0299cc] rounded flex items-center justify-center text-white transition-colors"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
           </div>
-          <div className="flex animate-marquee whitespace-nowrap absolute top-0 left-full">
-            {AIRLINES.map((a, i) => (
-              <span key={i} className="inline-flex items-center gap-2 mx-8 text-[#0A65AB] font-bold text-sm">
-                <Plane size={14} className="text-[#01b7f2]" />
-                {a}
-              </span>
+
+          <div
+            ref={sliderRef}
+            className="flex gap-5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth"
+          >
+            {AIRLINE_DEALS.map((a, i) => (
+              <div key={i} className="shrink-0 w-[240px] border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
+                {/* Logo area */}
+                <div
+                  className="h-[120px] flex items-center justify-center"
+                  style={{ background: a.bg }}
+                >
+                  <span
+                    className="text-2xl font-extrabold tracking-tight px-4 text-center leading-tight"
+                    style={{ color: a.color }}
+                  >
+                    {a.name}
+                  </span>
+                </div>
+                {/* Info */}
+                <div className="p-3">
+                  <p className="text-gray-700 font-semibold text-sm mb-1">{a.dest}</p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-green-600 font-bold text-base">{a.price}</span>
+                      <span className="text-gray-400 text-[10px] ml-1 font-semibold">{a.type}</span>
+                    </div>
+                    <button
+                      onClick={() => document.getElementById("flight-enquiry-form")?.scrollIntoView({ behavior: "smooth" })}
+                      className="text-[10px] font-bold text-gray-500 border border-gray-300 px-3 py-1 rounded hover:bg-[#0A65AB] hover:text-white hover:border-[#0A65AB] transition-colors"
+                    >
+                      SELECT
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
-
-      <style jsx>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-100%); }
-        }
-        .animate-marquee {
-          animation: marquee 20s linear infinite;
-        }
-      `}</style>
     </>
   );
 }
