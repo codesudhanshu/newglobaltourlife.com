@@ -28,7 +28,7 @@ export default function CarBanner() {
           key={car.label}
           href={car.href}
           aria-label={`View ${car.label}`}
-          className="absolute top-0 h-full cursor-pointer opacity-0 hover:opacity-100 hover:bg-black/10 transition-opacity"
+          className="absolute top-0 h-full cursor-pointer"
           style={{ left: car.left, width: car.width }}
           title={car.label}
         />
