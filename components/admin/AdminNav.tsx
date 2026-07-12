@@ -58,7 +58,7 @@ export default function AdminNav({ onLogout }: Props) {
   return (
     <>
       {/* ── Sidebar desktop ── */}
-      <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-gray-200 min-h-screen fixed left-0 top-0 shadow-sm">
+      <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-gray-200 h-screen fixed left-0 top-0 shadow-sm">
         {/* Logo */}
         <div className="px-5 py-5 border-b border-gray-100">
           <Image src="/logo.png" alt="New Global Tour Life" width={140} height={52} className="h-11 w-auto object-contain" />
@@ -101,7 +101,7 @@ export default function AdminNav({ onLogout }: Props) {
       {open && (
         <div className="lg:hidden fixed inset-0 z-30 flex">
           <div className="absolute inset-0 bg-black/30" onClick={() => setOpen(false)} />
-          <div className="relative bg-white w-72 min-h-screen flex flex-col shadow-xl z-40">
+          <div className="relative bg-white w-72 h-screen flex flex-col shadow-xl z-40">
             <div className="px-5 py-5 border-b border-gray-100 flex items-center justify-between">
               <Image src="/logo.png" alt="New Global Tour Life" width={120} height={48} className="h-10 w-auto object-contain" />
               <button onClick={() => setOpen(false)} className="text-gray-400 hover:text-gray-600 p-1">
