@@ -20,6 +20,8 @@ import Reveal from "@/components/Reveal";
 import SeoContent from "@/components/SeoContent";
 import { getPageSeo, buildMetadata } from "@/lib/seo";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata() {
   return buildMetadata(await getPageSeo("home"));
 }

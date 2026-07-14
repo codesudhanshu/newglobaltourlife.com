@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import BookingModal from "@/components/BookingModal";
 
@@ -78,7 +78,21 @@ function AirlineLogo({ name, bg, color, accent }: { name: string; bg: string; co
   );
 }
 
-const AIRLINE_DEALS = [
+type AirlineCard = { name: string; bg: string; color: string; dest: string; price: string; type: string };
+
+// Brand look (bg/logo colour) keyed by airline name — used to style the inline logo.
+const BRAND: Record<string, { bg: string; color: string }> = {
+  "SpiceJet":   { bg: "#fff",    color: "#E03B2E" },
+  "Vistara":    { bg: "#fff",    color: "#7B2D8B" },
+  "IndiGo":     { bg: "#1a2f6e", color: "#fff" },
+  "Air India":  { bg: "#fff",    color: "#C0392B" },
+  "Akasa Air":  { bg: "#FF6B35", color: "#fff" },
+  "Air Arabia": { bg: "#C8102E", color: "#fff" },
+  "Emirates":   { bg: "#1C1C1C", color: "#C5A028" },
+  "AirAsia":    { bg: "#E8000D", color: "#fff" },
+};
+
+const AIRLINE_DEALS: AirlineCard[] = [
   { name: "SpiceJet",   bg: "#fff",     color: "#E03B2E", dest: "Delhi → Mumbai",      price: "₹3,499",  type: "ONEWAY" },
   { name: "Vistara",    bg: "#fff",     color: "#7B2D8B", dest: "Mumbai → Goa",        price: "₹4,999",  type: "ONEWAY" },
   { name: "IndiGo",     bg: "#1a2f6e",  color: "#fff",    dest: "Indore → Delhi",      price: "₹2,999",  type: "ONEWAY" },
@@ -89,9 +103,36 @@ const AIRLINE_DEALS = [
   { name: "AirAsia",    bg: "#E8000D",  color: "#fff",    dest: "Kuala Lumpur → Delhi", price: "₹14,500", type: "ONEWAY" },
 ];
 
+type FlightRow = { airline?: string; from?: string; to?: string; price?: number; tripType?: string };
+
 export default function FlightEnquiryForm() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [modal, setModal] = useState<{ open: boolean; subject: string }>({ open: false, subject: "" });
+  const [deals, setDeals] = useState<AirlineCard[]>(AIRLINE_DEALS);
+
+  // Build the airline cards from live flight data (falls back to the static list).
+  useEffect(() => {
+    fetch("/api/flights")
+      .then((r) => r.json())
+      .then((rows: FlightRow[]) => {
+        if (!Array.isArray(rows) || rows.length === 0) return;
+        const cards = rows
+          .filter((f) => f.airline)
+          .map<AirlineCard>((f) => {
+            const brand = BRAND[f.airline as string] || { bg: "#0A65AB", color: "#fff" };
+            return {
+              name: f.airline as string,
+              bg: brand.bg,
+              color: brand.color,
+              dest: `${f.from || ""} → ${f.to || ""}`,
+              price: typeof f.price === "number" ? `₹${f.price.toLocaleString("en-IN")}` : "",
+              type: (f.tripType || "ONEWAY").toUpperCase(),
+            };
+          });
+        if (cards.length > 0) setDeals(cards);
+      })
+      .catch(() => {});
+  }, []);
 
   function scrollSlider(dir: "left" | "right") {
     if (!sliderRef.current) return;
@@ -115,7 +156,7 @@ export default function FlightEnquiryForm() {
           </div>
 
           <div ref={sliderRef} className="flex gap-5 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth">
-            {AIRLINE_DEALS.map((a, i) => (
+            {deals.map((a, i) => (
               <div key={i} className="shrink-0 w-[240px] border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow">
                 <div className="h-[120px]" style={{ background: a.bg }}>
                   <AirlineLogo name={a.name} bg={a.bg} color={a.color} />

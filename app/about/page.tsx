@@ -5,6 +5,8 @@ import { Globe, Car, MapPin, Star, Users, Award } from "lucide-react";
 import SeoContent from "@/components/SeoContent";
 import { getPageSeo, buildMetadata } from "@/lib/seo";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata() {
   return buildMetadata(await getPageSeo("about"));
 }

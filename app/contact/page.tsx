@@ -2,10 +2,17 @@ import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
+import SeoContent from "@/components/SeoContent";
+import { getPageSeo, buildMetadata } from "@/lib/seo";
 
-export const metadata = { title: "Contact Us — New Global Tour Life" };
+export const dynamic = "force-dynamic";
 
-export default function ContactPage() {
+export async function generateMetadata() {
+  return buildMetadata(await getPageSeo("contact"));
+}
+
+export default async function ContactPage() {
+  const seo = await getPageSeo("contact");
   const mapQuery = encodeURIComponent("New Global Tour Life Niranjanpur Indore");
   return (
     <>
@@ -41,6 +48,7 @@ export default function ContactPage() {
         </div>
       </section>
 
+      <SeoContent seo={seo} />
       <Footer />
     </>
   );

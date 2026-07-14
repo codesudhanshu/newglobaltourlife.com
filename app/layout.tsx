@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { getSiteConfig, organizationJsonLd } from "@/lib/siteConfig";
 
 export const metadata: Metadata = {
   title: "New Global Tour Life - Cab-Car Hire, Tour & Travel Services",
@@ -14,14 +15,64 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cfg = await getSiteConfig();
+
   return (
     <html lang="en">
+      <head>
+        {cfg.gscVerification && (
+          <meta name="google-site-verification" content={cfg.gscVerification} />
+        )}
+
+        {/* Organization structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: organizationJsonLd(cfg) }}
+        />
+
+        {/* Google Tag Manager */}
+        {cfg.gtmId && (
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${cfg.gtmId}');`,
+            }}
+          />
+        )}
+
+        {/* Google Analytics (GA4) */}
+        {cfg.gaId && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${cfg.gaId}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${cfg.gaId}');`,
+              }}
+            />
+          </>
+        )}
+
+        {/* Extra admin-provided head scripts / meta */}
+        {cfg.headScripts && (
+          <div dangerouslySetInnerHTML={{ __html: cfg.headScripts }} suppressHydrationWarning />
+        )}
+      </head>
       <body suppressHydrationWarning>
+        {/* GTM noscript */}
+        {cfg.gtmId && (
+          <noscript>
+            <iframe
+              src={`https://www.googletagmanager.com/ns.html?id=${cfg.gtmId}`}
+              height="0"
+              width="0"
+              style={{ display: "none", visibility: "hidden" }}
+            />
+          </noscript>
+        )}
         {children}
         <WhatsAppButton />
       </body>
