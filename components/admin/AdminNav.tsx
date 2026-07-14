@@ -6,7 +6,8 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, FileText, Car, MessageSquare, LogOut, Menu, X,
   Hotel, Settings, Landmark, IndianRupee, Package, Images, Bus,
-  FileCheck, Users, ChevronRight, MapPin, Search,
+  FileCheck, Users, ChevronRight, MapPin,
+  Plane, Home, Info, Network, Bot,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -15,6 +16,7 @@ interface Props { onLogout: () => void; }
 // ── Main Menu (0–2) ───────────────────────────────────────────
 // ── Services  (3–10) ──────────────────────────────────────────
 // ── Content   (11–) ───────────────────────────────────────────
+// Main Menu (0–2) · Services (3–11) · Content (12–)
 const links = [
   { href: "/admin/dashboard",    label: "Dashboard",    icon: LayoutDashboard }, // 0
   { href: "/admin/hero-slides",  label: "Hero Slides",  icon: Images },          // 1
@@ -27,10 +29,14 @@ const links = [
   { href: "/admin/tour-guides",  label: "Tour Guides",  icon: Users },           // 8
   { href: "/admin/bus",          label: "Bus Booking",  icon: Bus },             // 9
   { href: "/admin/visa",         label: "Visa",         icon: FileCheck },       // 10
-  { href: "/admin/blogs",        label: "Blogs",        icon: FileText },        // 11
-  { href: "/admin/seo",          label: "SEO",          icon: Search },          // 12
-  { href: "/admin/pricing",      label: "Pricing",      icon: IndianRupee },     // 13
-  { href: "/admin/settings",     label: "Settings",     icon: Settings },        // 14
+  { href: "/admin/flights",      label: "Flights",      icon: Plane },           // 11
+  { href: "/admin/blogs",        label: "Blogs",        icon: FileText },        // 12
+  { href: "/admin/seo/home",     label: "Home Page",    icon: Home },            // 13
+  { href: "/admin/seo/about",    label: "About Us",     icon: Info },            // 14
+  { href: "/admin/sitemap",      label: "Sitemap",      icon: Network },         // 15
+  { href: "/admin/robots",       label: "robots.txt",   icon: Bot },             // 16
+  { href: "/admin/pricing",      label: "Pricing",      icon: IndianRupee },     // 17
+  { href: "/admin/settings",     label: "Settings",     icon: Settings },        // 18
 ];
 
 export default function AdminNav({ onLogout }: Props) {
@@ -74,9 +80,9 @@ export default function AdminNav({ onLogout }: Props) {
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mb-2">Main Menu</p>
           {links.slice(0, 3).map((l) => <NavLink key={l.href} {...l} />)}
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mt-4 mb-2">Services</p>
-          {links.slice(3, 11).map((l) => <NavLink key={l.href} {...l} />)}
+          {links.slice(3, 12).map((l) => <NavLink key={l.href} {...l} />)}
           <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest px-3 mt-4 mb-2">Content</p>
-          {links.slice(11).map((l) => <NavLink key={l.href} {...l} />)}
+          {links.slice(12).map((l) => <NavLink key={l.href} {...l} />)}
         </nav>
 
         {/* Logout */}

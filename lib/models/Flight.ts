@@ -10,6 +10,10 @@ export interface IFlight extends Document {
   tripType: string;
   departInfo: string;
   image: string;
+  slug: string;
+  metaTitle: string;
+  metaKeywords: string;
+  metaDescription: string;
   order: number;
   available: boolean;
   createdAt: Date;
@@ -27,6 +31,10 @@ const FlightSchema = new Schema<IFlight>(
     tripType: { type: String, default: "One Way" },
     departInfo: { type: String, default: "" },
     image: { type: String, default: "" },
+    slug: { type: String, default: "" },
+    metaTitle: { type: String, default: "" },
+    metaKeywords: { type: String, default: "" },
+    metaDescription: { type: String, default: "" },
     order: { type: Number, default: 0 },
     available: { type: Boolean, default: true },
   },

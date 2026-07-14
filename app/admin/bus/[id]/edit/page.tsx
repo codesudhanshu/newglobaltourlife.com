@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { useRouter, useParams } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
+import SeoSection from "@/components/admin/SeoSection";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
@@ -20,6 +21,7 @@ export default function EditBus() {
     featured: false, available: true,
     highlights: [] as string[], faqs: [] as { question: string; answer: string }[],
     images: [] as string[], image: "",
+    slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
   });
 
   useEffect(() => {
@@ -33,6 +35,7 @@ export default function EditBus() {
             price: data.price || 0, order: data.order || 0, featured: !!data.featured, available: data.available !== false,
             highlights: data.highlights || [], faqs: data.faqs || [],
             images: data.images?.length ? data.images : (data.image ? [data.image] : []), image: data.image || "",
+            slug: data.slug || "", metaTitle: data.metaTitle || "", metaKeywords: data.metaKeywords || "", metaDescription: data.metaDescription || "",
           });
         }
         setFetching(false);
@@ -152,6 +155,12 @@ export default function EditBus() {
             <p className="text-gray-400 text-xs mb-3">First image = cover.</p>
             {token && <MultiImageUpload values={form.images} onChange={handleImages} token={token} folder="new-global-tour-life/bus" />}
           </div>
+
+          <SeoSection
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            onChange={(field, value) => set(field, value)}
+            autoSlugFrom={form.title}
+          />
         </div>
 
         <div className="space-y-5">

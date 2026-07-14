@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
+import SeoSection from "@/components/admin/SeoSection";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
@@ -18,6 +19,7 @@ export default function NewBus() {
     featured: false, available: true,
     highlights: [] as string[], faqs: [] as { question: string; answer: string }[],
     images: [] as string[], image: "",
+    slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
   });
 
   function set(field: string, value: unknown) { setForm((p) => ({ ...p, [field]: value })); }
@@ -135,6 +137,12 @@ export default function NewBus() {
             <p className="text-gray-400 text-xs mb-3">First image = cover.</p>
             {token && <MultiImageUpload values={form.images} onChange={handleImages} token={token} folder="new-global-tour-life/bus" />}
           </div>
+
+          <SeoSection
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            onChange={(field, value) => set(field, value)}
+            autoSlugFrom={form.title}
+          />
         </div>
 
         <div className="space-y-5">

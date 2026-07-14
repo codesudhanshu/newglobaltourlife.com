@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useAdmin } from "@/lib/useAdmin";
-import { Save, Megaphone, BarChart3, FileCode, Building2 } from "lucide-react";
+import { Save, Megaphone, BarChart3, Building2 } from "lucide-react";
 
 type Cfg = {
   gtmId: string; gaId: string; gscVerification: string; headScripts: string;
@@ -163,17 +163,6 @@ export default function AdminSettingsPage() {
           <label className={cfgLabel}>Extra &lt;head&gt; scripts / meta (advanced)</label>
           <textarea value={cfg.headScripts} onChange={(e) => setC("headScripts", e.target.value)} rows={3} placeholder="<meta ...> or <script>...</script>" className={cfgInput + " font-mono"} />
         </div>
-      </div>
-
-      {/* robots.txt */}
-      <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
-        <div className="flex items-center gap-2 mb-1">
-          <FileCode size={18} className="text-[#0A65AB]" />
-          <h2 className="text-gray-900 font-semibold">robots.txt</h2>
-        </div>
-        <p className="text-gray-500 text-xs mb-4">Served at <code>/robots.txt</code>. Leave blank to use the default (allows all, blocks /admin &amp; /api, links the sitemap).</p>
-        <textarea value={cfg.robotsTxt} onChange={(e) => setC("robotsTxt", e.target.value)} rows={6} placeholder={"User-agent: *\nAllow: /\nDisallow: /admin\n\nSitemap: https://www.newglobaltourlife.com/sitemap.xml"} className={cfgInput + " font-mono"} />
-        <p className="text-gray-400 text-xs mt-2">Sitemap auto-generates at <code>/sitemap.xml</code> from all published content.</p>
       </div>
 
       {/* Organization schema */}

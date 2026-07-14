@@ -4,6 +4,10 @@ export interface IFaq { question: string; answer: string }
 
 export interface IVisa extends Document {
   title: string;
+  slug: string;
+  metaTitle: string;
+  metaKeywords: string;
+  metaDescription: string;
   image: string;
   images: string[];
   description: string;
@@ -21,6 +25,10 @@ export interface IVisa extends Document {
 const VisaSchema = new Schema<IVisa>(
   {
     title: { type: String, required: true },
+    slug: { type: String, default: "" },
+    metaTitle: { type: String, default: "" },
+    metaKeywords: { type: String, default: "" },
+    metaDescription: { type: String, default: "" },
     image: { type: String, default: "" },
     images: { type: [String], default: [] },
     description: { type: String, default: "" },

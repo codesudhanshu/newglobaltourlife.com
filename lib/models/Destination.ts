@@ -10,6 +10,9 @@ export interface IDestination extends Document {
   highlights: string[];
   startingPrice: number;
   slug: string;
+  metaTitle: string;
+  metaKeywords: string;
+  metaDescription: string;
   featured: boolean;
   honeymoon: boolean;
   order: number;
@@ -29,6 +32,9 @@ const DestinationSchema = new Schema<IDestination>(
     highlights: { type: [String], default: [] },
     startingPrice: { type: Number, default: 0 },
     slug: { type: String, unique: true },
+    metaTitle: { type: String, default: "" },
+    metaKeywords: { type: String, default: "" },
+    metaDescription: { type: String, default: "" },
     featured: { type: Boolean, default: false },
     honeymoon: { type: Boolean, default: false },
     order: { type: Number, default: 0 },
