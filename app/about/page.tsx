@@ -1,10 +1,13 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-import Image from "next/image";
 import { Globe, Car, MapPin, Star, Users, Award } from "lucide-react";
+import SeoContent from "@/components/SeoContent";
+import { getPageSeo, buildMetadata } from "@/lib/seo";
 
-export const metadata = { title: "About Us – New Global Tour Life" };
+export async function generateMetadata() {
+  return buildMetadata(await getPageSeo("about"));
+}
 
 const stats = [
   { icon: Award, label: "Established", value: "2016" },
@@ -15,7 +18,8 @@ const stats = [
 
 const destinations = ["Singapore", "Thailand", "Malaysia", "Bali", "Sri Lanka", "Vietnam"];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const seo = await getPageSeo("about");
   return (
     <>
       <Navbar />
@@ -141,6 +145,7 @@ export default function AboutPage() {
         </div>
       </main>
 
+      <SeoContent seo={seo} />
       <Footer />
     </>
   );

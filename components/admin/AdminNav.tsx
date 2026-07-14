@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, FileText, Car, MessageSquare, LogOut, Menu, X,
   Hotel, Settings, Landmark, IndianRupee, Package, Images, Bus,
-  FileCheck, Users, ChevronRight, MapPin,
+  FileCheck, Users, ChevronRight, MapPin, Search,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -28,8 +28,9 @@ const links = [
   { href: "/admin/bus",          label: "Bus Booking",  icon: Bus },             // 9
   { href: "/admin/visa",         label: "Visa",         icon: FileCheck },       // 10
   { href: "/admin/blogs",        label: "Blogs",        icon: FileText },        // 11
-  { href: "/admin/pricing",      label: "Pricing",      icon: IndianRupee },     // 12
-  { href: "/admin/settings",     label: "Settings",     icon: Settings },        // 13
+  { href: "/admin/seo",          label: "SEO",          icon: Search },          // 12
+  { href: "/admin/pricing",      label: "Pricing",      icon: IndianRupee },     // 13
+  { href: "/admin/settings",     label: "Settings",     icon: Settings },        // 14
 ];
 
 export default function AdminNav({ onLogout }: Props) {

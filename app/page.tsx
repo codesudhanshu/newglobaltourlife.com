@@ -17,8 +17,15 @@ import Blog from "@/components/Blog";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
+import SeoContent from "@/components/SeoContent";
+import { getPageSeo, buildMetadata } from "@/lib/seo";
 
-export default function Home() {
+export async function generateMetadata() {
+  return buildMetadata(await getPageSeo("home"));
+}
+
+export default async function Home() {
+  const seo = await getPageSeo("home");
   return (
     <main>
       <Navbar />
@@ -38,6 +45,7 @@ export default function Home() {
       <Reveal><Testimonials /></Reveal>
       <Reveal><Blog /></Reveal>
       <Reveal><ContactForm /></Reveal>
+      <SeoContent seo={seo} />
       <Footer />
     </main>
   );
