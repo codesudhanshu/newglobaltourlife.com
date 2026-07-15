@@ -26,6 +26,7 @@ export default function NewHotelPage() {
     category: "Luxury", amenities: [] as string[],
     featured: false, available: true, order: 0,
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
   });
   const [images, setImages] = useState<string[]>([]);
   const [imageAlts, setImageAlts] = useState<string[]>([]);
@@ -203,7 +204,7 @@ export default function NewHotelPage() {
         </div>
 
         <SeoSection
-          data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+          data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
           onChange={(f, value) => field(f, value)}
           autoSlugFrom={form.name}
         />

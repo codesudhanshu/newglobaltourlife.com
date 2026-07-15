@@ -32,6 +32,7 @@ export default function NewCar() {
     category: "Cab Service", price: 0, description: "", longContent: "", image: "", images: [] as string[], imageAlts: [] as string[], order: 0, available: true,
     faqs: [] as { question: string; answer: string }[],
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
   });
 
   function set(field: string, value: any) {
@@ -153,7 +154,7 @@ export default function NewCar() {
           </div>
 
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.name}
           />

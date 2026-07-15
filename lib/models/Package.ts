@@ -17,6 +17,11 @@ export interface IPackage extends Document {
   metaTitle: string;
   metaKeywords: string;
   metaDescription: string;
+  canonical: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
+  twitterCard: string;
   destination: string;
   nights: number;
   days: number;
@@ -45,6 +50,11 @@ const PackageSchema = new Schema<IPackage>(
     metaTitle: { type: String, default: "" },
     metaKeywords: { type: String, default: "" },
     metaDescription: { type: String, default: "" },
+    canonical: { type: String, default: "" },
+    ogTitle: { type: String, default: "" },
+    ogDescription: { type: String, default: "" },
+    ogImage: { type: String, default: "" },
+    twitterCard: { type: String, default: "summary_large_image" },
     destination: { type: String, default: "" },
     nights: { type: Number, default: 0 },
     days: { type: Number, default: 0 },

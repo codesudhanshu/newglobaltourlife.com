@@ -82,6 +82,42 @@ export function buildMetadata(seo: PageSeoData): Metadata {
   };
 }
 
+// Build Metadata for a single content item (car/hotel/package/etc) from its own
+// per-item SEO fields, falling back to sensible values from the record.
+export function itemMetadata(
+  rec: Record<string, unknown> | null | undefined,
+  opts: { fallbackTitle: string; fallbackDescription?: string; fallbackImage?: string; path: string }
+): Metadata {
+  const r = (rec || {}) as Record<string, string>;
+  const title = r.metaTitle || opts.fallbackTitle;
+  const description = r.metaDescription || opts.fallbackDescription || "";
+  const canonicalRaw = r.canonical || opts.path;
+  const canonical = toAbsolute(canonicalRaw);
+  const ogImg = r.ogImage || opts.fallbackImage || "";
+  const images = ogImg ? [{ url: toAbsolute(ogImg) }] : undefined;
+  const card = (r.twitterCard as "summary" | "summary_large_image") || "summary_large_image";
+  return {
+    title: title || undefined,
+    description: description || undefined,
+    keywords: r.metaKeywords || undefined,
+    alternates: { canonical },
+    openGraph: {
+      title: r.ogTitle || title || undefined,
+      description: r.ogDescription || description || undefined,
+      url: canonical,
+      images,
+      type: "website",
+      siteName: "New Global Tour Life",
+    },
+    twitter: {
+      card,
+      title: r.ogTitle || title || undefined,
+      description: r.ogDescription || description || undefined,
+      images: images?.map((i) => i.url),
+    },
+  };
+}
+
 // JSON-LD FAQ schema string for a page's FAQs (empty if none).
 export function faqJsonLd(faqs: { question: string; answer: string }[]): string | null {
   const valid = faqs.filter((f) => f.question.trim() && f.answer.trim());

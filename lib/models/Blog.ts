@@ -6,6 +6,11 @@ export interface IBlog extends Document {
   metaTitle: string;
   metaKeywords: string;
   metaDescription: string;
+  canonical: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
+  twitterCard: string;
   excerpt: string;
   content: string;
   image: string;
@@ -24,6 +29,11 @@ const BlogSchema = new Schema<IBlog>(
     metaTitle: { type: String, default: "" },
     metaKeywords: { type: String, default: "" },
     metaDescription: { type: String, default: "" },
+    canonical: { type: String, default: "" },
+    ogTitle: { type: String, default: "" },
+    ogDescription: { type: String, default: "" },
+    ogImage: { type: String, default: "" },
+    twitterCard: { type: String, default: "summary_large_image" },
     excerpt: { type: String, default: "" },
     content: { type: String, default: "" },
     image: { type: String, default: "" },

@@ -29,6 +29,7 @@ export default function NewPackage() {
     itineraryDays: [] as Day[], images: [] as string[], imageAlts: [] as string[], image: "",
     faqs: [] as { question: string; answer: string }[],
     metaTitle: "", metaKeywords: "", metaDescription: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
   });
 
   function set(field: string, value: unknown) {
@@ -227,7 +228,7 @@ export default function NewPackage() {
           </div>
 
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.title}
           />

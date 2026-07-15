@@ -11,6 +11,11 @@ export interface ICar extends Document {
   metaTitle: string;
   metaKeywords: string;
   metaDescription: string;
+  canonical: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
+  twitterCard: string;
   year: number;
   transmission: string;
   capacity: number;
@@ -35,6 +40,11 @@ const CarSchema = new Schema<ICar>(
     metaTitle: { type: String, default: "" },
     metaKeywords: { type: String, default: "" },
     metaDescription: { type: String, default: "" },
+    canonical: { type: String, default: "" },
+    ogTitle: { type: String, default: "" },
+    ogDescription: { type: String, default: "" },
+    ogImage: { type: String, default: "" },
+    twitterCard: { type: String, default: "summary_large_image" },
     year: { type: Number, default: 2024 },
     transmission: { type: String, default: "Automatic" },
     capacity: { type: Number, default: 5 },

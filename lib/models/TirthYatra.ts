@@ -11,6 +11,11 @@ export interface ITirthYatra extends Document {
   metaTitle: string;
   metaKeywords: string;
   metaDescription: string;
+  canonical: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
+  twitterCard: string;
   description: string;
   location: string;
   state: string;
@@ -33,6 +38,11 @@ const TirthYatraSchema = new Schema<ITirthYatra>(
     metaTitle: { type: String, default: "" },
     metaKeywords: { type: String, default: "" },
     metaDescription: { type: String, default: "" },
+    canonical: { type: String, default: "" },
+    ogTitle: { type: String, default: "" },
+    ogDescription: { type: String, default: "" },
+    ogImage: { type: String, default: "" },
+    twitterCard: { type: String, default: "summary_large_image" },
     description: { type: String, default: "" },
     location: { type: String, default: "" },
     state: { type: String, default: "" },

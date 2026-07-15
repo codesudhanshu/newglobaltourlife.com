@@ -21,13 +21,14 @@ export default function EditBlog() {
     title: "", slug: "", excerpt: "", content: "", image: "",
     category: "General", author: "Admin", order: 0, published: true,
     metaTitle: "", metaKeywords: "", metaDescription: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
   });
 
   useEffect(() => {
     if (loading) return;
     fetch(`/api/blogs/${id}`, { headers: authHeaders() })
       .then((r) => r.json())
-      .then((data) => { setForm(data); setFetching(false); })
+      .then((data) => { setForm({ ...data, twitterCard: data.twitterCard || "summary_large_image" }); setFetching(false); })
       .catch(() => setFetching(false));
   }, [loading, id]);
 
@@ -85,7 +86,7 @@ export default function EditBlog() {
           </div>
 
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.title}
           />

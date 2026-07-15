@@ -29,6 +29,7 @@ export default function EditCar() {
     category: "Economy", price: 0, description: "", longContent: "", image: "", images: [] as string[], imageAlts: [] as string[], order: 0, available: true,
     faqs: [] as { question: string; answer: string }[],
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
   });
 
   useEffect(() => {
@@ -42,6 +43,11 @@ export default function EditCar() {
           images: data.images?.length ? data.images : (data.image ? [data.image] : []),
           imageAlts: data.imageAlts || [],
           faqs: data.faqs || [],
+          canonical: data.canonical || "",
+          ogTitle: data.ogTitle || "",
+          ogDescription: data.ogDescription || "",
+          ogImage: data.ogImage || "",
+          twitterCard: data.twitterCard || "summary_large_image",
         });
         setFetching(false);
       })
@@ -167,7 +173,7 @@ export default function EditCar() {
           </div>
 
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.name}
           />

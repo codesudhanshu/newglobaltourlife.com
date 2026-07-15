@@ -20,6 +20,11 @@ export interface IHotel extends Document {
   metaTitle: string;
   metaKeywords: string;
   metaDescription: string;
+  canonical: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
+  twitterCard: string;
   location: string;
   city: string;
   country: string;
@@ -45,6 +50,11 @@ const HotelSchema = new Schema<IHotel>(
     metaTitle:     { type: String, default: "" },
     metaKeywords:  { type: String, default: "" },
     metaDescription: { type: String, default: "" },
+    canonical:     { type: String, default: "" },
+    ogTitle:       { type: String, default: "" },
+    ogDescription: { type: String, default: "" },
+    ogImage:       { type: String, default: "" },
+    twitterCard:   { type: String, default: "summary_large_image" },
     location:      { type: String, default: "" },
     city:          { type: String, default: "" },
     country:       { type: String, default: "India" },

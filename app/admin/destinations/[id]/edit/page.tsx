@@ -23,6 +23,7 @@ export default function EditDestination() {
     image: "", imageAlts: [] as string[], description: "",
     active: true, featured: false, order: 0,
     metaTitle: "", metaKeywords: "", metaDescription: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
   });
 
   useEffect(() => {
@@ -43,6 +44,11 @@ export default function EditDestination() {
           metaTitle: data.metaTitle || "",
           metaKeywords: data.metaKeywords || "",
           metaDescription: data.metaDescription || "",
+          canonical: data.canonical || "",
+          ogTitle: data.ogTitle || "",
+          ogDescription: data.ogDescription || "",
+          ogImage: data.ogImage || "",
+          twitterCard: data.twitterCard || "summary_large_image",
         });
         setFetching(false);
       })
@@ -134,7 +140,7 @@ export default function EditDestination() {
           </div>
 
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.name}
           />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { SEO_PAGES } from "@/lib/seoPages";
 import RichTextEditor from "@/components/admin/RichTextEditor";
@@ -26,31 +26,39 @@ export default function SeoPageEditor({ pageKey }: { pageKey: string }) {
   const [saved, setSaved] = useState(false);
   const def = SEO_PAGES.find((p) => p.key === pageKey);
 
-  const load = useCallback(async () => {
-    setFetching(true); setSaved(false);
-    try {
-      const res = await fetch(`/api/admin/seo?key=${encodeURIComponent(pageKey)}`, { headers: authHeaders() });
-      const data = await res.json();
-      setForm({
-        ...EMPTY(pageKey),
-        title: data.title ?? def?.defaultTitle ?? "",
-        description: data.description ?? def?.defaultDescription ?? "",
-        keywords: data.keywords ?? "",
-        canonical: data.canonical ?? def?.path ?? "",
-        robots: data.robots ?? "index,follow",
-        ogTitle: data.ogTitle ?? "",
-        ogDescription: data.ogDescription ?? "",
-        ogImage: data.ogImage ?? "",
-        twitterCard: data.twitterCard ?? "summary_large_image",
-        h1: data.h1 ?? "",
-        longContent: data.longContent ?? "",
-        faqs: Array.isArray(data.faqs) ? data.faqs : [],
-      });
-    } catch { /* keep empty */ }
-    setFetching(false);
-  }, [authHeaders, pageKey, def]);
-
-  useEffect(() => { if (!loading) load(); }, [loading, load]);
+  // Load once per page when auth is ready. Depends only on [loading, pageKey]
+  // so it never re-runs from authHeaders/def identity changing (that caused a
+  // render loop that stopped the page from opening).
+  useEffect(() => {
+    if (loading) return;
+    let cancelled = false;
+    (async () => {
+      setFetching(true); setSaved(false);
+      try {
+        const res = await fetch(`/api/admin/seo?key=${encodeURIComponent(pageKey)}`, { headers: authHeaders() });
+        const data = await res.json();
+        if (cancelled) return;
+        setForm({
+          ...EMPTY(pageKey),
+          title: data.title ?? def?.defaultTitle ?? "",
+          description: data.description ?? def?.defaultDescription ?? "",
+          keywords: data.keywords ?? "",
+          canonical: data.canonical ?? def?.path ?? "",
+          robots: data.robots ?? "index,follow",
+          ogTitle: data.ogTitle ?? "",
+          ogDescription: data.ogDescription ?? "",
+          ogImage: data.ogImage ?? "",
+          twitterCard: data.twitterCard ?? "summary_large_image",
+          h1: data.h1 ?? "",
+          longContent: data.longContent ?? "",
+          faqs: Array.isArray(data.faqs) ? data.faqs : [],
+        });
+      } catch { /* keep empty */ }
+      if (!cancelled) setFetching(false);
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, pageKey]);
 
   function set<K extends keyof SeoForm>(k: K, v: SeoForm[K]) { setForm((f) => ({ ...f, [k]: v })); }
   function addFaq() { set("faqs", [...form.faqs, { question: "", answer: "" }]); }

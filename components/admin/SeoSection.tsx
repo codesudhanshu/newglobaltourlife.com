@@ -1,13 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
-import { Search, Link2, Type, Hash, AlignLeft } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Search, Link2, Type, Hash, AlignLeft, Share2, ChevronDown } from "lucide-react";
 
 export interface SeoData {
   slug: string;
   metaTitle: string;
   metaKeywords: string;
   metaDescription: string;
+  // Optional — advanced / social. Detail pages fall back to meta + name when unset.
+  canonical?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  twitterCard?: string;
 }
 
 interface Props {
@@ -24,6 +30,7 @@ const inp = "w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 tex
 const lbl = "block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5 flex items-center gap-1.5";
 
 export default function SeoSection({ data, onChange, autoSlugFrom }: Props) {
+  const [advOpen, setAdvOpen] = useState(false);
   function generateSlug() {
     if (autoSlugFrom) onChange("slug", toSlug(autoSlugFrom));
   }
@@ -120,6 +127,82 @@ export default function SeoSection({ data, onChange, autoSlugFrom }: Props) {
         <p className={`text-xs mt-1 ${remaining < 0 ? "text-red-500" : remaining < 20 ? "text-amber-500" : "text-gray-400"}`}>
           {remaining} chars remaining
         </p>
+      </div>
+
+      {/* Advanced: Canonical, Open Graph, Twitter */}
+      <div className="pt-2 border-t border-gray-100">
+        <button
+          type="button"
+          onClick={() => setAdvOpen((o) => !o)}
+          className="flex items-center gap-2 text-gray-600 hover:text-[#0A65AB] text-sm font-semibold transition-colors"
+        >
+          <Share2 size={14} /> Canonical, Open Graph &amp; Twitter
+          <ChevronDown size={15} className={`transition-transform ${advOpen ? "rotate-180" : ""}`} />
+        </button>
+
+        {advOpen && (
+          <div className="space-y-4 mt-4">
+            {/* Canonical */}
+            <div>
+              <label className={lbl}><Link2 size={12} /> Canonical URL</label>
+              <input
+                value={data.canonical || ""}
+                onChange={(e) => onChange("canonical", e.target.value)}
+                placeholder="Leave blank to use this page's own URL"
+                className={inp}
+              />
+              <p className="text-gray-400 text-xs mt-1">Absolute (https://…) or path (/cars/…). Prevents duplicate-content issues.</p>
+            </div>
+
+            {/* OG title + twitter card */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label className={lbl}><Type size={12} /> OG Title</label>
+                <input
+                  value={data.ogTitle || ""}
+                  onChange={(e) => onChange("ogTitle", e.target.value)}
+                  placeholder="Falls back to Meta Title"
+                  className={inp}
+                />
+              </div>
+              <div>
+                <label className={lbl}><Share2 size={12} /> Twitter Card</label>
+                <select
+                  value={data.twitterCard || "summary_large_image"}
+                  onChange={(e) => onChange("twitterCard", e.target.value)}
+                  className={inp}
+                >
+                  <option value="summary_large_image">summary_large_image</option>
+                  <option value="summary">summary</option>
+                </select>
+              </div>
+            </div>
+
+            {/* OG description */}
+            <div>
+              <label className={lbl}><AlignLeft size={12} /> OG Description</label>
+              <textarea
+                value={data.ogDescription || ""}
+                onChange={(e) => onChange("ogDescription", e.target.value)}
+                placeholder="Falls back to Meta Description"
+                rows={2}
+                className={`${inp} resize-none`}
+              />
+            </div>
+
+            {/* OG image */}
+            <div>
+              <label className={lbl}><Share2 size={12} /> OG / Social Share Image URL</label>
+              <input
+                value={data.ogImage || ""}
+                onChange={(e) => onChange("ogImage", e.target.value)}
+                placeholder="Falls back to the item's cover image"
+                className={inp}
+              />
+              <p className="text-gray-400 text-xs mt-1">Shown when the page is shared on Facebook / WhatsApp / Twitter.</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

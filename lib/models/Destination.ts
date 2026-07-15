@@ -14,6 +14,11 @@ export interface IDestination extends Document {
   metaTitle: string;
   metaKeywords: string;
   metaDescription: string;
+  canonical: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
+  twitterCard: string;
   featured: boolean;
   honeymoon: boolean;
   order: number;
@@ -37,6 +42,11 @@ const DestinationSchema = new Schema<IDestination>(
     metaTitle: { type: String, default: "" },
     metaKeywords: { type: String, default: "" },
     metaDescription: { type: String, default: "" },
+    canonical: { type: String, default: "" },
+    ogTitle: { type: String, default: "" },
+    ogDescription: { type: String, default: "" },
+    ogImage: { type: String, default: "" },
+    twitterCard: { type: String, default: "summary_large_image" },
     featured: { type: Boolean, default: false },
     honeymoon: { type: Boolean, default: false },
     order: { type: Number, default: 0 },

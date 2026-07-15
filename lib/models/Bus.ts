@@ -8,6 +8,11 @@ export interface IBus extends Document {
   metaTitle: string;
   metaKeywords: string;
   metaDescription: string;
+  canonical: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
+  twitterCard: string;
   image: string;
   images: string[];
   imageAlts: string[];
@@ -30,6 +35,11 @@ const BusSchema = new Schema<IBus>(
     metaTitle: { type: String, default: "" },
     metaKeywords: { type: String, default: "" },
     metaDescription: { type: String, default: "" },
+    canonical: { type: String, default: "" },
+    ogTitle: { type: String, default: "" },
+    ogDescription: { type: String, default: "" },
+    ogImage: { type: String, default: "" },
+    twitterCard: { type: String, default: "summary_large_image" },
     image: { type: String, default: "" },
     images: { type: [String], default: [] },
     imageAlts: { type: [String], default: [] },
