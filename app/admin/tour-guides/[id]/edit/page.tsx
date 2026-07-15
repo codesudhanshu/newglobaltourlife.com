@@ -23,6 +23,7 @@ export default function EditTourGuide() {
     rating: 0,
     featured: false, available: true, order: 0,
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
   });
 
   useEffect(() => {
@@ -36,6 +37,7 @@ export default function EditTourGuide() {
           languages: Array.isArray(data.languages) ? data.languages.join(", ") : (data.languages || ""),
           specializations: Array.isArray(data.specializations) ? data.specializations.join(", ") : (data.specializations || ""),
           locations: Array.isArray(data.locations) ? data.locations.join(", ") : (data.locations || ""),
+          canonical: data.canonical || "", ogTitle: data.ogTitle || "", ogDescription: data.ogDescription || "", ogImage: data.ogImage || "", twitterCard: data.twitterCard || "summary_large_image",
         });
         setFetching(false);
       })
@@ -153,7 +155,7 @@ export default function EditTourGuide() {
 
           {/* SEO */}
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
             onChange={setSeo}
             autoSlugFrom={form.name}
           />

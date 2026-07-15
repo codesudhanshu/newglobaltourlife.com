@@ -14,6 +14,11 @@ export interface IFlight extends Document {
   metaTitle: string;
   metaKeywords: string;
   metaDescription: string;
+  canonical: string;
+  ogTitle: string;
+  ogDescription: string;
+  ogImage: string;
+  twitterCard: string;
   order: number;
   available: boolean;
   createdAt: Date;
@@ -35,6 +40,11 @@ const FlightSchema = new Schema<IFlight>(
     metaTitle: { type: String, default: "" },
     metaKeywords: { type: String, default: "" },
     metaDescription: { type: String, default: "" },
+    canonical: { type: String, default: "" },
+    ogTitle: { type: String, default: "" },
+    ogDescription: { type: String, default: "" },
+    ogImage: { type: String, default: "" },
+    twitterCard: { type: String, default: "summary_large_image" },
     order: { type: Number, default: 0 },
     available: { type: Boolean, default: true },
   },
