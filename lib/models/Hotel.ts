@@ -25,6 +25,7 @@ export interface IHotel extends Document {
   country: string;
   description: string;
   images: string[];
+  imageAlts: string[];
   stars: number;
   pricePerNight: number;
   category: string;
@@ -49,6 +50,7 @@ const HotelSchema = new Schema<IHotel>(
     country:       { type: String, default: "India" },
     description:   { type: String, default: "" },
     images:        { type: [String], default: [] },
+    imageAlts:     { type: [String], default: [] },
     stars:         { type: Number, default: 3, min: 1, max: 5 },
     pricePerNight: { type: Number, default: 0 },
     category:      { type: String, default: "Standard" },

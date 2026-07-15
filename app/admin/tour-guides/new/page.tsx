@@ -14,7 +14,7 @@ export default function NewTourGuide() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [form, setForm] = useState({
-    name: "", phone: "", email: "", image: "",
+    name: "", phone: "", email: "", image: "", imageAlt: "",
     experience: 0,
     languages: "", specializations: "", locations: "",
     description: "",
@@ -126,6 +126,10 @@ export default function NewTourGuide() {
                 folder="new-global-tour-life/tour-guides"
               />
             )}
+            <div className="mt-4">
+              <label className="label">Image Alt Text <span className="text-gray-400 font-normal normal-case">(SEO)</span></label>
+              <input value={form.imageAlt} onChange={(e) => set("imageAlt", e.target.value)} placeholder="Describe the photo for SEO / accessibility" className="input" />
+            </div>
           </div>
 
           {/* SEO */}

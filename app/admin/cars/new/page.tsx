@@ -5,6 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
 import SeoSection from "@/components/admin/SeoSection";
+import RichTextEditor from "@/components/admin/RichTextEditor";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
@@ -28,7 +29,7 @@ export default function NewCar() {
   const [error, setError] = useState("");
   const [form, setForm] = useState({
     name: "", year: 2024, transmission: "Automatic", capacity: 5,
-    category: "Cab Service", price: 0, description: "", longContent: "", image: "", images: [] as string[], order: 0, available: true,
+    category: "Cab Service", price: 0, description: "", longContent: "", image: "", images: [] as string[], imageAlts: [] as string[], order: 0, available: true,
     faqs: [] as { question: string; answer: string }[],
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
   });
@@ -111,7 +112,7 @@ export default function NewCar() {
             <div>
               <label className="label">Long Content (SEO / page body)</label>
               <p className="text-gray-400 text-xs mb-2">Shown as the text content section on the car page. Blank lines separate paragraphs.</p>
-              <textarea value={form.longContent} onChange={(e) => set("longContent", e.target.value)} rows={8} placeholder="e.g. Honda City Car Booking in Indore..." className="input resize-none" />
+              <RichTextEditor value={form.longContent} onChange={(html) => set("longContent", html)} />
             </div>
           </div>
 
@@ -125,6 +126,8 @@ export default function NewCar() {
                 onChange={handleImages}
                 token={token}
                 folder="new-global-tour-life/cars"
+                alts={form.imageAlts}
+                onAltsChange={(a) => set("imageAlts", a)}
               />
             )}
           </div>

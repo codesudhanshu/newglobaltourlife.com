@@ -20,7 +20,7 @@ export default function EditDestination() {
   const [error, setError] = useState("");
   const [form, setForm] = useState({
     name: "", slug: "", region: "India" as "India" | "World",
-    image: "", description: "",
+    image: "", imageAlts: [] as string[], description: "",
     active: true, featured: false, order: 0,
     metaTitle: "", metaKeywords: "", metaDescription: "",
   });
@@ -35,6 +35,7 @@ export default function EditDestination() {
           slug: data.slug || "",
           region: data.region || "India",
           image: data.image || "",
+          imageAlts: data.imageAlts || [],
           description: data.description || "",
           active: data.active !== false,
           featured: !!data.featured,
@@ -144,6 +145,7 @@ export default function EditDestination() {
           <div className="bg-white rounded-2xl border border-gray-200 p-6">
             <h3 className="font-bold text-gray-800 text-sm mb-4">Destination Image</h3>
             <ImageUpload value={form.image} onChange={(url) => set("image", url)} token={token || ""} folder="destinations" />
+            <input value={form.imageAlts[0] || ""} onChange={(e) => set("imageAlts", [e.target.value])} placeholder="Image alt text (SEO)" className="w-full mt-3 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-gray-700 text-sm focus:outline-none focus:border-[#0A65AB]" />
           </div>
 
           {error && (

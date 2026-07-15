@@ -10,6 +10,7 @@ export interface IBus extends Document {
   metaDescription: string;
   image: string;
   images: string[];
+  imageAlts: string[];
   description: string;
   longContent: string;
   price: number;
@@ -31,6 +32,7 @@ const BusSchema = new Schema<IBus>(
     metaDescription: { type: String, default: "" },
     image: { type: String, default: "" },
     images: { type: [String], default: [] },
+    imageAlts: { type: [String], default: [] },
     description: { type: String, default: "" },
     longContent: { type: String, default: "" },
     price: { type: Number, default: 0 },

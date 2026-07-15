@@ -4,6 +4,7 @@ export interface ITourGuide extends Document {
   name: string;
   slug: string;
   image: string;
+  imageAlt: string;
   phone: string;
   email: string;
   experience: number;
@@ -28,6 +29,7 @@ const TourGuideSchema = new Schema<ITourGuide>(
     name:             { type: String, required: true },
     slug:             { type: String, default: "" },
     image:            { type: String, default: "" },
+    imageAlt:         { type: String, default: "" },
     phone:            { type: String, default: "" },
     email:            { type: String, default: "" },
     experience:       { type: Number, default: 0 },

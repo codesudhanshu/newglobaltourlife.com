@@ -25,6 +25,7 @@ interface Car {
   longContent: string;
   image: string;
   images: string[];
+  imageAlts: string[];
   faqs: { question: string; answer: string }[];
   available: boolean;
 }
@@ -107,7 +108,7 @@ export default function CarDetailPage() {
           <div className="space-y-3">
             <div className="relative h-72 lg:h-[420px] rounded-2xl overflow-hidden bg-white border border-gray-100" style={{ background: `linear-gradient(135deg, ${color}10, ${color}20)` }}>
               {imgs[activeImg] ? (
-                <Image src={imgs[activeImg]} alt={car.name} fill className="object-cover rounded-2xl" sizes="(max-width: 1024px) 100vw, 50vw" priority />
+                <Image src={imgs[activeImg]} alt={car.imageAlts?.[activeImg] || car.name} fill className="object-cover rounded-2xl" sizes="(max-width: 1024px) 100vw, 50vw" priority />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-7xl">🚗</div>
               )}
@@ -129,7 +130,7 @@ export default function CarDetailPage() {
                     onClick={() => setActiveImg(i)}
                     className={`relative flex-shrink-0 w-20 h-14 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? "border-[#01b7f2] scale-105" : "border-gray-200 hover:border-[#01b7f2]/50"}`}
                   >
-                    <Image src={img} alt="" fill className="object-cover" sizes="80px" />
+                    <Image src={img} alt={car.imageAlts?.[i] || car.name} fill className="object-cover" sizes="80px" />
                   </button>
                 ))}
               </div>

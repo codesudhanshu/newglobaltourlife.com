@@ -28,6 +28,7 @@ export default function NewHotelPage() {
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
   });
   const [images, setImages] = useState<string[]>([]);
+  const [imageAlts, setImageAlts] = useState<string[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [faqs, setFaqs] = useState<{ question: string; answer: string }[]>([]);
 
@@ -59,7 +60,7 @@ export default function NewHotelPage() {
     const res = await fetch("/api/hotels", {
       method: "POST",
       headers: { "Content-Type": "application/json", ...authHeaders() },
-      body: JSON.stringify({ ...form, images, rooms, faqs, pricePerNight: Number(form.pricePerNight) }),
+      body: JSON.stringify({ ...form, images, imageAlts, rooms, faqs, pricePerNight: Number(form.pricePerNight) }),
     });
     const data = await res.json();
     if (res.ok) { router.push("/admin/hotels"); }
@@ -198,7 +199,7 @@ export default function NewHotelPage() {
         {/* Images */}
         <div className="bg-white rounded-2xl p-5 border border-gray-200">
           <h2 className="text-gray-800 font-semibold text-sm mb-3">Images</h2>
-          {token && <MultiImageUpload values={images} onChange={setImages} token={token} folder="newglobaltourlife/hotels" />}
+          {token && <MultiImageUpload values={images} onChange={setImages} alts={imageAlts} onAltsChange={setImageAlts} token={token} folder="newglobaltourlife/hotels" />}
         </div>
 
         <SeoSection

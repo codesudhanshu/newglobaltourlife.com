@@ -28,7 +28,7 @@ export default function EditPackage() {
     title: "", slug: "", destination: "", nights: 0, days: 0, price: 0,
     category: "", itinerary: "", order: 0, featured: false, available: true,
     inclusions: [] as string[], exclusions: [] as string[], highlights: [] as string[],
-    itineraryDays: [] as Day[], images: [] as string[], image: "",
+    itineraryDays: [] as Day[], images: [] as string[], imageAlts: [] as string[], image: "",
     faqs: [] as { question: string; answer: string }[],
     metaTitle: "", metaKeywords: "", metaDescription: "",
   });
@@ -45,7 +45,7 @@ export default function EditPackage() {
             category: data.category || "", itinerary: data.itinerary || "", order: data.order || 0,
             featured: !!data.featured, available: data.available !== false,
             inclusions: data.inclusions || [], exclusions: data.exclusions || [], highlights: data.highlights || [],
-            itineraryDays: data.itineraryDays || [], images: data.images || [], image: data.image || "",
+            itineraryDays: data.itineraryDays || [], images: data.images || [], imageAlts: data.imageAlts || [], image: data.image || "",
             faqs: data.faqs || [],
             metaTitle: data.metaTitle || "", metaKeywords: data.metaKeywords || "", metaDescription: data.metaDescription || "",
           });
@@ -239,7 +239,7 @@ export default function EditPackage() {
             <label className="label mb-3 block">Package Photos (Gallery)</label>
             <p className="text-gray-400 text-xs mb-3">First image = cover photo.</p>
             {token && (
-              <MultiImageUpload values={form.images} onChange={handleImages} token={token} folder="new-global-tour-life/packages" />
+              <MultiImageUpload values={form.images} onChange={handleImages} token={token} folder="new-global-tour-life/packages" alts={form.imageAlts} onAltsChange={(a) => set("imageAlts", a)} />
             )}
           </div>
 

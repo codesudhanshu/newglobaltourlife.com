@@ -23,6 +23,7 @@ export interface IPackage extends Document {
   price: number;
   image: string;
   images: string[];
+  imageAlts: string[];
   inclusions: string[];
   exclusions: string[];
   highlights: string[];
@@ -50,6 +51,7 @@ const PackageSchema = new Schema<IPackage>(
     price: { type: Number, required: true },
     image: { type: String, default: "" },
     images: { type: [String], default: [] },
+    imageAlts: { type: [String], default: [] },
     inclusions: { type: [String], default: [] },
     exclusions: { type: [String], default: [] },
     highlights: { type: [String], default: [] },

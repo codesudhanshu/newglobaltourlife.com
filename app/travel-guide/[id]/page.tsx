@@ -14,6 +14,7 @@ interface TourGuide {
   name: string;
   slug: string;
   image: string;
+  imageAlt?: string;
   phone: string;
   email: string;
   experience: number;
@@ -95,7 +96,7 @@ export default function TourGuideDetail() {
             <div className="flex-shrink-0">
               {guide.image ? (
                 <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white/30 shadow-xl">
-                  <Image src={guide.image} alt={guide.name} fill className="object-cover" />
+                  <Image src={guide.image} alt={guide.imageAlt || guide.name} fill className="object-cover" />
                 </div>
               ) : (
                 <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-white/10 border-4 border-white/30 flex items-center justify-center text-5xl shadow-xl">

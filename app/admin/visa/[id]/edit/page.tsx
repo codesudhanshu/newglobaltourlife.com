@@ -5,6 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter, useParams } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
 import SeoSection from "@/components/admin/SeoSection";
+import RichTextEditor from "@/components/admin/RichTextEditor";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
@@ -20,7 +21,7 @@ export default function EditVisa() {
     title: "", description: "", longContent: "", price: 0, order: 0,
     featured: false, available: true,
     highlights: [] as string[], faqs: [] as { question: string; answer: string }[],
-    images: [] as string[], image: "",
+    images: [] as string[], imageAlts: [] as string[], image: "",
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
   });
 
@@ -34,7 +35,7 @@ export default function EditVisa() {
             title: data.title || "", description: data.description || "", longContent: data.longContent || "",
             price: data.price || 0, order: data.order || 0, featured: !!data.featured, available: data.available !== false,
             highlights: data.highlights || [], faqs: data.faqs || [],
-            images: data.images?.length ? data.images : (data.image ? [data.image] : []), image: data.image || "",
+            images: data.images?.length ? data.images : (data.image ? [data.image] : []), imageAlts: data.imageAlts || [], image: data.image || "",
             slug: data.slug || "", metaTitle: data.metaTitle || "", metaKeywords: data.metaKeywords || "", metaDescription: data.metaDescription || "",
           });
         }
@@ -111,7 +112,7 @@ export default function EditVisa() {
             <div>
               <label className="label">Long Content (SEO / page body)</label>
               <p className="text-gray-400 text-xs mb-2">Blank lines separate paragraphs.</p>
-              <textarea value={form.longContent} onChange={(e) => set("longContent", e.target.value)} rows={6} className="input resize-none" />
+              <RichTextEditor value={form.longContent} onChange={(html) => set("longContent", html)} />
             </div>
           </div>
 
@@ -153,7 +154,7 @@ export default function EditVisa() {
           <div className="bg-white rounded-2xl border border-gray-200 p-6">
             <label className="label mb-3 block">Photos (Gallery)</label>
             <p className="text-gray-400 text-xs mb-3">First image = cover.</p>
-            {token && <MultiImageUpload values={form.images} onChange={handleImages} token={token} folder="new-global-tour-life/visa" />}
+            {token && <MultiImageUpload values={form.images} onChange={handleImages} token={token} folder="new-global-tour-life/visa" alts={form.imageAlts} onAltsChange={(a) => set("imageAlts", a)} />}
           </div>
 
           <SeoSection

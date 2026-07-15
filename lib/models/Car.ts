@@ -20,6 +20,7 @@ export interface ICar extends Document {
   longContent: string;
   image: string;
   images: string[];
+  imageAlts: string[];
   faqs: IFaq[];
   order: number;
   available: boolean;
@@ -43,6 +44,7 @@ const CarSchema = new Schema<ICar>(
     longContent: { type: String, default: "" },
     image: { type: String, default: "" },
     images: { type: [String], default: [] },
+    imageAlts: { type: [String], default: [] },
     faqs: {
       type: [
         {

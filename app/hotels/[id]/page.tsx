@@ -21,6 +21,7 @@ interface Hotel {
   country: string;
   description: string;
   images: string[];
+  imageAlts: string[];
   stars: number;
   pricePerNight: number;
   category: string;
@@ -140,7 +141,7 @@ export default function HotelDetailPage() {
             <div className="space-y-3">
               <div className="relative h-72 lg:h-[420px] rounded-2xl overflow-hidden bg-white border border-gray-100">
                 {imgs[activeImg] ? (
-                  <Image src={imgs[activeImg]} alt={hotel.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" priority />
+                  <Image src={imgs[activeImg]} alt={hotel.imageAlts?.[activeImg] || hotel.name} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" priority />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-7xl">🏨</div>
                 )}
@@ -150,7 +151,7 @@ export default function HotelDetailPage() {
                   {imgs.map((img, i) => (
                     <button key={i} onClick={() => setActiveImg(i)}
                       className={`relative flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? "border-[#01b7f2] scale-105" : "border-gray-200 hover:border-[#01b7f2]/50"}`}>
-                      <Image src={img} alt="" fill className="object-cover" sizes="96px" />
+                      <Image src={img} alt={hotel.imageAlts?.[i] || hotel.name} fill className="object-cover" sizes="96px" />
                     </button>
                   ))}
                 </div>

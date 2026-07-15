@@ -7,6 +7,7 @@ export interface IDestination extends Document {
   description: string;
   image: string;
   images: string[];
+  imageAlts: string[];
   highlights: string[];
   startingPrice: number;
   slug: string;
@@ -29,6 +30,7 @@ const DestinationSchema = new Schema<IDestination>(
     description: { type: String, default: "" },
     image: { type: String, default: "" },
     images: { type: [String], default: [] },
+    imageAlts: { type: [String], default: [] },
     highlights: { type: [String], default: [] },
     startingPrice: { type: Number, default: 0 },
     slug: { type: String, unique: true },

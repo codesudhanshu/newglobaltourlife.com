@@ -23,6 +23,7 @@ interface Pkg {
   price: number;
   image: string;
   images: string[];
+  imageAlts: string[];
   inclusions: string[];
   exclusions: string[];
   highlights: string[];
@@ -114,7 +115,7 @@ export default function PackageDetailPage() {
             <div className="space-y-3">
               <div className="relative h-72 lg:h-[420px] rounded-2xl overflow-hidden bg-white border border-gray-100">
                 {imgs[activeImg] ? (
-                  <Image src={imgs[activeImg]} alt={pkg.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" priority />
+                  <Image src={imgs[activeImg]} alt={pkg.imageAlts?.[activeImg] || pkg.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 66vw" priority />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-7xl">🧳</div>
                 )}
@@ -127,7 +128,7 @@ export default function PackageDetailPage() {
                       onClick={() => setActiveImg(i)}
                       className={`relative flex-shrink-0 w-20 h-14 rounded-xl overflow-hidden border-2 transition-all ${i === activeImg ? "border-[#01b7f2] scale-105" : "border-gray-200 hover:border-[#01b7f2]/50"}`}
                     >
-                      <Image src={img} alt="" fill className="object-cover" sizes="80px" />
+                      <Image src={img} alt={pkg.imageAlts?.[i] || pkg.title} fill className="object-cover" sizes="80px" />
                     </button>
                   ))}
                 </div>
@@ -210,7 +211,7 @@ export default function PackageDetailPage() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {imgs.map((img, i) => (
                     <div key={i} className="relative h-36 rounded-xl overflow-hidden border border-gray-100">
-                      <Image src={img} alt={`${pkg.title} ${i + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 50vw, 33vw" />
+                      <Image src={img} alt={pkg.imageAlts?.[i] || `${pkg.title} ${i + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 50vw, 33vw" />
                     </div>
                   ))}
                 </div>
