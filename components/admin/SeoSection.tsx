@@ -75,7 +75,7 @@ export default function SeoSection({ data, onChange, autoSlugFrom }: Props) {
             </button>
           )}
         </div>
-        <p className="text-gray-400 text-xs mt-1">URL: /page/<strong className="text-gray-600">{data.slug || "slug-here"}</strong></p>
+        <p className="text-gray-400 text-xs mt-1">URL: /<strong className="text-gray-600">{data.slug || "slug-here"}</strong></p>
       </div>
 
       {/* Meta Title */}
