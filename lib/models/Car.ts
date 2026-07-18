@@ -16,6 +16,7 @@ export interface ICar extends Document {
   ogDescription: string;
   ogImage: string;
   twitterCard: string;
+  schemaJsonLd: string;
   year: number;
   transmission: string;
   capacity: number;
@@ -45,6 +46,7 @@ const CarSchema = new Schema<ICar>(
     ogDescription: { type: String, default: "" },
     ogImage: { type: String, default: "" },
     twitterCard: { type: String, default: "summary_large_image" },
+    schemaJsonLd: { type: String, default: "" },
     year: { type: Number, default: 2024 },
     transmission: { type: String, default: "Automatic" },
     capacity: { type: Number, default: 5 },

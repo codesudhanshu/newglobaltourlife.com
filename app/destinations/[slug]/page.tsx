@@ -23,6 +23,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   });
 }
 
-export default function Page() {
-  return <DestinationDetailClient />;
+export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const r = await getRec(slug) as Record<string, string> | null;
+  return (
+    <>
+      {r?.schemaJsonLd ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: r.schemaJsonLd }} /> : null}
+      <DestinationDetailClient />
+    </>
+  );
 }

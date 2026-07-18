@@ -14,6 +14,7 @@ export interface SeoData {
   ogDescription?: string;
   ogImage?: string;
   twitterCard?: string;
+  schemaJsonLd?: string;
 }
 
 interface Props {
@@ -200,6 +201,20 @@ export default function SeoSection({ data, onChange, autoSlugFrom }: Props) {
                 className={inp}
               />
               <p className="text-gray-400 text-xs mt-1">Shown when the page is shared on Facebook / WhatsApp / Twitter.</p>
+            </div>
+
+            {/* Custom schema */}
+            <div>
+              <label className={lbl}><Hash size={12} /> Custom Schema (JSON-LD)</label>
+              <textarea
+                value={data.schemaJsonLd || ""}
+                onChange={(e) => onChange("schemaJsonLd", e.target.value)}
+                placeholder='{"@context":"https://schema.org","@type":"Product","name":"…"}'
+                rows={5}
+                spellCheck={false}
+                className={`${inp} font-mono resize-y`}
+              />
+              <p className="text-gray-400 text-xs mt-1">Raw JSON-LD injected on this item&apos;s detail page. Leave blank if not needed.</p>
             </div>
           </div>
         )}

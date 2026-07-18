@@ -21,7 +21,7 @@ export default function EditFlight() {
     airline: "", from: "", to: "", fromCode: "", toCode: "",
     price: 0, tripType: "One Way", departInfo: "", image: "", order: 0, available: true,
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
   });
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function EditFlight() {
           metaTitle: data.metaTitle || "",
           metaKeywords: data.metaKeywords || "",
           metaDescription: data.metaDescription || "",
-          canonical: data.canonical || "", ogTitle: data.ogTitle || "", ogDescription: data.ogDescription || "", ogImage: data.ogImage || "", twitterCard: data.twitterCard || "summary_large_image",
+          canonical: data.canonical || "", ogTitle: data.ogTitle || "", ogDescription: data.ogDescription || "", ogImage: data.ogImage || "", twitterCard: data.twitterCard || "summary_large_image", schemaJsonLd: data.schemaJsonLd || "",
         });
         setFetching(false);
       })
@@ -148,7 +148,7 @@ export default function EditFlight() {
           </div>
 
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={`${form.airline} ${form.from} ${form.to}`}
           />

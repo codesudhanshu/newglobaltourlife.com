@@ -21,7 +21,7 @@ export default function NewTourGuide() {
     rating: 0,
     featured: false, available: true, order: 0,
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
   });
 
   function set(field: string, value: any) {
@@ -135,7 +135,7 @@ export default function NewTourGuide() {
 
           {/* SEO */}
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
             onChange={setSeo}
             autoSlugFrom={form.name}
           />

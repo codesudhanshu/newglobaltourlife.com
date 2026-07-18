@@ -25,6 +25,7 @@ export interface IHotel extends Document {
   ogDescription: string;
   ogImage: string;
   twitterCard: string;
+  schemaJsonLd: string;
   location: string;
   city: string;
   country: string;
@@ -55,6 +56,7 @@ const HotelSchema = new Schema<IHotel>(
     ogDescription: { type: String, default: "" },
     ogImage:       { type: String, default: "" },
     twitterCard:   { type: String, default: "summary_large_image" },
+    schemaJsonLd:  { type: String, default: "" },
     location:      { type: String, default: "" },
     city:          { type: String, default: "" },
     country:       { type: String, default: "India" },

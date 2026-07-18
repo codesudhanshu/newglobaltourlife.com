@@ -22,6 +22,7 @@ export interface ITourGuide extends Document {
   ogDescription: string;
   ogImage: string;
   twitterCard: string;
+  schemaJsonLd: string;
   available: boolean;
   featured: boolean;
   order: number;
@@ -52,6 +53,7 @@ const TourGuideSchema = new Schema<ITourGuide>(
     ogDescription:    { type: String, default: "" },
     ogImage:          { type: String, default: "" },
     twitterCard:      { type: String, default: "summary_large_image" },
+    schemaJsonLd:     { type: String, default: "" },
     available:        { type: Boolean, default: true },
     featured:         { type: Boolean, default: false },
     order:            { type: Number, default: 0 },

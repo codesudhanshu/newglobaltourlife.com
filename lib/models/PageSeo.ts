@@ -19,6 +19,7 @@ export interface IPageSeo extends Document {
   h1: string;               // primary heading override (optional)
   longContent: string;      // rich HTML body rendered on the page
   faqs: IFaqItem[];         // FAQ schema + on-page FAQ
+  schemaJsonLd: string;     // custom JSON-LD injected into the page head/body
 }
 
 const FaqSchema = new Schema<IFaqItem>(
@@ -41,6 +42,7 @@ const PageSeoSchema = new Schema<IPageSeo>(
     h1:           { type: String, default: "" },
     longContent:  { type: String, default: "" },
     faqs:         { type: [FaqSchema], default: [] },
+    schemaJsonLd: { type: String, default: "" },
   },
   { timestamps: true }
 );

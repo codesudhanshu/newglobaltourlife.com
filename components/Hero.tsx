@@ -35,7 +35,8 @@ export default function Hero() {
 
   return (
     <section className="relative">
-      <div className="relative h-[45vh] min-h-[280px] md:h-[70vh] md:min-h-[480px] overflow-hidden">
+      {/* Height follows the banner's 1900×596 aspect ratio so the full image shows (no crop) */}
+      <div className="relative w-full aspect-[1900/596] min-h-[200px] overflow-hidden">
         {slides.map((s, idx) => (
           <div
             key={idx}
@@ -57,7 +58,7 @@ export default function Hero() {
         </div>
 
         {/* Slide dots */}
-        <div className="absolute bottom-14 md:bottom-32 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+        <div className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 z-10 flex gap-2">
           {slides.map((_, idx) => (
             <button
               key={idx}

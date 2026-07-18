@@ -21,7 +21,7 @@ export default function NewVisa() {
     highlights: [] as string[], faqs: [] as { question: string; answer: string }[],
     images: [] as string[], imageAlts: [] as string[], image: "",
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
   });
 
   function set(field: string, value: unknown) { setForm((p) => ({ ...p, [field]: value })); }
@@ -141,7 +141,7 @@ export default function NewVisa() {
           </div>
 
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.title}
           />

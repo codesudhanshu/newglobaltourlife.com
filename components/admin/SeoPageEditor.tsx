@@ -10,12 +10,12 @@ type Faq = { question: string; answer: string };
 type SeoForm = {
   pageKey: string; title: string; description: string; keywords: string; canonical: string;
   robots: string; ogTitle: string; ogDescription: string; ogImage: string; twitterCard: string;
-  h1: string; longContent: string; faqs: Faq[];
+  h1: string; longContent: string; faqs: Faq[]; schemaJsonLd: string;
 };
 const EMPTY = (key: string): SeoForm => ({
   pageKey: key, title: "", description: "", keywords: "", canonical: "", robots: "index,follow",
   ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", h1: "",
-  longContent: "", faqs: [],
+  longContent: "", faqs: [], schemaJsonLd: "",
 });
 
 export default function SeoPageEditor({ pageKey }: { pageKey: string }) {
@@ -52,6 +52,7 @@ export default function SeoPageEditor({ pageKey }: { pageKey: string }) {
           h1: data.h1 ?? "",
           longContent: data.longContent ?? "",
           faqs: Array.isArray(data.faqs) ? data.faqs : [],
+          schemaJsonLd: data.schemaJsonLd ?? "",
         });
       } catch { /* keep empty */ }
       if (!cancelled) setFetching(false);
@@ -180,6 +181,20 @@ export default function SeoPageEditor({ pageKey }: { pageKey: string }) {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Custom schema */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-2">
+        <h2 className="font-bold text-gray-900">Custom Schema (JSON-LD)</h2>
+        <p className="text-gray-500 text-xs">Paste raw JSON-LD (e.g. Organization, Product, BreadcrumbList). Injected as a &lt;script type="application/ld+json"&gt; on this page. Leave blank if not needed.</p>
+        <textarea
+          value={form.schemaJsonLd}
+          onChange={(e) => set("schemaJsonLd", e.target.value)}
+          rows={8}
+          spellCheck={false}
+          placeholder={'{\n  "@context": "https://schema.org",\n  "@type": "WebPage",\n  "name": "…"\n}'}
+          className={`${input} font-mono`}
+        />
       </div>
 
       <div className="flex items-center gap-3 sticky bottom-4">

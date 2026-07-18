@@ -22,14 +22,14 @@ export default function EditTirthYatra() {
     featured: false, available: true, order: 0,
     faqs: [] as { question: string; answer: string }[],
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
   });
 
   useEffect(() => {
     if (loading) return;
     fetch(`/api/tirth-yatra/${id}`, { headers: authHeaders() })
       .then((r) => r.json())
-      .then((data) => { setForm({ ...data, faqs: data.faqs || [], twitterCard: data.twitterCard || "summary_large_image" }); setFetching(false); })
+      .then((data) => { setForm({ ...data, faqs: data.faqs || [], twitterCard: data.twitterCard || "summary_large_image", schemaJsonLd: data.schemaJsonLd || "" }); setFetching(false); })
       .catch(() => setFetching(false));
   }, [loading, id]);
 
@@ -174,7 +174,7 @@ export default function EditTirthYatra() {
           </div>
 
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.name}
           />

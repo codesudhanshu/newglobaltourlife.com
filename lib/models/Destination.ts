@@ -19,6 +19,7 @@ export interface IDestination extends Document {
   ogDescription: string;
   ogImage: string;
   twitterCard: string;
+  schemaJsonLd: string;
   featured: boolean;
   honeymoon: boolean;
   order: number;
@@ -47,6 +48,7 @@ const DestinationSchema = new Schema<IDestination>(
     ogDescription: { type: String, default: "" },
     ogImage: { type: String, default: "" },
     twitterCard: { type: String, default: "summary_large_image" },
+    schemaJsonLd: { type: String, default: "" },
     featured: { type: Boolean, default: false },
     honeymoon: { type: Boolean, default: false },
     order: { type: Number, default: 0 },

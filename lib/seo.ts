@@ -19,6 +19,7 @@ export type PageSeoData = {
   h1: string;
   longContent: string;
   faqs: { question: string; answer: string }[];
+  schemaJsonLd: string;
 };
 
 // Server-side: read a page's SEO record straight from the DB (used in generateMetadata
@@ -46,6 +47,7 @@ export async function getPageSeo(key: string): Promise<PageSeoData> {
     h1: doc?.h1 || "",
     longContent: doc?.longContent || "",
     faqs: (doc?.faqs || []).map((f) => ({ question: f.question, answer: f.answer })),
+    schemaJsonLd: doc?.schemaJsonLd || "",
   };
 }
 

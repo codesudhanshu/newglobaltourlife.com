@@ -6,8 +6,9 @@ export default function SeoContent({ seo }: { seo: PageSeoData }) {
   const hasContent = !!seo.longContent?.trim();
   const faqs = (seo.faqs || []).filter((f) => f.question.trim() && f.answer.trim());
   const jsonLd = faqJsonLd(faqs);
+  const customSchema = seo.schemaJsonLd?.trim() || "";
 
-  if (!hasContent && faqs.length === 0) return null;
+  if (!hasContent && faqs.length === 0 && !customSchema) return null;
 
   return (
     <section className="section-padding bg-white">
@@ -47,6 +48,14 @@ export default function SeoContent({ seo }: { seo: PageSeoData }) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLd }}
+        />
+      )}
+
+      {/* Admin-provided custom JSON-LD schema */}
+      {customSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: customSchema }}
         />
       )}
     </section>

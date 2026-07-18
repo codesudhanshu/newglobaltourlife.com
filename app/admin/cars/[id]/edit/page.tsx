@@ -13,7 +13,7 @@ const CAR_CATEGORY_GROUPS = [
   { group: "Cab Services col",  opts: ["Cab Service", "Car Rental", "Taxi Service", "Outstation"] },
   { group: "Cars col",          opts: ["Sedan", "Economy", "Hatchback", "SUV", "Family"] },
   { group: "Luxury Cars col",   opts: ["Luxury", "Business"] },
-  { group: "Van col",           opts: ["Van", "Tempo Traveller", "Bus"] },
+  { group: "Van col",           opts: ["Van", "Tempo Traveller", "Urbania", "Bus"] },
 ];
 const TRANSMISSIONS = ["Automatic", "Manual"];
 
@@ -29,7 +29,7 @@ export default function EditCar() {
     category: "Economy", price: 0, description: "", longContent: "", image: "", images: [] as string[], imageAlts: [] as string[], order: 0, available: true,
     faqs: [] as { question: string; answer: string }[],
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
   });
 
   useEffect(() => {
@@ -48,6 +48,7 @@ export default function EditCar() {
           ogDescription: data.ogDescription || "",
           ogImage: data.ogImage || "",
           twitterCard: data.twitterCard || "summary_large_image",
+          schemaJsonLd: data.schemaJsonLd || "",
         });
         setFetching(false);
       })
@@ -173,7 +174,7 @@ export default function EditCar() {
           </div>
 
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.name}
           />

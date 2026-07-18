@@ -28,7 +28,7 @@ export default function EditHotelPage() {
     category: "Luxury", amenities: [] as string[],
     featured: false, available: true, order: 0,
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
   });
   const [images, setImages] = useState<string[]>([]);
   const [imageAlts, setImageAlts] = useState<string[]>([]);
@@ -58,7 +58,7 @@ export default function EditHotelPage() {
           category: h.category, amenities: h.amenities || [],
           featured: h.featured, available: h.available, order: h.order,
           slug: h.slug || "", metaTitle: h.metaTitle || "", metaKeywords: h.metaKeywords || "", metaDescription: h.metaDescription || "",
-          canonical: h.canonical || "", ogTitle: h.ogTitle || "", ogDescription: h.ogDescription || "", ogImage: h.ogImage || "", twitterCard: h.twitterCard || "summary_large_image",
+          canonical: h.canonical || "", ogTitle: h.ogTitle || "", ogDescription: h.ogDescription || "", ogImage: h.ogImage || "", twitterCard: h.twitterCard || "summary_large_image", schemaJsonLd: h.schemaJsonLd || "",
         });
         setImages(h.images || []);
         setImageAlts(h.imageAlts || []);
@@ -223,7 +223,7 @@ export default function EditHotelPage() {
         </div>
 
         <SeoSection
-          data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard }}
+          data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
           onChange={(f, value) => field(f, value)}
           autoSlugFrom={form.name}
         />

@@ -19,6 +19,7 @@ export interface IFlight extends Document {
   ogDescription: string;
   ogImage: string;
   twitterCard: string;
+  schemaJsonLd: string;
   order: number;
   available: boolean;
   createdAt: Date;
@@ -45,6 +46,7 @@ const FlightSchema = new Schema<IFlight>(
     ogDescription: { type: String, default: "" },
     ogImage: { type: String, default: "" },
     twitterCard: { type: String, default: "summary_large_image" },
+    schemaJsonLd: { type: String, default: "" },
     order: { type: Number, default: 0 },
     available: { type: Boolean, default: true },
   },

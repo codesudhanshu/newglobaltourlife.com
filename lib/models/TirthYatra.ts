@@ -16,6 +16,7 @@ export interface ITirthYatra extends Document {
   ogDescription: string;
   ogImage: string;
   twitterCard: string;
+  schemaJsonLd: string;
   description: string;
   location: string;
   state: string;
@@ -43,6 +44,7 @@ const TirthYatraSchema = new Schema<ITirthYatra>(
     ogDescription: { type: String, default: "" },
     ogImage: { type: String, default: "" },
     twitterCard: { type: String, default: "summary_large_image" },
+    schemaJsonLd: { type: String, default: "" },
     description: { type: String, default: "" },
     location: { type: String, default: "" },
     state: { type: String, default: "" },

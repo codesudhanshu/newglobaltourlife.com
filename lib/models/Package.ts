@@ -22,6 +22,7 @@ export interface IPackage extends Document {
   ogDescription: string;
   ogImage: string;
   twitterCard: string;
+  schemaJsonLd: string;
   destination: string;
   nights: number;
   days: number;
@@ -55,6 +56,7 @@ const PackageSchema = new Schema<IPackage>(
     ogDescription: { type: String, default: "" },
     ogImage: { type: String, default: "" },
     twitterCard: { type: String, default: "summary_large_image" },
+    schemaJsonLd: { type: String, default: "" },
     destination: { type: String, default: "" },
     nights: { type: Number, default: 0 },
     days: { type: Number, default: 0 },
