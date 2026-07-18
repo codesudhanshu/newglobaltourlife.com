@@ -10,6 +10,7 @@ import HotelFilters, { type HotelFiltersState, type HotelFilterOptions } from "@
 
 interface Hotel {
   _id: string;
+  slug?: string;
   name: string;
   city: string;
   country: string;
@@ -166,7 +167,7 @@ function HotelsContent() {
               <>
                 <div className={view === "grid" ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" : "flex flex-col gap-5"}>
                   {paged.map((h) => (
-                    <HotelCard key={h._id} _id={h._id} name={h.name} city={h.city} country={h.country} stars={h.stars}
+                    <HotelCard key={h._id} _id={h._id} slug={h.slug} name={h.name} city={h.city} country={h.country} stars={h.stars}
                       pricePerNight={h.pricePerNight} category={h.category} amenities={h.amenities} image={h.images?.[0] || ""} layout={view} />
                   ))}
                 </div>

@@ -12,6 +12,7 @@ import Navbar from "@/components/Navbar";
 
 interface Car {
   _id: string;
+  slug?: string;
   name: string;
   year: number;
   transmission: string;
@@ -353,7 +354,7 @@ function CarsContent() {
                               Book Now
                             </Link>
                             <Link
-                              href={`/cars/${car._id}`}
+                              href={`/${car.slug || car._id}`}
                               className="flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-[#01b7f2] transition-colors border border-gray-200 px-3 py-2.5 rounded-xl hover:border-[#01b7f2]"
                             >
                               Details <ArrowRight size={13} />

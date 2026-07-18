@@ -34,7 +34,7 @@ export default function DestinationsIndia() {
           {items.map((d) => (
             <Link
               key={d._id}
-              href={`/destinations/${d.slug}`}
+              href={`/${d.slug}`}
               className="snap-start shrink-0 w-[260px] group"
             >
               <div className="relative h-44 rounded-2xl overflow-hidden mb-3 shadow-sm">

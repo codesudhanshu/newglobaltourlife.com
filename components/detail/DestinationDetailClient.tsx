@@ -24,8 +24,9 @@ interface Destination {
   slug: string;
 }
 
-export default function DestinationDetailClient() {
-  const { slug } = useParams<{ slug: string }>();
+export default function DestinationDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+  const params = useParams<{ id?: string; slug?: string }>();
+  const slug = idOrSlug ?? params.slug ?? params.id ?? "";
   const [dest, setDest] = useState<Destination | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);

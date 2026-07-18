@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-type CarLink = { _id: string; name: string };
+type CarLink = { _id: string; slug?: string; name: string };
 
 // Fallback shown until cars are fetched from the DB
 const FALLBACK: CarLink[] = [
@@ -25,7 +25,7 @@ export default function CarLinks() {
       .then((r) => r.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
-          setCars(data.map((c: any) => ({ _id: c._id, name: c.name })));
+          setCars(data.map((c: any) => ({ _id: c._id, slug: c.slug, name: c.name })));
         }
       })
       .catch(() => {});
@@ -39,7 +39,7 @@ export default function CarLinks() {
           {cars.map((c, i) => (
             <li key={c._id || c.name} className="break-inside-avoid">
               <Link
-                href={c._id ? `/cars/${c._id}` : "/cars"}
+                href={c.slug || c._id ? `/${c.slug || c._id}` : "/cars"}
                 className={`flex items-start gap-2 transition-colors hover:underline ${
                   i === 0 ? "text-white font-bold" : "text-white/90 hover:text-white"
                 }`}

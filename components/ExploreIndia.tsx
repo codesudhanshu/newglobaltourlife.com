@@ -56,7 +56,7 @@ export default function ExploreIndia() {
                 title={`${d.name} Tour Packages | ${d.highlights[0]} & More`}
                 sub={`${d.name}`}
                 price={d.startingPrice}
-                href={`/destinations/${d.slug}`}
+                href={`/${d.slug}`}
                 discount={DISCOUNTS[i % DISCOUNTS.length]}
               />
             </div>

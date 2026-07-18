@@ -16,9 +16,9 @@ const SERVICES_ITEMS = [
   { label: "Travel Guide", href: "/travel-guide" },
 ];
 const BLOG_ITEMS = [
-  { label: "Kashmir", href: "/blogs/jammu-kashmir-tour" },
-  { label: "Shimla",  href: "/blogs/shimla-manali-package" },
-  { label: "Goa",     href: "/blogs/goa-beach-holiday" },
+  { label: "Kashmir", href: "/jammu-kashmir-tour" },
+  { label: "Shimla",  href: "/shimla-manali-package" },
+  { label: "Goa",     href: "/goa-beach-holiday" },
 ];
 
 // ── Category bucketing helpers ────────────────────────────────
@@ -152,7 +152,7 @@ export default function Navbar() {
         const cars: { name: string; slug?: string; _id: string; category: string }[] = Array.isArray(data) ? data : (data.cars ?? []);
         const toLink = (c: { name: string; slug?: string; _id: string }): NavLink => ({
           label: c.name,
-          href: `/cars/${c.slug || c._id}`,
+          href: `/${c.slug || c._id}`,
         });
         setCarCols({
           services: cars.filter((c) => CAB_CATS.has(c.category)).map(toLink),
@@ -170,7 +170,7 @@ export default function Navbar() {
         const pkgs: { title: string; slug?: string; _id: string; category: string }[] = Array.isArray(data) ? data : (data.packages ?? []);
         const toLink = (p: { title: string; slug?: string; _id: string }): NavLink => ({
           label: p.title,
-          href: `/packages/${p.slug || p._id}`,
+          href: `/${p.slug || p._id}`,
         });
         setPkgCols((prev) => ({
           ...prev,
@@ -187,7 +187,7 @@ export default function Navbar() {
         const items: { name: string; slug?: string; _id: string }[] = Array.isArray(data) ? data : (data.items ?? []);
         setPkgCols((prev) => ({
           ...prev,
-          tirth: items.map((t) => ({ label: t.name, href: `/tirth-yatra/${t.slug || t._id}` })),
+          tirth: items.map((t) => ({ label: t.name, href: `/${t.slug || t._id}` })),
         }));
       })
       .catch(() => {});
@@ -199,7 +199,7 @@ export default function Navbar() {
         const dests: { name: string; slug?: string; _id: string; region: string }[] = Array.isArray(data) ? data : [];
         const toLink = (d: { name: string; slug?: string; _id: string }): NavLink => ({
           label: d.name,
-          href: `/destinations/${d.slug || d._id}`,
+          href: `/${d.slug || d._id}`,
         });
         setDestCols({
           india: dests.filter((d) => d.region === "India").map(toLink),

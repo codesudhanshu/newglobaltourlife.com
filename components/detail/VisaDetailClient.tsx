@@ -24,8 +24,9 @@ interface Visa {
   faqs: { question: string; answer: string }[];
 }
 
-export default function VisaDetailClient() {
-  const { id } = useParams<{ id: string }>();
+export default function VisaDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+  const params = useParams<{ id?: string; slug?: string }>();
+  const id = idOrSlug ?? params.id ?? params.slug ?? "";
   const [item, setItem] = useState<Visa | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);

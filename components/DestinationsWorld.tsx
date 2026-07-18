@@ -56,7 +56,7 @@ export default function DestinationsWorld() {
                 title={`${d.name} Tour | ${d.highlights[0]} & More`}
                 sub={`${d.country}`}
                 price={d.startingPrice}
-                href={`/destinations/${d.slug}`}
+                href={`/${d.slug}`}
                 discount={DISCOUNTS[i % DISCOUNTS.length]}
               />
             </div>

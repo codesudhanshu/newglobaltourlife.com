@@ -13,6 +13,7 @@ const AMENITY_ICONS: Record<string, React.ReactNode> = {
 
 export interface HotelCardProps {
   _id: string;
+  slug?: string;
   name: string;
   city: string;
   country: string;
@@ -48,8 +49,8 @@ function Amenities({ amenities }: { amenities: string[] }) {
   );
 }
 
-export default function HotelCard({ _id, name, city, country, stars, pricePerNight, category, amenities, image, layout = "grid" }: HotelCardProps) {
-  const href = `/hotels/${_id}`;
+export default function HotelCard({ _id, slug, name, city, country, stars, pricePerNight, category, amenities, image, layout = "grid" }: HotelCardProps) {
+  const href = `/${slug || _id}`;
   const img = image
     ? <Image src={image} alt={name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes={layout === "list" ? "256px" : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"} />
     : <div className="w-full h-full bg-gradient-to-br from-cyan-50 to-cyan-100 flex items-center justify-center text-4xl">🏨</div>;

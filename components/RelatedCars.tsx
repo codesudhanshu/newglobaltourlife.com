@@ -8,6 +8,7 @@ import Slider from "@/components/Slider";
 
 interface Car {
   _id: string;
+  slug?: string;
   name: string;
   year: number;
   transmission: string;
@@ -63,7 +64,7 @@ export default function RelatedCars({ currentId, category }: { currentId: string
                   )}
                 </div>
                 <div className="p-5">
-                  <Link href={`/cars/${car._id}`}>
+                  <Link href={`/${car.slug || car._id}`}>
                     <h3 className="font-extrabold text-[#0A65AB] text-lg mb-1 group-hover:text-[#01b7f2] transition-colors">{car.name}</h3>
                   </Link>
                   <div className="flex items-center gap-1.5 text-gray-400 text-xs mb-3">
@@ -86,7 +87,7 @@ export default function RelatedCars({ currentId, category }: { currentId: string
                       <span className="text-xl font-extrabold text-[#01b7f2]">₹{car.price.toLocaleString("en-IN")}</span>
                       <span className="text-gray-400 text-xs"> /Per Day</span>
                     </div>
-                    <Link href={`/cars/${car._id}`} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">
+                    <Link href={`/${car.slug || car._id}`} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">
                       See Details <ArrowRight size={13} />
                     </Link>
                   </div>

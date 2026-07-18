@@ -34,7 +34,7 @@ export default function DestinationLinks() {
                   {g.items.map((d) => (
                     <li key={d._id} className="break-inside-avoid">
                       <Link
-                        href={`/destinations/${d.slug}`}
+                        href={`/${d.slug}`}
                         className="flex items-center gap-2 text-white/90 hover:text-white hover:underline transition-colors"
                       >
                         <span className="text-white/60">•</span> {d.name}

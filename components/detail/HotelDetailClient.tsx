@@ -45,8 +45,9 @@ function Stars({ count }: { count: number }) {
   );
 }
 
-export default function HotelDetailClient() {
-  const { id } = useParams<{ id: string }>();
+export default function HotelDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+  const params = useParams<{ id?: string; slug?: string }>();
+  const id = idOrSlug ?? params.id ?? params.slug ?? "";
   const [hotel, setHotel] = useState<Hotel | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);

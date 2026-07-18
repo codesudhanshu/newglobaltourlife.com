@@ -4,6 +4,7 @@ import { MapPin, Star, Clock, ArrowRight } from "lucide-react";
 
 export interface PackageCardProps {
   _id: string;
+  slug?: string;
   title: string;
   destination: string;
   nights: number;
@@ -13,8 +14,8 @@ export interface PackageCardProps {
   category: string;
 }
 
-export default function PackageCard({ _id, title, destination, nights, days, price, image, category }: PackageCardProps) {
-  const href = /^[0-9a-f]{24}$/.test(_id) ? `/packages/${_id}` : "/packages";
+export default function PackageCard({ _id, slug, title, destination, nights, days, price, image, category }: PackageCardProps) {
+  const href = /^[0-9a-f]{24}$/.test(_id) ? `/${slug || _id}` : "/packages";
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-shadow overflow-hidden group">
       <Link href={href} className="block relative h-48 overflow-hidden">

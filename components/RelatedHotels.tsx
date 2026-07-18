@@ -6,6 +6,7 @@ import HotelCard from "@/components/HotelCard";
 
 interface Hotel {
   _id: string;
+  slug?: string;
   name: string;
   city: string;
   country: string;
@@ -50,7 +51,7 @@ export default function RelatedHotels({ currentId, city, category }: { currentId
         <Slider>
           {hotels.map((h) => (
             <div key={h._id} className="snap-start shrink-0 w-[300px]">
-              <HotelCard _id={h._id} name={h.name} city={h.city} country={h.country} stars={h.stars}
+              <HotelCard _id={h._id} slug={h.slug} name={h.name} city={h.city} country={h.country} stars={h.stars}
                 pricePerNight={h.pricePerNight} category={h.category} amenities={h.amenities} image={h.images?.[0] || ""} layout="grid" />
             </div>
           ))}

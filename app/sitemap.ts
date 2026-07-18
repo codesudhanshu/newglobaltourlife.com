@@ -20,13 +20,12 @@ type Row = { slug?: string; _id: unknown; updatedAt?: Date };
 
 async function collect(
   model: { find: (f: object) => { select: (s: string) => { lean: () => Promise<Row[]> } } },
-  filter: object,
-  prefix: string
+  filter: object
 ): Promise<MetadataRoute.Sitemap> {
   try {
     const rows = await model.find(filter).select("slug updatedAt").lean();
     return rows.map((r) => ({
-      url: `${base}${prefix}/${r.slug || String(r._id)}`,
+      url: `${base}/${r.slug || String(r._id)}`,
       lastModified: r.updatedAt || undefined,
       changeFrequency: "weekly" as const,
       priority: 0.7,
@@ -51,15 +50,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const dynamicGroups = await Promise.all([
-    collect(Car as never, { available: true }, "/cars"),
-    collect(Hotel as never, { available: true }, "/hotels"),
-    collect(Package as never, { available: true }, "/packages"),
-    collect(Destination as never, { active: true }, "/destinations"),
-    collect(TirthYatra as never, {}, "/tirth-yatra"),
-    collect(Bus as never, { available: true }, "/bus"),
-    collect(Visa as never, { available: true }, "/visa"),
-    collect(TourGuide as never, { available: true }, "/travel-guide"),
-    collect(Blog as never, { published: true }, "/blogs"),
+    collect(Car as never, { available: true }),
+    collect(Hotel as never, { available: true }),
+    collect(Package as never, { available: true }),
+    collect(Destination as never, { active: true }),
+    collect(TirthYatra as never, {}),
+    collect(Bus as never, { available: true }),
+    collect(Visa as never, { available: true }),
+    collect(TourGuide as never, { available: true }),
+    collect(Blog as never, { published: true }),
   ]);
 
   return [...staticPages, ...dynamicGroups.flat()];

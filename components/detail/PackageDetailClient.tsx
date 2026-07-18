@@ -34,8 +34,9 @@ interface Pkg {
   available: boolean;
 }
 
-export default function PackageDetailClient() {
-  const { id } = useParams<{ id: string }>();
+export default function PackageDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+  const params = useParams<{ id?: string; slug?: string }>();
+  const id = idOrSlug ?? params.id ?? params.slug ?? "";
   const [pkg, setPkg] = useState<Pkg | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);

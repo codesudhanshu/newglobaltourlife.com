@@ -44,7 +44,7 @@ export default function Blog() {
               ? new Date(post.createdAt).toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" })
               : "";
             return (
-              <Link key={post._id} href={`/blogs/${post._id}`} className="group block">
+              <Link key={post._id} href={`/${post.slug || post._id}`} className="group block">
                 <article className="bg-white rounded-2xl overflow-hidden border border-gray-100 card-hover h-full">
                   <div className="h-48 relative overflow-hidden">
                     {post.image ? (

@@ -8,6 +8,7 @@ import Slider from "@/components/Slider";
 
 interface Bus {
   _id: string;
+  slug?: string;
   title: string;
   image: string;
   price: number;
@@ -41,7 +42,7 @@ export default function RelatedBus({ currentId }: { currentId: string }) {
         <Slider>
           {items.map((b) => (
             <div key={b._id} className="snap-start shrink-0 w-[280px] bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-shadow overflow-hidden group">
-              <Link href={`/bus/${b._id}`} className="block relative h-44 overflow-hidden">
+              <Link href={`/${b.slug || b._id}`} className="block relative h-44 overflow-hidden">
                 {b.image ? (
                   <Image src={b.image} alt={b.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="280px" />
                 ) : (
@@ -49,14 +50,14 @@ export default function RelatedBus({ currentId }: { currentId: string }) {
                 )}
               </Link>
               <div className="p-5">
-                <Link href={`/bus/${b._id}`}>
+                <Link href={`/${b.slug || b._id}`}>
                   <h3 className="font-extrabold text-[#0A65AB] text-base mb-2 line-clamp-2 min-h-[2.5rem] group-hover:text-[#01b7f2] transition-colors">{b.title}</h3>
                 </Link>
                 <div className="flex items-center justify-between border-t border-gray-100 pt-3">
                   <div>
                     {b.price > 0 && <><span className="text-lg font-extrabold text-[#01b7f2]">₹{b.price.toLocaleString("en-IN")}</span><span className="text-gray-400 text-xs"> onwards</span></>}
                   </div>
-                  <Link href={`/bus/${b._id}`} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">
+                  <Link href={`/${b.slug || b._id}`} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">
                     View <ArrowRight size={13} />
                   </Link>
                 </div>

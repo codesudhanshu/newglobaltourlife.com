@@ -28,8 +28,9 @@ const CATEGORY_COLORS: Record<string, string> = {
   Tour: "#01b7f2", Adventure: "#10b981",
 };
 
-export default function BlogDetailClient() {
-  const { id } = useParams<{ id: string }>();
+export default function BlogDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+  const params = useParams<{ id?: string; slug?: string }>();
+  const id = idOrSlug ?? params.id ?? params.slug ?? "";
   const router = useRouter();
   const [blog, setBlog] = useState<Blog | null>(null);
   const [loading, setLoading] = useState(true);

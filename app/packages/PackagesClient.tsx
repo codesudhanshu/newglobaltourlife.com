@@ -146,6 +146,7 @@ function PackagesContent() {
                   <PackageCard
                     key={p._id}
                     _id={p._id}
+                    slug={p.slug}
                     title={p.title}
                     destination={p.destination}
                     nights={p.nights}

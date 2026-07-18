@@ -43,7 +43,7 @@ export default function PackagesSection() {
                 title={p.title}
                 sub={`${p.destination} (${p.nights}N/${p.days}D)`}
                 price={p.price}
-                href={/^[0-9a-f]{24}$/.test(p._id) ? `/packages/${p._id}` : "/packages"}
+                href={/^[0-9a-f]{24}$/.test(p._id) ? `/${p.slug || p._id}` : "/packages"}
                 discount={DISCOUNTS[i % DISCOUNTS.length]}
               />
             </div>

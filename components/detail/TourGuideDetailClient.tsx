@@ -28,8 +28,9 @@ interface TourGuide {
   available: boolean;
 }
 
-export default function TourGuideDetailClient() {
-  const { id } = useParams<{ id: string }>();
+export default function TourGuideDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+  const params = useParams<{ id?: string; slug?: string }>();
+  const id = idOrSlug ?? params.id ?? params.slug ?? "";
   const [guide, setGuide] = useState<TourGuide | null>(null);
   const [loading, setLoading] = useState(true);
   const [phoneRevealed, setPhoneRevealed] = useState(false);

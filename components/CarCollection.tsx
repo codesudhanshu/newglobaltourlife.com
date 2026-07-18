@@ -8,6 +8,7 @@ import Slider from "@/components/Slider";
 
 interface Car {
   _id: string;
+  slug?: string;
   name: string;
   year: number;
   transmission: string;
@@ -60,7 +61,7 @@ export default function CarCollection() {
         <Slider>
           {cars.map((car) => {
             const isStatic = car._id.startsWith("s");
-            const href = isStatic ? "/cars" : `/cars/${car._id}`;
+            const href = isStatic ? "/cars" : `/${car.slug || car._id}`;
             const fuel = car.category === "Electric" ? "Electric" : car.transmission === "Manual" ? "Petrol" : "Hybrid";
             return (
               <div

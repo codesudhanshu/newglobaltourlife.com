@@ -8,6 +8,7 @@ import Navbar from "@/components/Navbar";
 
 interface Bus {
   _id: string;
+  slug?: string;
   title: string;
   image: string;
   description: string;
@@ -56,7 +57,7 @@ export default function BusClient() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {items.map((b) => (
                 <div key={b._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-shadow overflow-hidden group">
-                  <Link href={`/bus/${b._id}`} className="block relative h-48 overflow-hidden">
+                  <Link href={`/${b.slug || b._id}`} className="block relative h-48 overflow-hidden">
                     {b.image ? (
                       <Image src={b.image} alt={b.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                     ) : (
@@ -64,7 +65,7 @@ export default function BusClient() {
                     )}
                   </Link>
                   <div className="p-5">
-                    <Link href={`/bus/${b._id}`}>
+                    <Link href={`/${b.slug || b._id}`}>
                       <h3 className="font-extrabold text-[#0A65AB] text-lg mb-1 line-clamp-2 group-hover:text-[#01b7f2] transition-colors">{b.title}</h3>
                     </Link>
                     {b.description && <p className="text-gray-500 text-sm line-clamp-2 mb-3">{b.description}</p>}
@@ -72,7 +73,7 @@ export default function BusClient() {
                       <div>
                         {b.price > 0 && <><span className="text-xl font-extrabold text-[#01b7f2]">₹{b.price.toLocaleString("en-IN")}</span><span className="text-gray-400 text-xs"> onwards</span></>}
                       </div>
-                      <Link href={`/bus/${b._id}`} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">
+                      <Link href={`/${b.slug || b._id}`} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">
                         View Details <ArrowRight size={13} />
                       </Link>
                     </div>

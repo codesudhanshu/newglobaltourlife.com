@@ -9,6 +9,7 @@ import { BLOGS } from "@/lib/placeholders";
 
 interface Blog {
   _id: string;
+  slug?: string;
   title: string;
   excerpt: string;
   category: string;
@@ -143,7 +144,7 @@ export default function BlogsClient() {
                     ? new Date(post.createdAt).toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" })
                     : "";
                   return (
-                    <Link key={post._id} href={`/blogs/${post._id}`} className="group block">
+                    <Link key={post._id} href={`/${post.slug || post._id}`} className="group block">
                       <article className="bg-white rounded-2xl overflow-hidden border border-gray-100 card-hover h-full flex flex-col">
                         <div className="h-48 relative overflow-hidden flex-shrink-0">
                           {post.image ? (

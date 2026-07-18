@@ -7,6 +7,7 @@ import { Star, MapPin, Wifi, Car, Coffee, Waves, ArrowRight } from "lucide-react
 
 interface Hotel {
   _id: string;
+  slug?: string;
   name: string;
   location: string;
   city: string;
@@ -81,7 +82,7 @@ export default function HotelsSection() {
           {hotels.map((hotel) => {
             const staticCard = isStatic || hotel._id.length < 10;
             const CardWrapper = staticCard ? "div" : Link;
-            const wrapProps = staticCard ? {} : { href: `/hotels/${hotel._id}` };
+            const wrapProps = staticCard ? {} : { href: `/${hotel.slug || hotel._id}` };
             return (
               // @ts-ignore
               <CardWrapper key={hotel._id} {...wrapProps} className="group block bg-[#1e293b] rounded-2xl overflow-hidden border border-slate-700 hover:border-[#01b7f2]/50 transition-all duration-300">

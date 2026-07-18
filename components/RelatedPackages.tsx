@@ -6,6 +6,7 @@ import ExploreCard from "@/components/ExploreCard";
 
 interface Pkg {
   _id: string;
+  slug?: string;
   title: string;
   destination: string;
   nights: number;
@@ -52,7 +53,7 @@ export default function RelatedPackages({ currentId, category }: { currentId: st
                 title={p.title}
                 sub={`${p.destination} (${p.nights}N/${p.days}D)`}
                 price={p.price}
-                href={`/packages/${p._id}`}
+                href={`/${p.slug || p._id}`}
               />
             </div>
           ))}

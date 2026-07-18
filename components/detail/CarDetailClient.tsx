@@ -36,8 +36,9 @@ const CATEGORY_COLORS: Record<string, string> = {
   Economy: "#64748b", Sedan: "#3b82f6", Convertible: "#ec4899",
 };
 
-export default function CarDetailClient() {
-  const { id } = useParams<{ id: string }>();
+export default function CarDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+  const params = useParams<{ id?: string; slug?: string }>();
+  const id = idOrSlug ?? params.id ?? params.slug ?? "";
   const [car, setCar] = useState<Car | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);

@@ -24,8 +24,9 @@ interface Bus {
   faqs: { question: string; answer: string }[];
 }
 
-export default function BusDetailClient() {
-  const { id } = useParams<{ id: string }>();
+export default function BusDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+  const params = useParams<{ id?: string; slug?: string }>();
+  const id = idOrSlug ?? params.id ?? params.slug ?? "";
   const [item, setItem] = useState<Bus | null>(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);

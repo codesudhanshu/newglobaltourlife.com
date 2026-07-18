@@ -6,7 +6,7 @@ import type { Destination } from "@/lib/placeholders";
 export default function DestinationCard({ d }: { d: Destination }) {
   return (
     <Link
-      href={`/destinations/${d.slug}`}
+      href={`/${d.slug}`}
       className="group relative block rounded-2xl overflow-hidden h-72 card-hover"
     >
       <Image

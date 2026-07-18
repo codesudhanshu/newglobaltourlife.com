@@ -10,6 +10,7 @@ import BookingModal from "@/components/BookingModal";
 
 interface TY {
   _id: string;
+  slug?: string;
   name: string;
   location: string;
   state: string;
@@ -117,7 +118,7 @@ function TirthYatraContent() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {filtered.map((item) => (
                   <div key={item._id} className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-shadow overflow-hidden group">
-                    <Link href={`/tirth-yatra/${item._id}`} className="block relative h-48 overflow-hidden">
+                    <Link href={`/${item.slug || item._id}`} className="block relative h-48 overflow-hidden">
                       {item.image ? (
                         <Image
                           src={item.image}
@@ -136,7 +137,7 @@ function TirthYatraContent() {
                       )}
                     </Link>
                     <div className="p-5">
-                      <Link href={`/tirth-yatra/${item._id}`}>
+                      <Link href={`/${item.slug || item._id}`}>
                         <h3 className="font-extrabold text-[#0A65AB] text-lg mb-1 line-clamp-2 group-hover:text-[#01b7f2] transition-colors">
                           {item.name}
                         </h3>
@@ -178,7 +179,7 @@ function TirthYatraContent() {
                           )}
                         </div>
                         <Link
-                          href={`/tirth-yatra/${item._id}`}
+                          href={`/${item.slug || item._id}`}
                           className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all"
                         >
                           View Details <ArrowRight size={13} />

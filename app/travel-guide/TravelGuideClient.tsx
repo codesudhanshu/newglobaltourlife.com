@@ -183,7 +183,7 @@ export default function TravelGuideClient() {
                   {/* Actions */}
                   <div className="mt-auto border-t border-gray-100 p-4 flex gap-2">
                     <Link
-                      href={`/travel-guide/${guide.slug || guide._id}`}
+                      href={`/${guide.slug || guide._id}`}
                       className="flex-1 flex items-center justify-center text-sm font-semibold py-2.5 rounded-xl text-white bg-[#0A65AB] hover:bg-[#0852a0] transition-colors"
                     >
                       View Profile
