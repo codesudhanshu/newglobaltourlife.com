@@ -25,6 +25,17 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Google Search Console */}
+        <meta name="google-site-verification" content="google6eba223b15b34690.html" />
+
+        {/* Google Analytics (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-HDX5QM2C4N" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HDX5QM2C4N');`,
+          }}
+        />
+
         {cfg.gscVerification && (
           <meta name="google-site-verification" content={cfg.gscVerification} />
         )}
