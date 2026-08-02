@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { connectDB } from "@/lib/db";
 import Blog from "@/lib/models/Blog";
 import Package from "@/lib/models/Package";
@@ -8,10 +9,11 @@ import TirthYatra from "@/lib/models/TirthYatra";
 import Bus from "@/lib/models/Bus";
 import Visa from "@/lib/models/Visa";
 import TourGuide from "@/lib/models/TourGuide";
+import Flight from "@/lib/models/Flight";
 
 export type DetailType =
   | "car" | "hotel" | "package" | "destination"
-  | "tirth" | "bus" | "visa" | "guide" | "blog";
+  | "tirth" | "bus" | "visa" | "guide" | "blog" | "flight";
 
 export type ResolvedItem = {
   type: DetailType;
@@ -29,11 +31,13 @@ const REGISTRY: { type: DetailType; model: { findOne: (f: object) => { lean: () 
   { type: "bus",         model: Bus as never },
   { type: "visa",        model: Visa as never },
   { type: "guide",       model: TourGuide as never },
+  { type: "flight",      model: Flight as never },
 ];
 
 // Given a flat URL segment (slug, or a 24-hex ObjectId), find which content
 // type it belongs to and return the record. Slug is tried first, then _id.
-export async function resolveSlug(param: string): Promise<ResolvedItem | null> {
+// Wrapped in React `cache` so generateMetadata and the page body share one lookup.
+export const resolveSlug = cache(async function resolveSlug(param: string): Promise<ResolvedItem | null> {
   if (!param) return null;
   try {
     await connectDB();
@@ -58,4 +62,10 @@ export async function resolveSlug(param: string): Promise<ResolvedItem | null> {
   }
 
   return null;
+});
+
+// Mongoose lean() docs carry ObjectIds and Dates — flatten to plain JSON before
+// handing them to a client component.
+export function serializeDoc<T = Record<string, unknown>>(doc: unknown): T {
+  return JSON.parse(JSON.stringify(doc)) as T;
 }

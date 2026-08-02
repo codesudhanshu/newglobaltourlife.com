@@ -9,6 +9,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DestinationEnquiryForm from "@/components/DestinationEnquiryForm";
 import RelatedDestinations from "@/components/RelatedDestinations";
+import ContentBox from "@/components/ContentBox";
 
 interface Destination {
   _id: string;
@@ -16,6 +17,7 @@ interface Destination {
   region: string;
   country: string;
   description: string;
+  longContent?: string;
   image: string;
   images: string[];
   imageAlts: string[];
@@ -24,15 +26,17 @@ interface Destination {
   slug: string;
 }
 
-export default function DestinationDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+export default function DestinationDetailClient({ idOrSlug, initial }: { idOrSlug?: string; initial?: Destination | null }) {
   const params = useParams<{ id?: string; slug?: string }>();
   const slug = idOrSlug ?? params.slug ?? params.id ?? "";
-  const [dest, setDest] = useState<Destination | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [dest, setDest] = useState<Destination | null>(initial ?? null);
+  const [loading, setLoading] = useState(!initial);
   const [notFound, setNotFound] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
 
   useEffect(() => {
+    // Server-rendered on first paint — skip the client fetch.
+    if (initial) return;
     if (!slug) return;
     fetch(`/api/destinations?slug=${encodeURIComponent(slug)}`)
       .then((r) => r.json())
@@ -42,6 +46,7 @@ export default function DestinationDetailClient({ idOrSlug }: { idOrSlug?: strin
         setLoading(false);
       })
       .catch(() => { setNotFound(true); setLoading(false); });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
   if (loading) {
@@ -163,6 +168,9 @@ export default function DestinationDetailClient({ idOrSlug }: { idOrSlug?: strin
           </div>
         </div>
       </main>
+
+      {/* Page content box (admin-managed) */}
+      <ContentBox content={dest.longContent} heading={`${dest.name} Travel Guide`} />
 
       {/* Related */}
       <RelatedDestinations currentSlug={dest.slug} region={dest.region} />

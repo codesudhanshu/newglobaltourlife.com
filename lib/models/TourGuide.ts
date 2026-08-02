@@ -12,6 +12,8 @@ export interface ITourGuide extends Document {
   specializations: string[];
   locations: string[];
   description: string;
+  longContent: string;
+  faqs: { question: string; answer: string }[];
   rating: number;
   reviewCount: number;
   metaTitle: string;
@@ -23,6 +25,7 @@ export interface ITourGuide extends Document {
   ogImage: string;
   twitterCard: string;
   schemaJsonLd: string;
+  schemaBlocks: string[];
   available: boolean;
   featured: boolean;
   order: number;
@@ -43,6 +46,11 @@ const TourGuideSchema = new Schema<ITourGuide>(
     specializations:  { type: [String], default: [] },
     locations:        { type: [String], default: [] },
     description:      { type: String, default: "" },
+    longContent:      { type: String, default: "" },
+    faqs: {
+      type: [{ question: { type: String, default: "" }, answer: { type: String, default: "" } }],
+      default: [],
+    },
     rating:           { type: Number, default: 0, min: 0, max: 5 },
     reviewCount:      { type: Number, default: 0 },
     metaTitle:        { type: String, default: "" },
@@ -54,6 +62,7 @@ const TourGuideSchema = new Schema<ITourGuide>(
     ogImage:          { type: String, default: "" },
     twitterCard:      { type: String, default: "summary_large_image" },
     schemaJsonLd:     { type: String, default: "" },
+    schemaBlocks:     { type: [String], default: [] },
     available:        { type: Boolean, default: true },
     featured:         { type: Boolean, default: false },
     order:            { type: Number, default: 0 },

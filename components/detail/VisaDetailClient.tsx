@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import FAQ from "@/components/FAQ";
 import EnquiryForm from "@/components/EnquiryForm";
 import RelatedVisa from "@/components/RelatedVisa";
+import { RichBody } from "@/components/ContentBox";
 
 interface Visa {
   _id: string;
@@ -24,20 +25,23 @@ interface Visa {
   faqs: { question: string; answer: string }[];
 }
 
-export default function VisaDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+export default function VisaDetailClient({ idOrSlug, initial }: { idOrSlug?: string; initial?: Visa | null }) {
   const params = useParams<{ id?: string; slug?: string }>();
   const id = idOrSlug ?? params.id ?? params.slug ?? "";
-  const [item, setItem] = useState<Visa | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [item, setItem] = useState<Visa | null>(initial ?? null);
+  const [loading, setLoading] = useState(!initial);
   const [notFound, setNotFound] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
 
   useEffect(() => {
+    // Server-rendered on first paint — skip the client fetch.
+    if (initial) return;
     if (!id) return;
     fetch(`/api/visa/${id}`)
       .then((r) => { if (!r.ok) { setNotFound(true); setLoading(false); return null; } return r.json(); })
       .then((data) => { if (data && !data.error) setItem(data); else setNotFound(true); setLoading(false); })
       .catch(() => { setNotFound(true); setLoading(false); });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (loading) {
@@ -111,11 +115,7 @@ export default function VisaDetailClient({ idOrSlug }: { idOrSlug?: string }) {
               <section className="bg-white rounded-2xl p-6 border border-gray-100">
                 <h2 className="text-xl font-extrabold text-[#0A65AB] mb-3">About This Visa Service</h2>
                 {item.description && <p className="text-gray-600 leading-relaxed text-sm mb-4">{item.description}</p>}
-                {item.longContent && (
-                  <div className="text-gray-600 text-sm leading-relaxed space-y-3">
-                    {item.longContent.split(/\n{2,}/).map((para, i) => <p key={i} className="whitespace-pre-line">{para}</p>)}
-                  </div>
-                )}
+                <RichBody content={item.longContent} />
               </section>
             )}
 

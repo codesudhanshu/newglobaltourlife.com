@@ -5,6 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
 import SeoSection from "@/components/admin/SeoSection";
+import PageContentField from "@/components/admin/PageContentField";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
@@ -29,7 +30,7 @@ export default function NewPackage() {
     itineraryDays: [] as Day[], images: [] as string[], imageAlts: [] as string[], image: "",
     faqs: [] as { question: string; answer: string }[],
     metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "", schemaBlocks: [] as string[], longContent: "",
   });
 
   function set(field: string, value: unknown) {
@@ -227,8 +228,10 @@ export default function NewPackage() {
             )}
           </div>
 
+          <PageContentField value={form.longContent} onChange={(html) => set("longContent", html)} />
+
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd, schemaBlocks: form.schemaBlocks }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.title}
           />

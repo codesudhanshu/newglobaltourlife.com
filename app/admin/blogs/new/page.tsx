@@ -5,6 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import ImageUpload from "@/components/admin/ImageUpload";
 import SeoSection from "@/components/admin/SeoSection";
+import PageContentField from "@/components/admin/PageContentField";
 import Link from "next/link";
 import { ArrowLeft, Loader } from "lucide-react";
 
@@ -32,7 +33,7 @@ export default function NewBlog() {
     ogTitle: "",
     ogDescription: "",
     ogImage: "",
-    twitterCard: "summary_large_image", schemaJsonLd: "",
+    twitterCard: "summary_large_image", schemaJsonLd: "", schemaBlocks: [] as string[],
   });
 
   function set(field: string, value: any) {
@@ -91,14 +92,17 @@ export default function NewBlog() {
               <label className="label">Excerpt</label>
               <textarea value={form.excerpt} onChange={(e) => set("excerpt", e.target.value)} rows={3} placeholder="Short description..." className="input resize-none" />
             </div>
-            <div>
-              <label className="label">Content</label>
-              <textarea required value={form.content} onChange={(e) => set("content", e.target.value)} rows={10} placeholder="Write your blog content here..." className="input resize-none" />
-            </div>
           </div>
 
+          <PageContentField
+            value={form.content}
+            onChange={(html) => set("content", html)}
+            label="Page Content (article body)"
+            hint="Rich text rendered on the blog page. Use headings, links and image alt tags for SEO."
+          />
+
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd, schemaBlocks: form.schemaBlocks }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.title}
           />

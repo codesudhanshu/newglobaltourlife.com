@@ -20,6 +20,10 @@ export interface IFlight extends Document {
   ogImage: string;
   twitterCard: string;
   schemaJsonLd: string;
+  schemaBlocks: string[];
+  description: string;
+  longContent: string;
+  faqs: { question: string; answer: string }[];
   order: number;
   available: boolean;
   createdAt: Date;
@@ -47,6 +51,13 @@ const FlightSchema = new Schema<IFlight>(
     ogImage: { type: String, default: "" },
     twitterCard: { type: String, default: "summary_large_image" },
     schemaJsonLd: { type: String, default: "" },
+    schemaBlocks: { type: [String], default: [] },
+    description: { type: String, default: "" },
+    longContent: { type: String, default: "" },
+    faqs: {
+      type: [{ question: { type: String, default: "" }, answer: { type: String, default: "" } }],
+      default: [],
+    },
     order: { type: Number, default: 0 },
     available: { type: Boolean, default: true },
   },

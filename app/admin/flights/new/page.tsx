@@ -5,6 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
 import SeoSection from "@/components/admin/SeoSection";
+import PageContentField from "@/components/admin/PageContentField";
 import Link from "next/link";
 import { ArrowLeft, Loader } from "lucide-react";
 
@@ -19,7 +20,7 @@ export default function NewFlight() {
     airline: "", from: "", to: "", fromCode: "", toCode: "",
     price: 0, tripType: "One Way", departInfo: "", image: "", order: 0, available: true,
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "", schemaBlocks: [] as string[], longContent: "",
   });
 
   function set(field: string, value: any) {
@@ -117,8 +118,10 @@ export default function NewFlight() {
             )}
           </div>
 
+          <PageContentField value={form.longContent} onChange={(html) => set("longContent", html)} />
+
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd, schemaBlocks: form.schemaBlocks }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={`${form.airline} ${form.from} ${form.to}`}
           />

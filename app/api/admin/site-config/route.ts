@@ -18,6 +18,10 @@ export async function PUT(request: Request) {
   if (typeof body.orgSameAs === "string") {
     body.orgSameAs = body.orgSameAs.split(",").map((s: string) => s.trim()).filter(Boolean);
   }
+  // Stamp the upload time whenever a sitemap XML is submitted.
+  if (typeof body.customSitemapXml === "string") {
+    body.sitemapUpdatedAt = new Date();
+  }
   let doc = await SiteConfig.findOne();
   if (!doc) doc = await SiteConfig.create(body);
   else doc = await SiteConfig.findByIdAndUpdate(doc._id, body, { new: true });

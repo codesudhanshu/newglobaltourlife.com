@@ -20,6 +20,7 @@ export type PageSeoData = {
   longContent: string;
   faqs: { question: string; answer: string }[];
   schemaJsonLd: string;
+  schemaBlocks: string[];
 };
 
 // Server-side: read a page's SEO record straight from the DB (used in generateMetadata
@@ -48,6 +49,7 @@ export async function getPageSeo(key: string): Promise<PageSeoData> {
     longContent: doc?.longContent || "",
     faqs: (doc?.faqs || []).map((f) => ({ question: f.question, answer: f.answer })),
     schemaJsonLd: doc?.schemaJsonLd || "",
+    schemaBlocks: Array.isArray(doc?.schemaBlocks) ? doc!.schemaBlocks.filter(Boolean) : [],
   };
 }
 
@@ -55,6 +57,17 @@ function toAbsolute(url: string): string {
   if (!url) return SITE_URL;
   if (url.startsWith("http")) return url;
   return SITE_URL.replace(/\/$/, "") + (url.startsWith("/") ? url : "/" + url);
+}
+
+// The site serves one English version to every region, so each page declares
+// itself for en / en-IN and as the x-default fallback. Without this, Google
+// reports "no hreflang" and can pick the wrong regional variant.
+function hreflang(canonical: string): Record<string, string> {
+  return {
+    en: canonical,
+    "en-IN": canonical,
+    "x-default": canonical,
+  };
 }
 
 // Build a Next.js Metadata object from a page's SEO data.
@@ -65,7 +78,7 @@ export function buildMetadata(seo: PageSeoData): Metadata {
     title: seo.title || undefined,
     description: seo.description || undefined,
     keywords: seo.keywords || undefined,
-    alternates: { canonical },
+    alternates: { canonical, languages: hreflang(canonical) },
     robots: seo.robots || undefined,
     openGraph: {
       title: seo.ogTitle || seo.title || undefined,
@@ -102,7 +115,7 @@ export function itemMetadata(
     title: title || undefined,
     description: description || undefined,
     keywords: r.metaKeywords || undefined,
-    alternates: { canonical },
+    alternates: { canonical, languages: hreflang(canonical) },
     openGraph: {
       title: r.ogTitle || title || undefined,
       description: r.ogDescription || description || undefined,

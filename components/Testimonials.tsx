@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { Quote, Star } from "lucide-react";
 
 const testimonials = [
@@ -53,13 +52,10 @@ export default function Testimonials() {
 
       {/* Auto-sliding marquee */}
       <div className="relative w-full">
-        <motion.div
-          className="flex gap-6 w-max px-3"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ duration: 40, ease: "linear", repeat: Infinity }}
-        >
+        {/* CSS marquee — the list is duplicated, so sliding 50% loops seamlessly */}
+        <div className="marquee flex gap-6 w-max px-3">
           {loop.map((t, i) => <Card key={i} t={t} />)}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

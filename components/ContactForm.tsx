@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Send, CheckCircle, Loader } from "lucide-react";
+import ObfuscatedEmail from "@/components/ObfuscatedEmail";
 
 export default function ContactForm({ source = "Contact Page" }: { source?: string }) {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
@@ -51,7 +52,6 @@ export default function ContactForm({ source = "Contact Page" }: { source?: stri
             <div className="space-y-4">
               {[
                 { label: "Phone", value: "+91-9131727811" },
-                { label: "Email", value: "newglobaltourlife@gmail.com" },
                 { label: "Hours", value: "24/7 Customer Support" },
               ].map(({ label, value }) => (
                 <div key={label} className="flex gap-3">
@@ -59,6 +59,11 @@ export default function ContactForm({ source = "Contact Page" }: { source?: stri
                   <span className="text-gray-700 text-sm">{value}</span>
                 </div>
               ))}
+              <div className="flex gap-3">
+                <span className="text-[#01b7f2] font-semibold text-sm w-12">Email</span>
+                {/* Assembled in the browser — keeps the address away from spam scrapers */}
+                <ObfuscatedEmail user="newglobaltourlife" domain="gmail.com" className="text-gray-700 text-sm hover:text-[#01b7f2] transition-colors" />
+              </div>
             </div>
           </div>
 

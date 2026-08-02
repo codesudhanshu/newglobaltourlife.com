@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { getSiteConfig, organizationJsonLd } from "@/lib/siteConfig";
@@ -21,24 +22,17 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const cfg = await getSiteConfig();
+  const gaId = cfg.gaId || "G-HDX5QM2C4N";
 
   return (
-    <html lang="en">
+    <html lang="en-IN">
       <head>
-        {/* Google Search Console */}
-        <meta name="google-site-verification" content="google6eba223b15b34690.html" />
+        {/* Google Search Console — admin value wins, else the original property token */}
+        <meta name="google-site-verification" content={cfg.gscVerification || "google6eba223b15b34690.html"} />
 
-        {/* Google Analytics (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-HDX5QM2C4N" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-HDX5QM2C4N');`,
-          }}
-        />
-
-        {cfg.gscVerification && (
-          <meta name="google-site-verification" content={cfg.gscVerification} />
-        )}
+        {/* Preconnect to the image CDN so the hero image starts downloading sooner */}
+        <link rel="preconnect" href="https://res.cloudinary.com" />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
 
         {/* Organization structured data */}
         <script
@@ -46,33 +40,30 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: organizationJsonLd(cfg) }}
         />
 
-        {/* Google Tag Manager */}
-        {cfg.gtmId && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${cfg.gtmId}');`,
-            }}
-          />
-        )}
-
-        {/* Google Analytics (GA4) */}
-        {cfg.gaId && (
-          <>
-            <script async src={`https://www.googletagmanager.com/gtag/js?id=${cfg.gaId}`} />
-            <script
-              dangerouslySetInnerHTML={{
-                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${cfg.gaId}');`,
-              }}
-            />
-          </>
-        )}
-
         {/* Extra admin-provided head scripts / meta */}
         {cfg.headScripts && (
           <div dangerouslySetInnerHTML={{ __html: cfg.headScripts }} suppressHydrationWarning />
         )}
       </head>
       <body suppressHydrationWarning>
+        {/*
+          Analytics load after the page is interactive rather than blocking first
+          paint. Exactly one GA property is loaded (admin-configured, else the
+          default) — the page used to load two gtag.js copies.
+        */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga-init" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${gaId}');`}
+        </Script>
+
+        {cfg.gtmId && (
+          <Script id="gtm-init" strategy="afterInteractive">
+            {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${cfg.gtmId}');`}
+          </Script>
+        )}
         {/* GTM noscript */}
         {cfg.gtmId && (
           <noscript>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Slider from "@/components/Slider";
+import { toSlug } from "@/lib/slug";
 
 const U = "https://images.unsplash.com/photo-";
 const Q = "?auto=format&fit=crop&w=500&q=80";
@@ -55,7 +56,7 @@ export default function TopCities() {
           {cities.map((c) => (
             <Link
               key={c.name}
-              href={`/hotels?city=${encodeURIComponent(c.name)}`}
+              href={`/hotels/${toSlug(c.name)}`}
               className="snap-start shrink-0 w-[260px] group text-center"
             >
               <div className="relative h-44 rounded-2xl overflow-hidden mb-3 shadow-sm">

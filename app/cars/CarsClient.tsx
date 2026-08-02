@@ -71,10 +71,10 @@ function CarSVG({ color }: { color: string }) {
   );
 }
 
-function CarsContent() {
+function CarsContent({ initialCategory }: { initialCategory?: string }) {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const activeSlug = searchParams.get("category") || "";
+  const activeSlug = initialCategory || searchParams.get("category") || "";
   const qParam = searchParams.get("q") || "";
 
   const [cars, setCars] = useState<Car[]>(STATIC_CARS);
@@ -166,7 +166,7 @@ function CarsContent() {
               return (
                 <button
                   key={cat._id}
-                  onClick={() => router.push(cat.slug ? `/cars?category=${cat.slug}` : "/cars")}
+                  onClick={() => router.push(cat.slug ? `/cars/${cat.slug}` : "/cars")}
                   className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all ${
                     isActive
                       ? "bg-[#01b7f2] text-white shadow-lg shadow-cyan-900/30"
@@ -236,7 +236,7 @@ function CarsContent() {
                     {cats.map((cat) => (
                       <button
                         key={cat._id}
-                        onClick={() => router.push(cat.slug ? `/cars?category=${cat.slug}` : "/cars")}
+                        onClick={() => router.push(cat.slug ? `/cars/${cat.slug}` : "/cars")}
                         className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm transition-colors ${
                           cat.slug === activeSlug
                             ? "bg-cyan-50 text-[#01b7f2] font-semibold"
@@ -423,10 +423,11 @@ function CarsContent() {
   );
 }
 
-export default function CarsClient() {
+// `initialCategory` comes from the clean URL /cars/<category-slug>.
+export default function CarsClient({ initialCategory }: { initialCategory?: string }) {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[#0A65AB] flex items-center justify-center text-white">Loading...</div>}>
-      <CarsContent />
+      <CarsContent initialCategory={initialCategory} />
     </Suspense>
   );
 }

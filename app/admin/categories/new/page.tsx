@@ -64,7 +64,7 @@ export default function NewCategory() {
             <div>
               <label className="label">Slug (URL key)</label>
               <input value={form.slug} onChange={(e) => set("slug", e.target.value)} placeholder="business-cars" className="input font-mono" />
-              <p className="text-xs text-gray-400 mt-1">Used in URL filter: /cars?category=<span className="text-gray-500">{form.slug || "slug"}</span></p>
+              <p className="text-xs text-gray-400 mt-1">Page URL: /cars/<span className="text-gray-500">{form.slug || "slug"}</span></p>
             </div>
             <div>
               <label className="label">Description</label>

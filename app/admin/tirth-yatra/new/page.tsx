@@ -5,6 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import ImageUpload from "@/components/admin/ImageUpload";
 import SeoSection from "@/components/admin/SeoSection";
+import PageContentField from "@/components/admin/PageContentField";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
@@ -20,7 +21,7 @@ export default function NewTirthYatra() {
     featured: false, available: true, order: 0,
     faqs: [] as { question: string; answer: string }[],
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "", schemaBlocks: [] as string[], longContent: "",
   });
 
   function set(field: string, value: any) {
@@ -163,8 +164,10 @@ export default function NewTirthYatra() {
             )}
           </div>
 
+          <PageContentField value={form.longContent} onChange={(html) => set("longContent", html)} />
+
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd, schemaBlocks: form.schemaBlocks }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.name}
           />

@@ -5,6 +5,7 @@ export interface IDestination extends Document {
   region: "India" | "World";
   country: string;
   description: string;
+  longContent: string;
   image: string;
   images: string[];
   imageAlts: string[];
@@ -20,6 +21,8 @@ export interface IDestination extends Document {
   ogImage: string;
   twitterCard: string;
   schemaJsonLd: string;
+  schemaBlocks: string[];
+  faqs: { question: string; answer: string }[];
   featured: boolean;
   honeymoon: boolean;
   order: number;
@@ -34,6 +37,7 @@ const DestinationSchema = new Schema<IDestination>(
     region: { type: String, enum: ["India", "World"], required: true },
     country: { type: String, default: "" },
     description: { type: String, default: "" },
+    longContent: { type: String, default: "" },
     image: { type: String, default: "" },
     images: { type: [String], default: [] },
     imageAlts: { type: [String], default: [] },
@@ -49,6 +53,11 @@ const DestinationSchema = new Schema<IDestination>(
     ogImage: { type: String, default: "" },
     twitterCard: { type: String, default: "summary_large_image" },
     schemaJsonLd: { type: String, default: "" },
+    schemaBlocks: { type: [String], default: [] },
+    faqs: {
+      type: [{ question: { type: String, default: "" }, answer: { type: String, default: "" } }],
+      default: [],
+    },
     featured: { type: Boolean, default: false },
     honeymoon: { type: Boolean, default: false },
     order: { type: Number, default: 0 },

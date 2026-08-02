@@ -1,15 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 
+// Eight equal hotspots over the banner artwork, starting 16% from the left.
+// Laid out with flex so no inline positioning styles are needed.
 const CAR_LINKS = [
-  { label: "Swift Dzire",     href: "/cars/maruti-suzuki-swift",  left: "16.0%", width: "10.5%" },
-  { label: "Ertiga",          href: "/cars/maruti-suzuki-ertiga", left: "26.5%", width: "10.5%" },
-  { label: "Innova Crysta",   href: "/cars/toyota-innova-crysta", left: "37.0%", width: "10.5%" },
-  { label: "Force Urbania",   href: "/cars/force-urbania",        left: "47.5%", width: "10.5%" },
-  { label: "SUV",             href: "/cars",                      left: "58.0%", width: "10.5%" },
-  { label: "Audi",            href: "/cars/audi-a6",              left: "68.5%", width: "10.5%" },
-  { label: "BMW",             href: "/cars/bmw-5-series",         left: "79.0%", width: "10.5%" },
-  { label: "Jaguar",          href: "/cars/jaguar-xf",            left: "89.5%", width: "10.5%" },
+  { label: "Swift Dzire",   href: "/cars/maruti-suzuki-swift" },
+  { label: "Ertiga",        href: "/cars/maruti-suzuki-ertiga" },
+  { label: "Innova Crysta", href: "/cars/toyota-innova-crysta" },
+  { label: "Force Urbania", href: "/cars/force-urbania" },
+  { label: "SUV",           href: "/cars" },
+  { label: "Audi",          href: "/cars/audi-a6" },
+  { label: "BMW",           href: "/cars/bmw-5-series" },
+  { label: "Jaguar",        href: "/cars/jaguar-xf" },
 ];
 
 export default function CarBanner() {
@@ -23,16 +25,17 @@ export default function CarBanner() {
         className="w-full h-auto"
         priority
       />
-      {CAR_LINKS.map((car) => (
-        <Link
-          key={car.label}
-          href={car.href}
-          aria-label={`View ${car.label}`}
-          className="absolute top-0 h-full cursor-pointer"
-          style={{ left: car.left, width: car.width }}
-          title={car.label}
-        />
-      ))}
+      <div className="absolute inset-0 flex pl-[16%]">
+        {CAR_LINKS.map((car) => (
+          <Link
+            key={car.label}
+            href={car.href}
+            aria-label={`View ${car.label}`}
+            className="flex-1 h-full cursor-pointer"
+            title={car.label}
+          />
+        ))}
+      </div>
     </section>
   );
 }

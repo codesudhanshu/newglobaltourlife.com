@@ -8,6 +8,8 @@ import { User, Calendar, ChevronLeft, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { BLOGS } from "@/lib/placeholders";
+import { RichBody } from "@/components/ContentBox";
+import { categoryStyle } from "@/lib/blogCategories";
 
 interface Blog {
   _id: string;
@@ -22,21 +24,18 @@ interface Blog {
   published: boolean;
 }
 
-const CATEGORY_COLORS: Record<string, string> = {
-  Travel: "#3b82f6", "Car Guide": "#01b7f2", Savings: "#10b981",
-  News: "#8b5cf6", Tips: "#ef4444", General: "#64748b",
-  Tour: "#01b7f2", Adventure: "#10b981",
-};
 
-export default function BlogDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+export default function BlogDetailClient({ idOrSlug, initial }: { idOrSlug?: string; initial?: Blog | null }) {
   const params = useParams<{ id?: string; slug?: string }>();
   const id = idOrSlug ?? params.id ?? params.slug ?? "";
   const router = useRouter();
-  const [blog, setBlog] = useState<Blog | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [blog, setBlog] = useState<Blog | null>(initial ?? null);
+  const [loading, setLoading] = useState(!initial);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+    // Server-rendered on first paint — skip the client fetch.
+    if (initial) return;
     if (!id) return;
     const fallback = BLOGS.find((b) => b._id === id || b.slug === id) as unknown as Blog | undefined;
     fetch(`/api/blogs/${id}`)
@@ -52,9 +51,10 @@ export default function BlogDetailClient({ idOrSlug }: { idOrSlug?: string }) {
         else setNotFound(true);
         setLoading(false);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const color = blog ? (CATEGORY_COLORS[blog.category] || "#64748b") : "#01b7f2";
+  const cat = categoryStyle(blog?.category);
   const dateStr = blog?.createdAt
     ? new Date(blog.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })
     : "";
@@ -99,7 +99,7 @@ export default function BlogDetailClient({ idOrSlug }: { idOrSlug?: string }) {
             <span>/</span>
             <span className="text-white line-clamp-1">{blog.title}</span>
           </div>
-          <span className="text-xs font-bold px-3 py-1.5 rounded-full text-white mb-4 inline-block" style={{ backgroundColor: color }}>
+          <span className={`text-xs font-bold px-3 py-1.5 rounded-full text-white mb-4 inline-block ${cat.chip}`}>
             {blog.category}
           </span>
           <h1 className="text-3xl lg:text-4xl font-extrabold text-white leading-tight mb-5">{blog.title}</h1>
@@ -128,17 +128,14 @@ export default function BlogDetailClient({ idOrSlug }: { idOrSlug?: string }) {
 
           {/* Excerpt */}
           {blog.excerpt && (
-            <p className="text-lg text-gray-600 leading-relaxed border-l-4 pl-5 mb-8 italic" style={{ borderColor: color }}>
+            <p className={`text-lg text-gray-600 leading-relaxed border-l-4 pl-5 mb-8 italic ${cat.border}`}>
               {blog.excerpt}
             </p>
           )}
 
-          {/* Content */}
+          {/* Content box — same rich body as the car pages */}
           {blog.content ? (
-            <div
-              className="prose prose-slate max-w-none text-gray-700 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: blog.content.replace(/\n/g, "<br/>") }}
-            />
+            <RichBody content={blog.content} className="!text-base" />
           ) : (
             <p className="text-gray-500 italic">Full article coming soon.</p>
           )}

@@ -10,10 +10,10 @@ import { DESTINATIONS, type Destination } from "@/lib/placeholders";
 
 type Region = "India" | "World";
 
-function DestinationsContent() {
+function DestinationsContent({ initialRegion }: { initialRegion?: Region }) {
   const params = useSearchParams();
   const router = useRouter();
-  const region = (params.get("region") === "World" ? "World" : "India") as Region;
+  const region = (initialRegion || (params.get("region") === "World" ? "World" : "India")) as Region;
 
   const [all, setAll] = useState<Destination[]>(DESTINATIONS);
 
@@ -51,7 +51,7 @@ function DestinationsContent() {
           {(["India", "World"] as Region[]).map((r) => (
             <button
               key={r}
-              onClick={() => router.push(`/destinations?region=${r}`)}
+              onClick={() => router.push(`/destinations/${r.toLowerCase()}`)}
               className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${
                 region === r ? "bg-[#01b7f2] text-white" : "text-gray-400 hover:text-white hover:bg-slate-700"
               }`}
@@ -81,10 +81,11 @@ function DestinationsContent() {
   );
 }
 
-export default function DestinationsClient() {
+// `initialRegion` comes from the clean URL /destinations/india | /destinations/world.
+export default function DestinationsClient({ initialRegion }: { initialRegion?: "India" | "World" }) {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[#0A65AB] flex items-center justify-center text-white">Loading...</div>}>
-      <DestinationsContent />
+      <DestinationsContent initialRegion={initialRegion} />
     </Suspense>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Search, Link2, Type, Hash, AlignLeft, Share2, ChevronDown } from "lucide-react";
+import SchemaTags from "@/components/admin/SchemaTags";
 
 export interface SeoData {
   slug: string;
@@ -15,13 +16,16 @@ export interface SeoData {
   ogImage?: string;
   twitterCard?: string;
   schemaJsonLd?: string;
+  // Multiple JSON-LD blocks — each is emitted as its own <script> on the page.
+  schemaBlocks?: string[];
 }
 
 interface Props {
   data: SeoData;
-  onChange: (field: keyof SeoData, value: string) => void;
+  onChange: (field: keyof SeoData, value: string | string[]) => void;
   autoSlugFrom?: string;
 }
+
 
 function toSlug(s: string) {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
@@ -203,19 +207,13 @@ export default function SeoSection({ data, onChange, autoSlugFrom }: Props) {
               <p className="text-gray-400 text-xs mt-1">Shown when the page is shared on Facebook / WhatsApp / Twitter.</p>
             </div>
 
-            {/* Custom schema */}
-            <div>
-              <label className={lbl}><Hash size={12} /> Custom Schema (JSON-LD)</label>
-              <textarea
-                value={data.schemaJsonLd || ""}
-                onChange={(e) => onChange("schemaJsonLd", e.target.value)}
-                placeholder='{"@context":"https://schema.org","@type":"Product","name":"…"}'
-                rows={5}
-                spellCheck={false}
-                className={`${inp} font-mono resize-y`}
-              />
-              <p className="text-gray-400 text-xs mt-1">Raw JSON-LD injected on this item&apos;s detail page. Leave blank if not needed.</p>
-            </div>
+            {/* Schema tags — one block per schema, as many as needed */}
+            <SchemaTags
+              primary={data.schemaJsonLd || ""}
+              blocks={data.schemaBlocks || []}
+              onPrimaryChange={(v) => onChange("schemaJsonLd", v)}
+              onBlocksChange={(v) => onChange("schemaBlocks", v)}
+            />
           </div>
         )}
       </div>

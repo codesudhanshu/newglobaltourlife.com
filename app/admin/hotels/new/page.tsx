@@ -5,6 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
 import SeoSection from "@/components/admin/SeoSection";
+import PageContentField from "@/components/admin/PageContentField";
 import Link from "next/link";
 import { ArrowLeft, Plus, X } from "lucide-react";
 import ImageUpload from "@/components/admin/ImageUpload";
@@ -26,7 +27,7 @@ export default function NewHotelPage() {
     category: "Luxury", amenities: [] as string[],
     featured: false, available: true, order: 0,
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "", schemaBlocks: [] as string[], longContent: "",
   });
   const [images, setImages] = useState<string[]>([]);
   const [imageAlts, setImageAlts] = useState<string[]>([]);
@@ -203,8 +204,10 @@ export default function NewHotelPage() {
           {token && <MultiImageUpload values={images} onChange={setImages} alts={imageAlts} onAltsChange={setImageAlts} token={token} folder="newglobaltourlife/hotels" />}
         </div>
 
+        <PageContentField value={form.longContent} onChange={(html) => field("longContent", html)} />
+
         <SeoSection
-          data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
+          data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd, schemaBlocks: form.schemaBlocks }}
           onChange={(f, value) => field(f, value)}
           autoSlugFrom={form.name}
         />

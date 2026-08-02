@@ -99,7 +99,7 @@ export default function CategorySection() {
             return (
               <Link
                 key={cat._id}
-                href={`/cars?category=${cat.slug}`}
+                href={`/cars/${cat.slug}`}
                 className="group relative rounded-2xl overflow-hidden cursor-pointer"
                 style={{ minHeight: "200px" }}
               >

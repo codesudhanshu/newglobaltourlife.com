@@ -12,6 +12,7 @@ import TripBookingForm from "@/components/TripBookingForm";
 import QuickBookCTA from "@/components/QuickBookCTA";
 import FareTable from "@/components/FareTable";
 import RelatedCars from "@/components/RelatedCars";
+import ContentBox from "@/components/ContentBox";
 
 interface Car {
   _id: string;
@@ -36,15 +37,17 @@ const CATEGORY_COLORS: Record<string, string> = {
   Economy: "#64748b", Sedan: "#3b82f6", Convertible: "#ec4899",
 };
 
-export default function CarDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+export default function CarDetailClient({ idOrSlug, initial }: { idOrSlug?: string; initial?: Car | null }) {
   const params = useParams<{ id?: string; slug?: string }>();
   const id = idOrSlug ?? params.id ?? params.slug ?? "";
-  const [car, setCar] = useState<Car | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [car, setCar] = useState<Car | null>(initial ?? null);
+  const [loading, setLoading] = useState(!initial);
   const [notFound, setNotFound] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
 
   useEffect(() => {
+    // Server-rendered on first paint — skip the client fetch.
+    if (initial) return;
     if (!id) return;
     fetch(`/api/cars/${id}`)
       .then((r) => {
@@ -56,6 +59,7 @@ export default function CarDetailClient({ idOrSlug }: { idOrSlug?: string }) {
         setLoading(false);
       })
       .catch(() => { setNotFound(true); setLoading(false); });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const color = car ? (CATEGORY_COLORS[car.category] || "#01b7f2") : "#01b7f2";
@@ -150,26 +154,8 @@ export default function CarDetailClient({ idOrSlug }: { idOrSlug?: string }) {
         </div>
       </section>
 
-      {/* Text content */}
-      {(car.longContent || car.description) && (
-        <section className="section-padding bg-white">
-          <div className="container-custom max-w-4xl">
-            <h2 className="section-title mb-5">{car.name} Car Booking</h2>
-            {(car.longContent || car.description).trim().startsWith("<") ? (
-              <div
-                className="prose prose-sm max-w-none text-gray-600 leading-relaxed [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-gray-800 [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-gray-700 [&_h3]:mt-5 [&_h3]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_li]:text-gray-600 [&_p]:mb-3 [&_strong]:text-gray-800"
-                dangerouslySetInnerHTML={{ __html: car.longContent || car.description }}
-              />
-            ) : (
-              <div className="text-gray-600 text-sm leading-relaxed space-y-4">
-                {(car.longContent || car.description).split(/\n{2,}/).map((para, i) => (
-                  <p key={i} className="whitespace-pre-line">{para}</p>
-                ))}
-              </div>
-            )}
-          </div>
-        </section>
-      )}
+      {/* Page content box (admin-managed) */}
+      <ContentBox content={car.longContent || car.description} heading={`${car.name} Car Booking`} />
 
       {/* Quick book CTA */}
       <QuickBookCTA carName={car.name} />

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone, Mail, MapPin, Star, Clock, ChevronRight, Gift } from "lucide-react";
 import { useState } from "react";
+import ObfuscatedEmail from "@/components/ObfuscatedEmail";
 
 const SERVICES = [
   "Car Rental with Driver", "Local City Cab", "Outstation Cabs",
@@ -133,9 +134,13 @@ export default function Footer() {
               <a href="tel:+919131727811" className="flex items-center gap-2 hover:text-amber-400 transition-colors">
                 <Phone size={14} className="text-amber-400 shrink-0" /> +91 91317 27811
               </a>
-              <a href="mailto:newglobaltourlife@gmail.com" className="flex items-center gap-2 hover:text-amber-400 transition-colors text-xs break-all">
-                <Mail size={14} className="text-amber-400 shrink-0" /> newglobaltourlife@gmail.com
-              </a>
+              <ObfuscatedEmail
+                user="newglobaltourlife"
+                domain="gmail.com"
+                className="flex items-center gap-2 hover:text-amber-400 transition-colors text-xs break-all"
+              >
+                <Mail size={14} className="text-amber-400 shrink-0" />
+              </ObfuscatedEmail>
               <div className="flex items-center gap-2">
                 <Clock size={14} className="text-amber-400 shrink-0" />
                 <span className="text-gray-400">Mon - Sun : 24x7 Available</span>

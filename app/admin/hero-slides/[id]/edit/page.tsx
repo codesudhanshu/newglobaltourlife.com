@@ -14,7 +14,7 @@ export default function EditHeroSlide() {
   const [saving, setSaving] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState("");
-  const [form, setForm] = useState({ image: "", heading: "", sub: "", order: 0, active: true });
+  const [form, setForm] = useState({ image: "", mobileImage: "", imageAlt: "", heading: "", sub: "", order: 0, active: true });
 
   useEffect(() => {
     if (loading || !id) return;
@@ -23,7 +23,8 @@ export default function EditHeroSlide() {
       .then((data) => {
         if (data && !data.error) {
           setForm({
-            image: data.image || "", heading: data.heading || "", sub: data.sub || "",
+            image: data.image || "", mobileImage: data.mobileImage || "", imageAlt: data.imageAlt || "",
+            heading: data.heading || "", sub: data.sub || "",
             order: data.order || 0, active: data.active !== false,
           });
         }
@@ -67,9 +68,19 @@ export default function EditHeroSlide() {
       <form onSubmit={handleSubmit} className="max-w-2xl space-y-5">
         <div className="bg-white rounded-2xl border border-gray-200 p-6 space-y-5">
           <div>
-            <label className="label">Slide Image</label>
-            <p className="text-gray-400 text-xs mb-2">Wide landscape image works best (full-width hero).</p>
+            <label className="label">Slide Image (desktop)</label>
+            <p className="text-gray-400 text-xs mb-2">Wide landscape image works best (full-width hero, ~1900×600).</p>
             {token && <ImageUpload value={form.image} onChange={(url) => set("image", url)} token={token} folder="newglobaltourlife/hero" />}
+          </div>
+          <div>
+            <label className="label">Mobile Image (optional)</label>
+            <p className="text-gray-400 text-xs mb-2">A taller crop (4:3 or portrait) used on phones. Without it, the wide image is fitted to the screen instead of being cropped.</p>
+            {token && <ImageUpload value={form.mobileImage} onChange={(url) => set("mobileImage", url)} token={token} folder="newglobaltourlife/hero" />}
+          </div>
+          <div>
+            <label className="label">Image Alt Text</label>
+            <input value={form.imageAlt} onChange={(e) => set("imageAlt", e.target.value)} placeholder="e.g. Mahakal temple Ujjain tour banner" className="input" />
+            <p className="text-gray-400 text-xs mt-1">Describes the image for Google Images and screen readers.</p>
           </div>
           <div>
             <label className="label">Heading</label>

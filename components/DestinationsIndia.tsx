@@ -26,7 +26,7 @@ export default function DestinationsIndia() {
           <p className="text-gray-500 text-sm leading-relaxed">
             Looking to explore the beauty of India without going far? Our trending domestic packages are
             designed to give you memorable travel experiences across the country&apos;s most popular and
-            offbeat destinations. <Link href="/destinations?region=India" className="text-[#01b7f2] font-semibold">Read More</Link>
+            offbeat destinations. <Link href="/destinations/india" className="text-[#01b7f2] font-semibold">Read More</Link>
           </p>
         </div>
 

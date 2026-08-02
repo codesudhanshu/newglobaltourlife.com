@@ -19,19 +19,22 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import SeoContent from "@/components/SeoContent";
 import { getPageSeo, buildMetadata } from "@/lib/seo";
+import { getHeroSlides } from "@/lib/heroSlides";
 
-export const dynamic = "force-dynamic";
+// Cached HTML with a short refresh window — much lower TTFB than rendering the
+// homepage from scratch on every request.
+export const revalidate = 60;
 
 export async function generateMetadata() {
   return buildMetadata(await getPageSeo("home"));
 }
 
 export default async function Home() {
-  const seo = await getPageSeo("home");
+  const [seo, heroSlides] = await Promise.all([getPageSeo("home"), getHeroSlides()]);
   return (
     <main>
       <Navbar />
-      <Hero />
+      <Hero slides={heroSlides} />
       <Reveal><AboutUs /></Reveal>
       <CarBanner />
       <Reveal><SpecialOffers /></Reveal>

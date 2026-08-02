@@ -10,6 +10,9 @@ export type SiteConfigData = {
   gscVerification: string;
   headScripts: string;
   robotsTxt: string;
+  sitemapMode: "auto" | "custom";
+  customSitemapXml: string;
+  sitemapUpdatedAt: string | null;
   orgName: string;
   orgLogo: string;
   orgUrl: string;
@@ -19,6 +22,7 @@ export type SiteConfigData = {
 
 const DEFAULTS: SiteConfigData = {
   gtmId: "", gaId: "", gscVerification: "", headScripts: "", robotsTxt: "",
+  sitemapMode: "auto", customSitemapXml: "", sitemapUpdatedAt: null,
   orgName: "New Global Tour Life", orgLogo: "", orgUrl: SITE_URL,
   orgPhone: "+91-9131727811", orgSameAs: [],
 };
@@ -34,6 +38,9 @@ export async function getSiteConfig(): Promise<SiteConfigData> {
       gscVerification: doc.gscVerification || "",
       headScripts: doc.headScripts || "",
       robotsTxt: doc.robotsTxt || "",
+      sitemapMode: doc.sitemapMode === "custom" ? "custom" : "auto",
+      customSitemapXml: doc.customSitemapXml || "",
+      sitemapUpdatedAt: doc.sitemapUpdatedAt ? new Date(doc.sitemapUpdatedAt).toISOString() : null,
       orgName: doc.orgName || DEFAULTS.orgName,
       orgLogo: doc.orgLogo || "",
       orgUrl: doc.orgUrl || SITE_URL,

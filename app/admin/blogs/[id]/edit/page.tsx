@@ -5,6 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter, useParams } from "next/navigation";
 import ImageUpload from "@/components/admin/ImageUpload";
 import SeoSection from "@/components/admin/SeoSection";
+import PageContentField from "@/components/admin/PageContentField";
 import Link from "next/link";
 import { ArrowLeft, Loader } from "lucide-react";
 
@@ -21,14 +22,14 @@ export default function EditBlog() {
     title: "", slug: "", excerpt: "", content: "", image: "",
     category: "General", author: "Admin", order: 0, published: true,
     metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "", schemaBlocks: [] as string[],
   });
 
   useEffect(() => {
     if (loading) return;
     fetch(`/api/blogs/${id}`, { headers: authHeaders() })
       .then((r) => r.json())
-      .then((data) => { setForm({ ...data, twitterCard: data.twitterCard || "summary_large_image" }); setFetching(false); })
+      .then((data) => { setForm({ ...data, twitterCard: data.twitterCard || "summary_large_image", schemaJsonLd: data.schemaJsonLd || "", schemaBlocks: data.schemaBlocks || [] }); setFetching(false); })
       .catch(() => setFetching(false));
   }, [loading, id]);
 
@@ -79,14 +80,17 @@ export default function EditBlog() {
               <label className="label">Excerpt</label>
               <textarea value={form.excerpt} onChange={(e) => set("excerpt", e.target.value)} rows={3} className="input resize-none" />
             </div>
-            <div>
-              <label className="label">Content</label>
-              <textarea required value={form.content} onChange={(e) => set("content", e.target.value)} rows={10} className="input resize-none" />
-            </div>
           </div>
 
+          <PageContentField
+            value={form.content}
+            onChange={(html) => set("content", html)}
+            label="Page Content (article body)"
+            hint="Rich text rendered on the blog page. Use headings, links and image alt tags for SEO."
+          />
+
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd, schemaBlocks: form.schemaBlocks }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.title}
           />

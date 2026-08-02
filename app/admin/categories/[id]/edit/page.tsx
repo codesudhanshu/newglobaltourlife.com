@@ -68,7 +68,7 @@ export default function EditCategory() {
             <div>
               <label className="label">Slug (URL key)</label>
               <input value={form.slug} onChange={(e) => set("slug", e.target.value)} className="input font-mono" />
-              <p className="text-xs text-gray-400 mt-1">Filter URL: /cars?category=<span className="text-gray-500">{form.slug}</span></p>
+              <p className="text-xs text-gray-400 mt-1">Page URL: /cars/<span className="text-gray-500">{form.slug}</span></p>
             </div>
             <div>
               <label className="label">Description</label>

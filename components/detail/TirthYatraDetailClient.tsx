@@ -10,11 +10,13 @@ import Footer from "@/components/Footer";
 import FAQ from "@/components/FAQ";
 import EnquiryForm from "@/components/EnquiryForm";
 import RelatedTirthYatra from "@/components/RelatedTirthYatra";
+import ContentBox from "@/components/ContentBox";
 
 interface TirthYatra {
   _id: string;
   name: string;
   description: string;
+  longContent?: string;
   location: string;
   state: string;
   image: string;
@@ -24,19 +26,22 @@ interface TirthYatra {
   faqs: { question: string; answer: string }[];
 }
 
-export default function TirthYatraDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+export default function TirthYatraDetailClient({ idOrSlug, initial }: { idOrSlug?: string; initial?: TirthYatra | null }) {
   const params = useParams<{ id?: string; slug?: string }>();
   const id = idOrSlug ?? params.id ?? params.slug ?? "";
-  const [item, setItem] = useState<TirthYatra | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [item, setItem] = useState<TirthYatra | null>(initial ?? null);
+  const [loading, setLoading] = useState(!initial);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
+    // Server-rendered on first paint — skip the client fetch.
+    if (initial) return;
     if (!id) return;
     fetch(`/api/tirth-yatra/${id}`)
       .then((r) => { if (!r.ok) { setNotFound(true); setLoading(false); return null; } return r.json(); })
       .then((data) => { if (data && !data.error) setItem(data); else setNotFound(true); setLoading(false); })
       .catch(() => { setNotFound(true); setLoading(false); });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (loading) {
@@ -127,6 +132,9 @@ export default function TirthYatraDetailClient({ idOrSlug }: { idOrSlug?: string
           </div>
         </div>
       </main>
+
+      {/* Page content box (admin-managed) */}
+      <ContentBox content={item.longContent} heading={`${item.name} Yatra Details`} />
 
       <RelatedTirthYatra currentId={item._id} />
 

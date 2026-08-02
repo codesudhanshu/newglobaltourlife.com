@@ -3,7 +3,8 @@ import SeoContent from "@/components/SeoContent";
 import { getPageSeo, buildMetadata } from "@/lib/seo";
 import BlogsClient from "./BlogsClient";
 
-export const dynamic = "force-dynamic";
+// Cached HTML, refreshed at most every 60s — keeps server response time low.
+export const revalidate = 60;
 
 export async function generateMetadata() {
   return buildMetadata(await getPageSeo("blogs"));

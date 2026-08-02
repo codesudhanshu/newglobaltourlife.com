@@ -10,6 +10,11 @@ export interface ISiteConfig extends Document {
   // robots.txt (served at /robots.txt)
   robotsTxt: string;
 
+  // sitemap.xml — "auto" generates from the database, "custom" serves uploaded XML
+  sitemapMode: "auto" | "custom";
+  customSitemapXml: string;
+  sitemapUpdatedAt: Date | null;
+
   // Organization schema (JSON-LD)
   orgName: string;
   orgLogo: string;
@@ -25,6 +30,9 @@ const SiteConfigSchema = new Schema<ISiteConfig>(
     gscVerification: { type: String, default: "" },
     headScripts:     { type: String, default: "" },
     robotsTxt:       { type: String, default: "" },
+    sitemapMode:     { type: String, enum: ["auto", "custom"], default: "auto" },
+    customSitemapXml:{ type: String, default: "" },
+    sitemapUpdatedAt:{ type: Date, default: null },
     orgName:         { type: String, default: "New Global Tour Life" },
     orgLogo:         { type: String, default: "" },
     orgUrl:          { type: String, default: "" },

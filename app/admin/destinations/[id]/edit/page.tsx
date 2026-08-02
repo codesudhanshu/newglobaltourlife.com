@@ -5,6 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter, useParams } from "next/navigation";
 import ImageUpload from "@/components/admin/ImageUpload";
 import SeoSection from "@/components/admin/SeoSection";
+import PageContentField from "@/components/admin/PageContentField";
 import Link from "next/link";
 import { ArrowLeft, Loader } from "lucide-react";
 
@@ -23,7 +24,7 @@ export default function EditDestination() {
     image: "", imageAlts: [] as string[], description: "",
     active: true, featured: false, order: 0,
     metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "", schemaBlocks: [] as string[], longContent: "",
   });
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function EditDestination() {
           ogDescription: data.ogDescription || "",
           ogImage: data.ogImage || "",
           twitterCard: data.twitterCard || "summary_large_image",
-          schemaJsonLd: data.schemaJsonLd || "",
+          schemaJsonLd: data.schemaJsonLd || "", schemaBlocks: data.schemaBlocks || [], longContent: data.longContent || "",
         });
         setFetching(false);
       })
@@ -140,8 +141,10 @@ export default function EditDestination() {
             </div>
           </div>
 
+          <PageContentField value={form.longContent} onChange={(html) => set("longContent", html)} />
+
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd, schemaBlocks: form.schemaBlocks }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.name}
           />

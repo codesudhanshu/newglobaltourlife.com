@@ -6,6 +6,7 @@ import Image from "next/image";
 import { User, Calendar, ArrowRight, ChevronRight, Search } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { BLOGS } from "@/lib/placeholders";
+import { categoryStyle } from "@/lib/blogCategories";
 
 interface Blog {
   _id: string;
@@ -19,17 +20,11 @@ interface Blog {
   published: boolean;
 }
 
-const CATEGORY_COLORS: Record<string, string> = {
-  Travel: "#3b82f6", "Car Guide": "#01b7f2", Savings: "#10b981",
-  News: "#8b5cf6", Tips: "#ef4444", General: "#64748b",
-  Tour: "#01b7f2", Adventure: "#10b981",
-};
-
 const PAGE_SIZE = 12;
 
-function BlogPlaceholder({ color }: { color: string }) {
+function BlogPlaceholder({ tint }: { tint: string }) {
   return (
-    <div className="w-full h-full flex items-center justify-center" style={{ background: `${color}15` }}>
+    <div className={`w-full h-full flex items-center justify-center ${tint}`}>
       <span className="text-5xl">📰</span>
     </div>
   );
@@ -76,7 +71,7 @@ export default function BlogsClient() {
 
       {/* Hero */}
       <section className="bg-[#0A65AB] relative overflow-hidden py-16 lg:py-20">
-        <div className="absolute inset-0 opacity-5" style={{ backgroundImage: "linear-gradient(#01b7f2 1px, transparent 1px), linear-gradient(90deg, #01b7f2 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+        <div className="grid-lines absolute inset-0 opacity-5" />
         <div className="container-custom relative z-10">
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
             <Link href="/" className="hover:text-[#01b7f2]">Home</Link>
@@ -139,7 +134,7 @@ export default function BlogsClient() {
               <p className="text-gray-500 text-sm mb-6">{filtered.length} article{filtered.length !== 1 ? "s" : ""}</p>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {paged.map((post) => {
-                  const color = CATEGORY_COLORS[post.category] || "#64748b";
+                  const cat = categoryStyle(post.category);
                   const dateStr = post.createdAt
                     ? new Date(post.createdAt).toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" })
                     : "";
@@ -150,9 +145,9 @@ export default function BlogsClient() {
                           {post.image ? (
                             <Image src={post.image} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                           ) : (
-                            <BlogPlaceholder color={color} />
+                            <BlogPlaceholder tint={cat.tint} />
                           )}
-                          <span className="absolute top-4 left-4 text-xs font-bold px-2.5 py-1 rounded-full text-white" style={{ backgroundColor: color }}>
+                          <span className={`absolute top-4 left-4 text-xs font-bold px-2.5 py-1 rounded-full text-white ${cat.chip}`}>
                             {post.category}
                           </span>
                         </div>

@@ -19,7 +19,8 @@ export interface IPageSeo extends Document {
   h1: string;               // primary heading override (optional)
   longContent: string;      // rich HTML body rendered on the page
   faqs: IFaqItem[];         // FAQ schema + on-page FAQ
-  schemaJsonLd: string;     // custom JSON-LD injected into the page head/body
+  schemaJsonLd: string;     // custom JSON-LD injected into the page head/body (legacy single block)
+  schemaBlocks: string[];   // multiple JSON-LD blocks, each emitted as its own <script>
 }
 
 const FaqSchema = new Schema<IFaqItem>(
@@ -43,6 +44,7 @@ const PageSeoSchema = new Schema<IPageSeo>(
     longContent:  { type: String, default: "" },
     faqs:         { type: [FaqSchema], default: [] },
     schemaJsonLd: { type: String, default: "" },
+    schemaBlocks: { type: [String], default: [] },
   },
   { timestamps: true }
 );

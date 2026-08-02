@@ -2,6 +2,8 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export interface IHeroSlide extends Document {
   image: string;
+  mobileImage: string;   // optional portrait/square crop used below 768px
+  imageAlt: string;
   heading: string;
   sub: string;
   order: number;
@@ -13,6 +15,8 @@ export interface IHeroSlide extends Document {
 const HeroSlideSchema = new Schema<IHeroSlide>(
   {
     image: { type: String, default: "" },
+    mobileImage: { type: String, default: "" },
+    imageAlt: { type: String, default: "" },
     heading: { type: String, default: "" },
     sub: { type: String, default: "" },
     order: { type: Number, default: 0 },

@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import FAQ from "@/components/FAQ";
 import PackageEnquiryForm from "@/components/PackageEnquiryForm";
 import RelatedPackages from "@/components/RelatedPackages";
+import ContentBox from "@/components/ContentBox";
 
 interface ItineraryDay { day: number; title: string; description: string }
 
@@ -30,19 +31,22 @@ interface Pkg {
   itinerary: string;
   itineraryDays: ItineraryDay[];
   faqs: { question: string; answer: string }[];
+  longContent?: string;
   category: string;
   available: boolean;
 }
 
-export default function PackageDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+export default function PackageDetailClient({ idOrSlug, initial }: { idOrSlug?: string; initial?: Pkg | null }) {
   const params = useParams<{ id?: string; slug?: string }>();
   const id = idOrSlug ?? params.id ?? params.slug ?? "";
-  const [pkg, setPkg] = useState<Pkg | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [pkg, setPkg] = useState<Pkg | null>(initial ?? null);
+  const [loading, setLoading] = useState(!initial);
   const [notFound, setNotFound] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
 
   useEffect(() => {
+    // Server-rendered on first paint — skip the client fetch.
+    if (initial) return;
     if (!id) return;
     fetch(`/api/packages/${id}`)
       .then((r) => {
@@ -55,6 +59,7 @@ export default function PackageDetailClient({ idOrSlug }: { idOrSlug?: string })
         setLoading(false);
       })
       .catch(() => { setNotFound(true); setLoading(false); });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (loading) {
@@ -229,6 +234,9 @@ export default function PackageDetailClient({ idOrSlug }: { idOrSlug?: string })
           </div>
         </div>
       </main>
+
+      {/* Page content box (admin-managed) */}
+      <ContentBox content={pkg.longContent} heading={`${pkg.title} — Tour Details`} />
 
       {/* Related */}
       <RelatedPackages currentId={pkg._id} category={pkg.category} />

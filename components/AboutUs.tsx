@@ -75,10 +75,7 @@ export default function AboutUs() {
           {/* Right — image + badge */}
           <div className="relative">
             {/* dotted decoration */}
-            <div
-              className="hidden lg:block absolute -top-6 -right-6 w-28 h-28 opacity-60"
-              style={{ backgroundImage: "radial-gradient(#0A65AB 2px, transparent 2px)", backgroundSize: "14px 14px" }}
-            />
+            <div className="dot-grid hidden lg:block absolute -top-6 -right-6 w-28 h-28 opacity-60" />
             <div className="relative h-[360px] sm:h-[500px] rounded-3xl overflow-hidden shadow-xl">
               <Image
                 src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=900&q=80"

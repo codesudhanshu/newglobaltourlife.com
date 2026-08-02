@@ -8,6 +8,8 @@ import { MapPin, Phone, Mail, Globe, Star, ChevronRight, Eye } from "lucide-reac
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
+import ContentBox from "@/components/ContentBox";
+import FAQ from "@/components/FAQ";
 
 interface TourGuide {
   _id: string;
@@ -22,25 +24,31 @@ interface TourGuide {
   specializations: string[];
   locations: string[];
   description: string;
+  longContent?: string;
+  faqs?: { question: string; answer: string }[];
   rating: number;
   reviewCount: number;
   featured: boolean;
   available: boolean;
 }
 
-export default function TourGuideDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+export default function TourGuideDetailClient({ idOrSlug, initial }: { idOrSlug?: string; initial?: TourGuide | null }) {
   const params = useParams<{ id?: string; slug?: string }>();
   const id = idOrSlug ?? params.id ?? params.slug ?? "";
-  const [guide, setGuide] = useState<TourGuide | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [guide, setGuide] = useState<TourGuide | null>(initial ?? null);
+  const [loading, setLoading] = useState(!initial);
   const [phoneRevealed, setPhoneRevealed] = useState(false);
+  const [emailRevealed, setEmailRevealed] = useState(false);
   const [modal, setModal] = useState(false);
 
   useEffect(() => {
+    // Server-rendered on first paint — skip the client fetch.
+    if (initial) return;
     fetch(`/api/tour-guides/${id}`)
       .then((r) => r.json())
       .then((data) => { setGuide(data && data._id ? data : null); setLoading(false); })
       .catch(() => setLoading(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (loading) {
@@ -240,9 +248,19 @@ export default function TourGuideDetailClient({ idOrSlug }: { idOrSlug?: string 
                       <div className="flex items-center gap-2 text-gray-500 text-xs mb-1">
                         <Mail size={11} /> Email
                       </div>
-                      <a href={`mailto:${guide.email}`} className="text-[#0A65AB] font-semibold text-sm hover:underline break-all">
-                        {guide.email}
-                      </a>
+                      {/* Click-to-reveal, same as the phone — keeps guide emails out of the HTML */}
+                      {emailRevealed ? (
+                        <a href={`mailto:${guide.email}`} className="text-[#0A65AB] font-semibold text-sm hover:underline break-all">
+                          {guide.email}
+                        </a>
+                      ) : (
+                        <button
+                          onClick={() => setEmailRevealed(true)}
+                          className="flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-[#0A65AB] transition-colors border border-gray-200 rounded-lg px-4 py-2 w-full"
+                        >
+                          <Eye size={14} /> Reveal Email
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
@@ -299,6 +317,11 @@ export default function TourGuideDetailClient({ idOrSlug }: { idOrSlug?: string 
           </div>
         </div>
       </div>
+
+      {/* Page content box (admin-managed) */}
+      <ContentBox content={guide.longContent} heading={`About ${guide.name}`} bg="bg-gray-50" />
+
+      <FAQ items={guide.faqs || []} />
 
       <Footer />
 

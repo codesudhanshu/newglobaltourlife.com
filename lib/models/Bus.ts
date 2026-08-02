@@ -14,6 +14,7 @@ export interface IBus extends Document {
   ogImage: string;
   twitterCard: string;
   schemaJsonLd: string;
+  schemaBlocks: string[];
   image: string;
   images: string[];
   imageAlts: string[];
@@ -42,6 +43,7 @@ const BusSchema = new Schema<IBus>(
     ogImage: { type: String, default: "" },
     twitterCard: { type: String, default: "summary_large_image" },
     schemaJsonLd: { type: String, default: "" },
+    schemaBlocks: { type: [String], default: [] },
     image: { type: String, default: "" },
     images: { type: [String], default: [] },
     imageAlts: { type: [String], default: [] },

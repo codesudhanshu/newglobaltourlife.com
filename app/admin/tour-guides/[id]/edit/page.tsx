@@ -5,6 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter, useParams } from "next/navigation";
 import ImageUpload from "@/components/admin/ImageUpload";
 import SeoSection from "@/components/admin/SeoSection";
+import PageContentField from "@/components/admin/PageContentField";
 import Link from "next/link";
 import { ArrowLeft, Loader } from "lucide-react";
 
@@ -23,7 +24,7 @@ export default function EditTourGuide() {
     rating: 0,
     featured: false, available: true, order: 0,
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "", schemaBlocks: [] as string[], longContent: "",
   });
 
   useEffect(() => {
@@ -37,7 +38,7 @@ export default function EditTourGuide() {
           languages: Array.isArray(data.languages) ? data.languages.join(", ") : (data.languages || ""),
           specializations: Array.isArray(data.specializations) ? data.specializations.join(", ") : (data.specializations || ""),
           locations: Array.isArray(data.locations) ? data.locations.join(", ") : (data.locations || ""),
-          canonical: data.canonical || "", ogTitle: data.ogTitle || "", ogDescription: data.ogDescription || "", ogImage: data.ogImage || "", twitterCard: data.twitterCard || "summary_large_image", schemaJsonLd: data.schemaJsonLd || "",
+          canonical: data.canonical || "", ogTitle: data.ogTitle || "", ogDescription: data.ogDescription || "", ogImage: data.ogImage || "", twitterCard: data.twitterCard || "summary_large_image", schemaJsonLd: data.schemaJsonLd || "", schemaBlocks: data.schemaBlocks || [], longContent: data.longContent || "",
         });
         setFetching(false);
       })
@@ -48,7 +49,7 @@ export default function EditTourGuide() {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
-  function setSeo(field: string, value: string) {
+  function setSeo(field: string, value: string | string[]) {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
@@ -154,8 +155,10 @@ export default function EditTourGuide() {
           </div>
 
           {/* SEO */}
+          <PageContentField value={form.longContent} onChange={(html) => set("longContent", html)} />
+
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd, schemaBlocks: form.schemaBlocks }}
             onChange={setSeo}
             autoSlugFrom={form.name}
           />

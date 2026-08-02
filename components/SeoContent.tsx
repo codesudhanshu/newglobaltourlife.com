@@ -1,25 +1,24 @@
 import { faqJsonLd, type PageSeoData } from "@/lib/seo";
+import { collectSchemas } from "@/lib/schema";
+import JsonLd from "@/components/JsonLd";
+import { contentBoxProse } from "@/components/ContentBox";
 
-// Renders the admin-managed SEO body (rich HTML) + FAQ section + FAQPage JSON-LD.
-// Safe to drop into any page; renders nothing if there's no content/FAQs.
+// Renders the admin-managed SEO body (rich HTML) + FAQ section + every JSON-LD
+// schema configured for the page. Renders nothing if there's no content/FAQs.
 export default function SeoContent({ seo }: { seo: PageSeoData }) {
   const hasContent = !!seo.longContent?.trim();
   const faqs = (seo.faqs || []).filter((f) => f.question.trim() && f.answer.trim());
   const jsonLd = faqJsonLd(faqs);
-  const customSchema = seo.schemaJsonLd?.trim() || "";
+  const schemas = collectSchemas(seo);
 
-  if (!hasContent && faqs.length === 0 && !customSchema) return null;
+  if (!hasContent && faqs.length === 0 && schemas.length === 0) return null;
 
   return (
     <section className="section-padding bg-white">
       <div className="container-custom max-w-4xl">
         {hasContent && (
           <div
-            className="seo-body text-gray-600 text-sm leading-relaxed
-              [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-gray-800 [&_h2]:mt-6 [&_h2]:mb-3
-              [&_h3]:text-base [&_h3]:font-bold [&_h3]:text-gray-700 [&_h3]:mt-5 [&_h3]:mb-2
-              [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol]:space-y-1
-              [&_a]:text-[#01b7f2] [&_a]:underline [&_strong]:text-gray-800 [&_img]:rounded-xl [&_img]:my-3"
+            className={`seo-body ${contentBoxProse}`}
             dangerouslySetInnerHTML={{ __html: seo.longContent }}
           />
         )}
@@ -44,20 +43,8 @@ export default function SeoContent({ seo }: { seo: PageSeoData }) {
         )}
       </div>
 
-      {jsonLd && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: jsonLd }}
-        />
-      )}
-
-      {/* Admin-provided custom JSON-LD schema */}
-      {customSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: customSchema }}
-        />
-      )}
+      {/* FAQPage schema + every admin-configured schema tag, one script each */}
+      <JsonLd source={seo} extra={[jsonLd || ""]} />
     </section>
   );
 }

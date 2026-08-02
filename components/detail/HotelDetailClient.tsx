@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import FAQ from "@/components/FAQ";
 import HotelBookingForm from "@/components/HotelBookingForm";
 import RelatedHotels from "@/components/RelatedHotels";
+import ContentBox from "@/components/ContentBox";
 
 interface Room { name: string; price: number; capacity: number; size: string; bed: string; image: string }
 
@@ -20,6 +21,7 @@ interface Hotel {
   city: string;
   country: string;
   description: string;
+  longContent?: string;
   images: string[];
   imageAlts: string[];
   stars: number;
@@ -45,16 +47,18 @@ function Stars({ count }: { count: number }) {
   );
 }
 
-export default function HotelDetailClient({ idOrSlug }: { idOrSlug?: string }) {
+export default function HotelDetailClient({ idOrSlug, initial }: { idOrSlug?: string; initial?: Hotel | null }) {
   const params = useParams<{ id?: string; slug?: string }>();
   const id = idOrSlug ?? params.id ?? params.slug ?? "";
-  const [hotel, setHotel] = useState<Hotel | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [hotel, setHotel] = useState<Hotel | null>(initial ?? null);
+  const [loading, setLoading] = useState(!initial);
   const [notFound, setNotFound] = useState(false);
   const [activeImg, setActiveImg] = useState(0);
   const [selectedRoom, setSelectedRoom] = useState("");
 
   useEffect(() => {
+    // Data already server-rendered — no client fetch needed.
+    if (initial) return;
     if (!id) return;
     fetch(`/api/hotels/${id}`)
       .then((r) => {
@@ -67,6 +71,7 @@ export default function HotelDetailClient({ idOrSlug }: { idOrSlug?: string }) {
         setLoading(false);
       })
       .catch(() => { setNotFound(true); setLoading(false); });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   function bookRoom(name: string) {
@@ -241,6 +246,9 @@ export default function HotelDetailClient({ idOrSlug }: { idOrSlug?: string }) {
           </div>
         </div>
       </main>
+
+      {/* Page content box (admin-managed) */}
+      <ContentBox content={hotel.longContent} heading={`About ${hotel.name}`} />
 
       {/* Related */}
       <RelatedHotels currentId={hotel._id} city={hotel.city} category={hotel.category} />

@@ -5,6 +5,7 @@ import { useAdmin } from "@/lib/useAdmin";
 import { useRouter, useParams } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
 import SeoSection from "@/components/admin/SeoSection";
+import PageContentField from "@/components/admin/PageContentField";
 import Link from "next/link";
 import { ArrowLeft, Loader, Plus, X } from "lucide-react";
 
@@ -31,7 +32,7 @@ export default function EditPackage() {
     itineraryDays: [] as Day[], images: [] as string[], imageAlts: [] as string[], image: "",
     faqs: [] as { question: string; answer: string }[],
     metaTitle: "", metaKeywords: "", metaDescription: "",
-    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "",
+    canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "", schemaBlocks: [] as string[], longContent: "",
   });
 
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function EditPackage() {
             itineraryDays: data.itineraryDays || [], images: data.images || [], imageAlts: data.imageAlts || [], image: data.image || "",
             faqs: data.faqs || [],
             metaTitle: data.metaTitle || "", metaKeywords: data.metaKeywords || "", metaDescription: data.metaDescription || "",
-            canonical: data.canonical || "", ogTitle: data.ogTitle || "", ogDescription: data.ogDescription || "", ogImage: data.ogImage || "", twitterCard: data.twitterCard || "summary_large_image", schemaJsonLd: data.schemaJsonLd || "",
+            canonical: data.canonical || "", ogTitle: data.ogTitle || "", ogDescription: data.ogDescription || "", ogImage: data.ogImage || "", twitterCard: data.twitterCard || "summary_large_image", schemaJsonLd: data.schemaJsonLd || "", schemaBlocks: data.schemaBlocks || [], longContent: data.longContent || "",
           });
         }
         setFetching(false);
@@ -245,8 +246,10 @@ export default function EditPackage() {
             )}
           </div>
 
+          <PageContentField value={form.longContent} onChange={(html) => set("longContent", html)} />
+
           <SeoSection
-            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd }}
+            data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd, schemaBlocks: form.schemaBlocks }}
             onChange={(field, value) => set(field, value)}
             autoSlugFrom={form.title}
           />

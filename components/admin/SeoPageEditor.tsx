@@ -4,18 +4,19 @@ import { useEffect, useState } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { SEO_PAGES } from "@/lib/seoPages";
 import RichTextEditor from "@/components/admin/RichTextEditor";
+import SchemaTags from "@/components/admin/SchemaTags";
 import { Save, Plus, Trash2, Loader, CheckCircle } from "lucide-react";
 
 type Faq = { question: string; answer: string };
 type SeoForm = {
   pageKey: string; title: string; description: string; keywords: string; canonical: string;
   robots: string; ogTitle: string; ogDescription: string; ogImage: string; twitterCard: string;
-  h1: string; longContent: string; faqs: Faq[]; schemaJsonLd: string;
+  h1: string; longContent: string; faqs: Faq[]; schemaJsonLd: string; schemaBlocks: string[];
 };
 const EMPTY = (key: string): SeoForm => ({
   pageKey: key, title: "", description: "", keywords: "", canonical: "", robots: "index,follow",
   ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", h1: "",
-  longContent: "", faqs: [], schemaJsonLd: "",
+  longContent: "", faqs: [], schemaJsonLd: "", schemaBlocks: [],
 });
 
 export default function SeoPageEditor({ pageKey }: { pageKey: string }) {
@@ -53,6 +54,7 @@ export default function SeoPageEditor({ pageKey }: { pageKey: string }) {
           longContent: data.longContent ?? "",
           faqs: Array.isArray(data.faqs) ? data.faqs : [],
           schemaJsonLd: data.schemaJsonLd ?? "",
+          schemaBlocks: Array.isArray(data.schemaBlocks) ? data.schemaBlocks : [],
         });
       } catch { /* keep empty */ }
       if (!cancelled) setFetching(false);
@@ -183,17 +185,14 @@ export default function SeoPageEditor({ pageKey }: { pageKey: string }) {
         )}
       </div>
 
-      {/* Custom schema */}
-      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-2">
-        <h2 className="font-bold text-gray-900">Custom Schema (JSON-LD)</h2>
-        <p className="text-gray-500 text-xs">Paste raw JSON-LD (e.g. Organization, Product, BreadcrumbList). Injected as a &lt;script type="application/ld+json"&gt; on this page. Leave blank if not needed.</p>
-        <textarea
-          value={form.schemaJsonLd}
-          onChange={(e) => set("schemaJsonLd", e.target.value)}
-          rows={8}
-          spellCheck={false}
-          placeholder={'{\n  "@context": "https://schema.org",\n  "@type": "WebPage",\n  "name": "…"\n}'}
-          className={`${input} font-mono`}
+      {/* Schema tags — as many JSON-LD blocks as this page needs */}
+      <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+        <SchemaTags
+          primary={form.schemaJsonLd}
+          blocks={form.schemaBlocks}
+          onPrimaryChange={(v) => set("schemaJsonLd", v)}
+          onBlocksChange={(v) => set("schemaBlocks", v)}
+          hint="Add as many schemas as this page needs (Organization, Product, BreadcrumbList, HowTo …). Each one is published as its own JSON-LD script."
         />
       </div>
 

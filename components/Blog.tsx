@@ -5,12 +5,9 @@ import { ArrowRight, Calendar, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { BLOGS, type BlogPost } from "@/lib/placeholders";
+import { categoryStyle } from "@/lib/blogCategories";
 
-const CATEGORY_COLORS: Record<string, string> = {
-  Travel: "#3b82f6", "Car Guide": "#01b7f2", Savings: "#10b981",
-  News: "#8b5cf6", Tips: "#ef4444", General: "#64748b", Tour: "#01b7f2",
-  Heritage: "#b45309", Adventure: "#10b981",
-};
+
 
 export default function Blog() {
   const [posts, setPosts] = useState<BlogPost[]>(BLOGS.slice(0, 3));
@@ -39,7 +36,7 @@ export default function Blog() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {posts.map((post: any) => {
-            const color = CATEGORY_COLORS[post.category] || CATEGORY_COLORS.General;
+            const cat = categoryStyle(post.category);
             const dateStr = post.createdAt
               ? new Date(post.createdAt).toLocaleDateString("en-IN", { month: "short", day: "numeric", year: "numeric" })
               : "";
@@ -50,9 +47,9 @@ export default function Blog() {
                     {post.image ? (
                       <Image src={post.image} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width:768px) 100vw, 33vw" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-4xl" style={{ background: `${color}15` }}>📰</div>
+                      <div className={`w-full h-full flex items-center justify-center text-4xl ${cat.tint}`}>📰</div>
                     )}
-                    <span className="absolute top-4 left-4 text-xs font-bold px-2.5 py-1 rounded-full text-white" style={{ backgroundColor: color }}>
+                    <span className={`absolute top-4 left-4 text-xs font-bold px-2.5 py-1 rounded-full text-white ${cat.chip}`}>
                       {post.category}
                     </span>
                   </div>

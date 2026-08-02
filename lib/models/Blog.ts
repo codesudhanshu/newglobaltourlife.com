@@ -12,6 +12,7 @@ export interface IBlog extends Document {
   ogImage: string;
   twitterCard: string;
   schemaJsonLd: string;
+  schemaBlocks: string[];
   excerpt: string;
   content: string;
   image: string;
@@ -36,6 +37,7 @@ const BlogSchema = new Schema<IBlog>(
     ogImage: { type: String, default: "" },
     twitterCard: { type: String, default: "summary_large_image" },
     schemaJsonLd: { type: String, default: "" },
+    schemaBlocks: { type: [String], default: [] },
     excerpt: { type: String, default: "" },
     content: { type: String, default: "" },
     image: { type: String, default: "" },

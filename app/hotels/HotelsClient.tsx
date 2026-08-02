@@ -26,7 +26,7 @@ interface Hotel {
 type SortKey = "default" | "price-asc" | "price-desc" | "rating-desc";
 const PAGE_SIZE = 12;
 
-function HotelsContent() {
+function HotelsContent({ initialCity }: { initialCity?: string }) {
   const params = useSearchParams();
   const [hotels, setHotels] = useState<Hotel[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,7 +35,7 @@ function HotelsContent() {
   const [page, setPage] = useState(1);
   const priceInitialized = useRef(false);
   const [filters, setFilters] = useState<HotelFiltersState>({
-    search: params.get("city") || "",
+    search: initialCity || params.get("city") || "",
     minPrice: 0,
     maxPrice: 0,
     amenities: [],
@@ -205,10 +205,11 @@ function HotelsContent() {
   );
 }
 
-export default function HotelsClient() {
+// `initialCity` comes from the clean URL /hotels/<city-slug>.
+export default function HotelsClient({ initialCity }: { initialCity?: string }) {
   return (
     <Suspense fallback={<div className="min-h-screen bg-[#0A65AB] flex items-center justify-center text-white">Loading...</div>}>
-      <HotelsContent />
+      <HotelsContent initialCity={initialCity} />
     </Suspense>
   );
 }
