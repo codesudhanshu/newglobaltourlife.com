@@ -69,11 +69,7 @@ export default function FlightDeals() {
 
                 <p className="text-xs text-gray-500 text-center mb-4">{f.departInfo}</p>
 
-                <div className="flex items-end justify-between border-t border-gray-100 pt-3">
-                  <div>
-                    <div className="text-[11px] text-gray-400">Starting from</div>
-                    <div className="text-xl font-extrabold text-[#01b7f2]">₹{f.price.toLocaleString("en-IN")}</div>
-                  </div>
+                <div className="flex items-end justify-end border-t border-gray-100 pt-3">
                   <span className="text-sm font-semibold text-[#0A65AB] group-hover:text-[#01b7f2] flex items-center gap-1 transition-colors">
                     Book <ArrowRight size={14} />
                   </span>

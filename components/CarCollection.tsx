@@ -114,12 +114,8 @@ export default function CarCollection() {
                     <span className="flex items-center gap-1.5"><Settings2 size={13} className="text-[#01b7f2]" /> {car.transmission}</span>
                   </div>
 
-                  {/* Price + CTA */}
-                  <div className="flex items-center justify-between border-t border-gray-100 pt-4">
-                    <div>
-                      <span className="text-xl font-extrabold text-[#01b7f2]">₹{car.price.toLocaleString("en-IN")}</span>
-                      <span className="text-gray-400 text-xs"> /Per Day</span>
-                    </div>
+                  {/* CTA */}
+                  <div className="flex items-center justify-end border-t border-gray-100 pt-4">
                     <Link href={href} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">
                       See Details <ArrowRight size={13} />
                     </Link>

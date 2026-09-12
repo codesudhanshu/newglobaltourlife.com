@@ -60,10 +60,7 @@ export default function RelatedTirthYatra({ currentId }: { currentId: string }) 
                   {t.location && <span className="flex items-center gap-1"><MapPin size={11} className="text-[#01b7f2]" /> {t.location}{t.state ? `, ${t.state}` : ""}</span>}
                   {t.duration && <span className="flex items-center gap-1"><Clock size={11} className="text-[#01b7f2]" /> {t.duration}</span>}
                 </div>
-                <div className="flex items-center justify-between border-t border-gray-100 pt-3">
-                  <div>
-                    {t.price > 0 && <><span className="text-lg font-extrabold text-[#01b7f2]">₹{t.price.toLocaleString("en-IN")}</span><span className="text-gray-400 text-xs"> /person</span></>}
-                  </div>
+                <div className="flex items-center justify-end border-t border-gray-100 pt-3">
                   <Link href={`/${t.slug || t._id}`} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">
                     View <ArrowRight size={13} />
                   </Link>

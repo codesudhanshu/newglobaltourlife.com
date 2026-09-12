@@ -86,7 +86,6 @@ export default function VisaDetailClient({ idOrSlug, initial }: { idOrSlug?: str
             <span className="text-white">{item.title}</span>
           </div>
           <h1 className="text-3xl lg:text-4xl font-extrabold text-white mb-3">{item.title}</h1>
-          {item.price > 0 && <span className="text-[#01b7f2] font-bold text-lg">₹{item.price.toLocaleString("en-IN")}<span className="text-gray-300 text-sm font-normal"> onwards</span></span>}
         </div>
       </div>
 

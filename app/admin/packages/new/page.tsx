@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
+import ReviewsEditor, { type ReviewItem } from "@/components/admin/ReviewsEditor";
 import SeoSection from "@/components/admin/SeoSection";
 import PageContentField from "@/components/admin/PageContentField";
 import Link from "next/link";
@@ -29,6 +30,7 @@ export default function NewPackage() {
     inclusions: [] as string[], exclusions: [] as string[], highlights: [] as string[],
     itineraryDays: [] as Day[], images: [] as string[], imageAlts: [] as string[], image: "",
     faqs: [] as { question: string; answer: string }[],
+    reviews: [] as ReviewItem[],
     metaTitle: "", metaKeywords: "", metaDescription: "",
     canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "", schemaBlocks: [] as string[], longContent: "",
   });
@@ -188,6 +190,16 @@ export default function NewPackage() {
               {form.faqs.length === 0 && <p className="text-gray-400 text-sm">No FAQs added yet.</p>}
             </div>
           </div>
+
+          {/* Customer reviews (shown on the public page) */}
+          {token && (
+            <ReviewsEditor
+              value={form.reviews}
+              onChange={(r) => set("reviews", r)}
+              token={token}
+              folder="new-global-tour-life/reviews"
+            />
+          )}
 
           {/* Inclusions / Exclusions / Highlights */}
           {([

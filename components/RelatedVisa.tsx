@@ -53,10 +53,7 @@ export default function RelatedVisa({ currentId }: { currentId: string }) {
                 <Link href={`/${v.slug || v._id}`}>
                   <h3 className="font-extrabold text-[#0A65AB] text-base mb-2 line-clamp-2 min-h-[2.5rem] group-hover:text-[#01b7f2] transition-colors">{v.title}</h3>
                 </Link>
-                <div className="flex items-center justify-between border-t border-gray-100 pt-3">
-                  <div>
-                    {v.price > 0 && <><span className="text-lg font-extrabold text-[#01b7f2]">₹{v.price.toLocaleString("en-IN")}</span><span className="text-gray-400 text-xs"> onwards</span></>}
-                  </div>
+                <div className="flex items-center justify-end border-t border-gray-100 pt-3">
                   <Link href={`/${v.slug || v._id}`} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">
                     View <ArrowRight size={13} />
                   </Link>

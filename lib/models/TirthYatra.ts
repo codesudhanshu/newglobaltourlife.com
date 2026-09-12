@@ -5,6 +5,13 @@ export interface IFaq {
   answer: string;
 }
 
+export interface IReview {
+  name: string;
+  image: string;
+  rating: number;
+  review: string;
+}
+
 export interface ITirthYatra extends Document {
   name: string;
   slug: string;
@@ -29,6 +36,7 @@ export interface ITirthYatra extends Document {
   featured: boolean;
   available: boolean;
   faqs: IFaq[];
+  reviews: IReview[];
   order: number;
   createdAt: Date;
   updatedAt: Date;
@@ -63,6 +71,17 @@ const TirthYatraSchema = new Schema<ITirthYatra>(
         {
           question: { type: String, default: "" },
           answer: { type: String, default: "" },
+        },
+      ],
+      default: [],
+    },
+    reviews: {
+      type: [
+        {
+          name: { type: String, default: "" },
+          image: { type: String, default: "" },
+          rating: { type: Number, default: 5 },
+          review: { type: String, default: "" },
         },
       ],
       default: [],

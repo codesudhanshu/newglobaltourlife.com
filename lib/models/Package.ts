@@ -11,6 +11,13 @@ export interface IItineraryDay {
   description: string;
 }
 
+export interface IReview {
+  name: string;
+  image: string;
+  rating: number;
+  review: string;
+}
+
 export interface IPackage extends Document {
   title: string;
   slug: string;
@@ -39,6 +46,7 @@ export interface IPackage extends Document {
   itinerary: string;
   itineraryDays: IItineraryDay[];
   faqs: IFaq[];
+  reviews: IReview[];
   category: string;
   featured: boolean;
   order: number;
@@ -89,6 +97,17 @@ const PackageSchema = new Schema<IPackage>(
         {
           question: { type: String, default: "" },
           answer: { type: String, default: "" },
+        },
+      ],
+      default: [],
+    },
+    reviews: {
+      type: [
+        {
+          name: { type: String, default: "" },
+          image: { type: String, default: "" },
+          rating: { type: Number, default: 5 },
+          review: { type: String, default: "" },
         },
       ],
       default: [],

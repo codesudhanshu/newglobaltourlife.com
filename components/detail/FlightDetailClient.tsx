@@ -96,12 +96,6 @@ export default function FlightDetailClient({ idOrSlug, initial }: { idOrSlug?: s
             <span className="bg-white/10 px-2.5 py-1 rounded-full">{item.tripType}</span>
             {item.departInfo && <span className="flex items-center gap-1.5"><Clock size={14} className="text-[#01b7f2]" /> {item.departInfo}</span>}
           </div>
-          {item.price > 0 && (
-            <p className="mt-4 text-[#01b7f2] font-bold text-2xl">
-              ₹{item.price.toLocaleString("en-IN")}
-              <span className="text-gray-300 text-sm font-normal"> onwards</span>
-            </p>
-          )}
         </div>
       </div>
 

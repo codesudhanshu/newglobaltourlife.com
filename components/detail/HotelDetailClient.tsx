@@ -131,10 +131,6 @@ export default function HotelDetailClient({ idOrSlug, initial }: { idOrSlug?: st
                 <span className="text-gray-300 text-sm flex items-center gap-1.5"><MapPin size={13} className="text-[#01b7f2]" /> {hotel.city}, {hotel.country}</span>
               </div>
             </div>
-            <div className="text-right">
-              <div className="text-3xl font-extrabold text-[#01b7f2]">₹{hotel.pricePerNight.toLocaleString("en-IN")}</div>
-              <div className="text-gray-300 text-sm">per night</div>
-            </div>
           </div>
         </div>
       </div>
@@ -206,8 +202,7 @@ export default function HotelDetailClient({ idOrSlug, initial }: { idOrSlug?: st
                           {room.size && <span className="flex items-center gap-1 bg-gray-50 px-2.5 py-1 rounded-full"><Maximize size={12} className="text-[#01b7f2]" /> {room.size}</span>}
                           {room.bed && <span className="flex items-center gap-1 bg-gray-50 px-2.5 py-1 rounded-full"><BedDouble size={12} className="text-[#01b7f2]" /> {room.bed}</span>}
                         </div>
-                        <div className="flex items-center justify-between mt-auto">
-                          <div><span className="text-xl font-extrabold text-[#01b7f2]">₹{room.price.toLocaleString("en-IN")}</span><span className="text-gray-400 text-xs"> /night</span></div>
+                        <div className="flex items-center justify-end mt-auto">
                           <button onClick={() => bookRoom(room.name)} className="bg-[#01b7f2] hover:bg-[#0299cc] text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">Book this room</button>
                         </div>
                       </div>

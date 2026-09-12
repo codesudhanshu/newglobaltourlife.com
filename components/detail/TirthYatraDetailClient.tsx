@@ -11,6 +11,7 @@ import FAQ from "@/components/FAQ";
 import EnquiryForm from "@/components/EnquiryForm";
 import RelatedTirthYatra from "@/components/RelatedTirthYatra";
 import ContentBox from "@/components/ContentBox";
+import CustomerReviews, { type Review } from "@/components/CustomerReviews";
 
 interface TirthYatra {
   _id: string;
@@ -24,6 +25,7 @@ interface TirthYatra {
   duration: string;
   highlights: string[];
   faqs: { question: string; answer: string }[];
+  reviews: Review[];
 }
 
 export default function TirthYatraDetailClient({ idOrSlug, initial }: { idOrSlug?: string; initial?: TirthYatra | null }) {
@@ -88,7 +90,6 @@ export default function TirthYatraDetailClient({ idOrSlug, initial }: { idOrSlug
           <div className="flex flex-wrap items-center gap-5 text-gray-200 text-sm">
             {(item.location || item.state) && <span className="flex items-center gap-1.5"><MapPin size={15} className="text-[#01b7f2]" /> {[item.location, item.state].filter(Boolean).join(", ")}</span>}
             {item.duration && <span className="flex items-center gap-1.5"><Clock size={15} className="text-[#01b7f2]" /> {item.duration}</span>}
-            {item.price > 0 && <span className="text-[#01b7f2] font-bold text-lg">₹{item.price.toLocaleString("en-IN")}<span className="text-gray-300 text-sm font-normal"> /person</span></span>}
           </div>
         </div>
       </div>
@@ -135,6 +136,8 @@ export default function TirthYatraDetailClient({ idOrSlug, initial }: { idOrSlug
 
       {/* Page content box (admin-managed) */}
       <ContentBox content={item.longContent} heading={`${item.name} Yatra Details`} />
+
+      <CustomerReviews reviews={item.reviews} title={`${item.name} Customer Reviews`} />
 
       <RelatedTirthYatra currentId={item._id} />
 

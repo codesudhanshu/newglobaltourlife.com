@@ -133,11 +133,7 @@ export default function HotelsSection() {
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between pt-3 border-t border-slate-700">
-                    <div>
-                      <span className="text-[#01b7f2] font-extrabold text-lg">₹{hotel.pricePerNight.toLocaleString()}</span>
-                      <span className="text-gray-500 text-xs ml-1">/ night</span>
-                    </div>
+                  <div className="flex items-center justify-end pt-3 border-t border-slate-700">
                     {staticCard ? (
                       <a
                         href="#contact"

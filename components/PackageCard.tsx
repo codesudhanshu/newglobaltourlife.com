@@ -45,11 +45,7 @@ export default function PackageCard({ _id, slug, title, destination, nights, day
           </span>
           <span className="text-xs text-gray-500 font-medium">Excellent <span className="text-gray-400">(2.5k Reviews)</span></span>
         </div>
-        <div className="flex items-center justify-between border-t border-gray-100 pt-4">
-          <div>
-            <span className="text-xl font-extrabold text-[#01b7f2]">₹{price.toLocaleString("en-IN")}</span>
-            <span className="text-gray-400 text-xs"> /person</span>
-          </div>
+        <div className="flex items-center justify-end border-t border-gray-100 pt-4">
           <Link href={href} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">
             View Details <ArrowRight size={13} />
           </Link>

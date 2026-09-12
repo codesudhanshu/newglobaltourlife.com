@@ -69,21 +69,6 @@ export default function HotelFilters({ filters, onChange, options, resultCount, 
           </div>
         </div>
 
-        {/* Price */}
-        <div>
-          <label className="block text-sm font-bold text-[#0A65AB] mb-2">Price / night (₹)</label>
-          <div className="flex items-center gap-2">
-            <input type="number" min={options.priceMin} max={options.priceMax} value={filters.minPrice}
-              onChange={(e) => onChange({ ...filters, minPrice: +e.target.value })}
-              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#0A65AB] focus:outline-none focus:border-[#01b7f2]" />
-            <span className="text-gray-400 text-sm">–</span>
-            <input type="number" min={options.priceMin} max={options.priceMax} value={filters.maxPrice}
-              onChange={(e) => onChange({ ...filters, maxPrice: +e.target.value })}
-              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-[#0A65AB] focus:outline-none focus:border-[#01b7f2]" />
-          </div>
-          <p className="text-[11px] text-gray-400 mt-1">Range ₹{options.priceMin.toLocaleString("en-IN")} – ₹{options.priceMax.toLocaleString("en-IN")}</p>
-        </div>
-
         {/* Star rating */}
         {options.stars.length > 0 && (
           <div>

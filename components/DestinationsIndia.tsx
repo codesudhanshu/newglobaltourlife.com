@@ -43,8 +43,6 @@ export default function DestinationsIndia() {
               <h3 className="text-base font-bold text-[#0A65AB] group-hover:text-[#01b7f2] transition-colors">
                 {d.name} Tour Packages
               </h3>
-              <p className="text-xs text-gray-400 mt-1">Starting from</p>
-              <p className="text-base font-extrabold text-[#0A65AB]">₹{d.startingPrice.toLocaleString("en-IN")}</p>
             </Link>
           ))}
         </Slider>

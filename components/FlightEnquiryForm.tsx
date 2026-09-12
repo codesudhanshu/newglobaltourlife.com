@@ -78,7 +78,7 @@ function AirlineLogo({ name, bg, color, accent }: { name: string; bg: string; co
   );
 }
 
-type AirlineCard = { name: string; bg: string; color: string; dest: string; price: string; type: string };
+type AirlineCard = { name: string; bg: string; color: string; dest: string; type: string };
 
 // Brand look (bg/logo colour) keyed by airline name — used to style the inline logo.
 const BRAND: Record<string, { bg: string; color: string }> = {
@@ -93,14 +93,14 @@ const BRAND: Record<string, { bg: string; color: string }> = {
 };
 
 const AIRLINE_DEALS: AirlineCard[] = [
-  { name: "SpiceJet",   bg: "#fff",     color: "#E03B2E", dest: "Delhi → Mumbai",      price: "₹3,499",  type: "ONEWAY" },
-  { name: "Vistara",    bg: "#fff",     color: "#7B2D8B", dest: "Mumbai → Goa",        price: "₹4,999",  type: "ONEWAY" },
-  { name: "IndiGo",     bg: "#1a2f6e",  color: "#fff",    dest: "Indore → Delhi",      price: "₹2,999",  type: "ONEWAY" },
-  { name: "Air India",  bg: "#fff",     color: "#C0392B", dest: "Delhi → London",      price: "₹45,000", type: "ONEWAY" },
-  { name: "Akasa Air",  bg: "#FF6B35",  color: "#fff",    dest: "Mumbai → Bengaluru",  price: "₹3,199",  type: "ONEWAY" },
-  { name: "Air Arabia", bg: "#C8102E",  color: "#fff",    dest: "Dubai → Mumbai",      price: "₹18,500", type: "ONEWAY" },
-  { name: "Emirates",   bg: "#1C1C1C",  color: "#C5A028", dest: "Dubai → Delhi",       price: "₹35,000", type: "ONEWAY" },
-  { name: "AirAsia",    bg: "#E8000D",  color: "#fff",    dest: "Kuala Lumpur → Delhi", price: "₹14,500", type: "ONEWAY" },
+  { name: "SpiceJet",   bg: "#fff",     color: "#E03B2E", dest: "Delhi → Mumbai",  type: "ONEWAY" },
+  { name: "Vistara",    bg: "#fff",     color: "#7B2D8B", dest: "Mumbai → Goa",  type: "ONEWAY" },
+  { name: "IndiGo",     bg: "#1a2f6e",  color: "#fff",    dest: "Indore → Delhi",  type: "ONEWAY" },
+  { name: "Air India",  bg: "#fff",     color: "#C0392B", dest: "Delhi → London", type: "ONEWAY" },
+  { name: "Akasa Air",  bg: "#FF6B35",  color: "#fff",    dest: "Mumbai → Bengaluru",  type: "ONEWAY" },
+  { name: "Air Arabia", bg: "#C8102E",  color: "#fff",    dest: "Dubai → Mumbai", type: "ONEWAY" },
+  { name: "Emirates",   bg: "#1C1C1C",  color: "#C5A028", dest: "Dubai → Delhi", type: "ONEWAY" },
+  { name: "AirAsia",    bg: "#E8000D",  color: "#fff",    dest: "Kuala Lumpur → Delhi", type: "ONEWAY" },
 ];
 
 type FlightRow = { airline?: string; from?: string; to?: string; price?: number; tripType?: string };
@@ -125,7 +125,6 @@ export default function FlightEnquiryForm() {
               bg: brand.bg,
               color: brand.color,
               dest: `${f.from || ""} → ${f.to || ""}`,
-              price: typeof f.price === "number" ? `₹${f.price.toLocaleString("en-IN")}` : "",
               type: (f.tripType || "ONEWAY").toUpperCase(),
             };
           });
@@ -164,10 +163,7 @@ export default function FlightEnquiryForm() {
                 <div className="p-3 bg-white">
                   <p className="text-gray-700 font-semibold text-sm mb-1">{a.dest}</p>
                   <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-green-600 font-bold text-base">{a.price}</span>
-                      <span className="text-gray-400 text-[10px] ml-1 font-semibold">{a.type}</span>
-                    </div>
+                    <span className="text-gray-400 text-[10px] font-semibold">{a.type}</span>
                     <button
                       onClick={() => setModal({ open: true, subject: `${a.name}: ${a.dest}` })}
                       className="text-[10px] font-bold text-gray-500 border border-gray-300 px-3 py-1 rounded hover:bg-[#0A65AB] hover:text-white hover:border-[#0A65AB] transition-colors"

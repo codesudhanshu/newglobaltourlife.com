@@ -69,10 +69,7 @@ export default function VisaClient() {
                       <h3 className="font-extrabold text-[#0A65AB] text-lg mb-1 line-clamp-2 group-hover:text-[#01b7f2] transition-colors">{v.title}</h3>
                     </Link>
                     {v.description && <p className="text-gray-500 text-sm line-clamp-2 mb-3">{v.description}</p>}
-                    <div className="flex items-center justify-between border-t border-gray-100 pt-4">
-                      <div>
-                        {v.price > 0 && <><span className="text-xl font-extrabold text-[#01b7f2]">₹{v.price.toLocaleString("en-IN")}</span><span className="text-gray-400 text-xs"> onwards</span></>}
-                      </div>
+                    <div className="flex items-center justify-end border-t border-gray-100 pt-4">
                       <Link href={`/${v.slug || v._id}`} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">
                         View Details <ArrowRight size={13} />
                       </Link>

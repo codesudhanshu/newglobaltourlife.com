@@ -34,11 +34,7 @@ export default function DestinationCard({ d }: { d: Destination }) {
           ))}
         </div>
 
-        <div className="flex items-center justify-between">
-          <span className="text-sm">
-            <span className="text-gray-300 text-xs">From </span>
-            <span className="font-extrabold text-[#01b7f2]">₹{d.startingPrice.toLocaleString("en-IN")}</span>
-          </span>
+        <div className="flex items-center justify-end">
           <span className="text-xs font-semibold underline decoration-[#01b7f2] underline-offset-4">Explore →</span>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAdmin } from "@/lib/useAdmin";
 import { useRouter } from "next/navigation";
 import MultiImageUpload from "@/components/admin/MultiImageUpload";
+import ReviewsEditor, { type ReviewItem } from "@/components/admin/ReviewsEditor";
 import SeoSection from "@/components/admin/SeoSection";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import Link from "next/link";
@@ -31,6 +32,7 @@ export default function NewCar() {
     name: "", year: 2024, transmission: "Automatic", capacity: 5,
     category: "Cab Service", price: 0, description: "", longContent: "", image: "", images: [] as string[], imageAlts: [] as string[], order: 0, available: true,
     faqs: [] as { question: string; answer: string }[],
+    reviews: [] as ReviewItem[],
     slug: "", metaTitle: "", metaKeywords: "", metaDescription: "",
     canonical: "", ogTitle: "", ogDescription: "", ogImage: "", twitterCard: "summary_large_image", schemaJsonLd: "", schemaBlocks: [] as string[],
   });
@@ -152,6 +154,16 @@ export default function NewCar() {
               {form.faqs.length === 0 && <p className="text-gray-400 text-sm">No FAQs added yet.</p>}
             </div>
           </div>
+
+          {/* Customer reviews (shown on the public page) */}
+          {token && (
+            <ReviewsEditor
+              value={form.reviews}
+              onChange={(r) => set("reviews", r)}
+              token={token}
+              folder="new-global-tour-life/reviews"
+            />
+          )}
 
           <SeoSection
             data={{ slug: form.slug, metaTitle: form.metaTitle, metaKeywords: form.metaKeywords, metaDescription: form.metaDescription, canonical: form.canonical, ogTitle: form.ogTitle, ogDescription: form.ogDescription, ogImage: form.ogImage, twitterCard: form.twitterCard, schemaJsonLd: form.schemaJsonLd, schemaBlocks: form.schemaBlocks }}

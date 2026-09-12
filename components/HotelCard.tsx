@@ -69,8 +69,7 @@ export default function HotelCard({ _id, slug, name, city, country, stars, price
           </div>
           <div className="flex items-center gap-1.5 text-gray-400 text-xs mb-3"><MapPin size={12} className="text-[#01b7f2]" /> {city}, {country}</div>
           <div className="mb-4"><Amenities amenities={amenities} /></div>
-          <div className="flex items-center justify-between border-t border-gray-100 pt-4 mt-auto">
-            <div><span className="text-xl font-extrabold text-[#01b7f2]">₹{pricePerNight.toLocaleString("en-IN")}</span><span className="text-gray-400 text-xs"> /night</span></div>
+          <div className="flex items-center justify-end border-t border-gray-100 pt-4 mt-auto">
             <Link href={href} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">See Details <ArrowRight size={13} /></Link>
           </div>
         </div>
@@ -91,8 +90,7 @@ export default function HotelCard({ _id, slug, name, city, country, stars, price
         </div>
         <div className="flex items-center gap-1.5 text-gray-400 text-xs mb-3"><MapPin size={12} className="text-[#01b7f2]" /> {city}, {country}</div>
         <div className="mb-4"><Amenities amenities={amenities} /></div>
-        <div className="flex items-center justify-between border-t border-gray-100 pt-4">
-          <div><span className="text-xl font-extrabold text-[#01b7f2]">₹{pricePerNight.toLocaleString("en-IN")}</span><span className="text-gray-400 text-xs"> /night</span></div>
+        <div className="flex items-center justify-end border-t border-gray-100 pt-4">
           <Link href={href} className="flex items-center gap-1 text-sm font-semibold text-[#0A65AB] hover:text-[#01b7f2] hover:gap-2 transition-all">See Details <ArrowRight size={13} /></Link>
         </div>
       </div>

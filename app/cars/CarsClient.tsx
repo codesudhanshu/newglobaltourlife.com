@@ -213,22 +213,6 @@ function CarsContent({ initialCategory }: { initialCategory?: string }) {
                   </div>
                 </div>
 
-                {/* Price range */}
-                <div className="mb-5">
-                  <div className="flex items-center justify-between mb-2">
-                    <label className="text-sm font-semibold text-gray-700">Max Price / Day</label>
-                    <span className="text-sm font-bold text-[#01b7f2]">₹{maxPrice.toLocaleString("en-IN")}</span>
-                  </div>
-                  <input
-                    type="range" min={1000} max={50000} step={500} value={maxPrice}
-                    onChange={(e) => setMaxPrice(+e.target.value)}
-                    className="w-full accent-cyan-500"
-                  />
-                  <div className="flex justify-between text-xs text-gray-400 mt-1">
-                    <span>₹1,000</span><span>₹50,000</span>
-                  </div>
-                </div>
-
                 {/* Categories quick filter */}
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
@@ -315,11 +299,6 @@ function CarsContent({ initialCategory }: { initialCategory?: string }) {
                           <span className="absolute top-3 left-3 text-xs font-bold px-3 py-1 rounded-full text-white shadow-lg" style={{ backgroundColor: c }}>
                             {car.category}
                           </span>
-                          {/* Price badge */}
-                          <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 shadow-lg">
-                            <span className="font-extrabold text-[#0A65AB] text-sm">₹{car.price.toLocaleString("en-IN")}</span>
-                            <span className="text-gray-400 text-xs">/day</span>
-                          </div>
                         </div>
 
                         {/* Content */}

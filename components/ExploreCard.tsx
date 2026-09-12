@@ -38,10 +38,6 @@ export default function ExploreCard({ image, title, sub, price, href, discount }
           >
             View Details
           </Link>
-          <div className="text-right">
-            <div className="text-sm font-extrabold text-[#01b7f2] leading-none">₹{price.toLocaleString("en-IN")}</div>
-            <div className="text-[10px] text-gray-400">Per Person</div>
-          </div>
           <a
             href="tel:+919131727811"
             aria-label="Call to book"

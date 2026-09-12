@@ -5,6 +5,13 @@ export interface IFaq {
   answer: string;
 }
 
+export interface IReview {
+  name: string;
+  image: string;
+  rating: number;
+  review: string;
+}
+
 export interface ICar extends Document {
   name: string;
   slug: string;
@@ -29,6 +36,7 @@ export interface ICar extends Document {
   images: string[];
   imageAlts: string[];
   faqs: IFaq[];
+  reviews: IReview[];
   order: number;
   available: boolean;
   createdAt: Date;
@@ -64,6 +72,17 @@ const CarSchema = new Schema<ICar>(
         {
           question: { type: String, default: "" },
           answer: { type: String, default: "" },
+        },
+      ],
+      default: [],
+    },
+    reviews: {
+      type: [
+        {
+          name: { type: String, default: "" },
+          image: { type: String, default: "" },
+          rating: { type: Number, default: 5 },
+          review: { type: String, default: "" },
         },
       ],
       default: [],

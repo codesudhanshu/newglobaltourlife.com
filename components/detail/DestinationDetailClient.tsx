@@ -95,7 +95,6 @@ export default function DestinationDetailClient({ idOrSlug, initial }: { idOrSlu
           <div className="flex flex-wrap items-center gap-5 text-gray-200 text-sm">
             <span className="flex items-center gap-1.5"><MapPin size={15} className="text-[#01b7f2]" /> {dest.country}</span>
             <span className="flex items-center gap-1.5"><Globe size={15} className="text-[#01b7f2]" /> {dest.region}</span>
-            <span className="text-[#01b7f2] font-bold text-lg">From ₹{dest.startingPrice.toLocaleString("en-IN")}<span className="text-gray-300 text-sm font-normal"> /person</span></span>
           </div>
         </div>
       </div>

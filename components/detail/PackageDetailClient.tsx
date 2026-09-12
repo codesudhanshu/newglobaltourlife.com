@@ -11,6 +11,7 @@ import FAQ from "@/components/FAQ";
 import PackageEnquiryForm from "@/components/PackageEnquiryForm";
 import RelatedPackages from "@/components/RelatedPackages";
 import ContentBox from "@/components/ContentBox";
+import CustomerReviews, { type Review } from "@/components/CustomerReviews";
 
 interface ItineraryDay { day: number; title: string; description: string }
 
@@ -31,6 +32,7 @@ interface Pkg {
   itinerary: string;
   itineraryDays: ItineraryDay[];
   faqs: { question: string; answer: string }[];
+  reviews: Review[];
   longContent?: string;
   category: string;
   available: boolean;
@@ -108,7 +110,6 @@ export default function PackageDetailClient({ idOrSlug, initial }: { idOrSlug?: 
           <div className="flex flex-wrap items-center gap-5 text-gray-200 text-sm">
             {pkg.destination && <span className="flex items-center gap-1.5"><MapPin size={15} className="text-[#01b7f2]" /> {pkg.destination}</span>}
             <span className="flex items-center gap-1.5"><Clock size={15} className="text-[#01b7f2]" /> {pkg.days}D / {pkg.nights}N</span>
-            <span className="text-[#01b7f2] font-bold text-lg">₹{pkg.price.toLocaleString("en-IN")}<span className="text-gray-300 text-sm font-normal"> /person</span></span>
           </div>
         </div>
       </div>
@@ -237,6 +238,9 @@ export default function PackageDetailClient({ idOrSlug, initial }: { idOrSlug?: 
 
       {/* Page content box (admin-managed) */}
       <ContentBox content={pkg.longContent} heading={`${pkg.title} — Tour Details`} />
+
+      {/* Customer reviews (admin-managed) */}
+      <CustomerReviews reviews={pkg.reviews} title={`${pkg.title} Customer Reviews`} />
 
       {/* Related */}
       <RelatedPackages currentId={pkg._id} category={pkg.category} />
