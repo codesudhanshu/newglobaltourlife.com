@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import { Phone } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
@@ -30,6 +31,10 @@ interface Car {
   faqs: { question: string; answer: string }[];
   available: boolean;
 }
+
+// Same booking line used across the site (Navbar, Footer, enquiry forms).
+const BOOKING_PHONE = "+919131727811";
+const BOOKING_PHONE_DISPLAY = "+91-9131727811";
 
 const CATEGORY_COLORS: Record<string, string> = {
   Business: "#3b82f6", Family: "#01b7f2", Sports: "#ef4444",
@@ -145,6 +150,22 @@ export default function CarDetailClient({ idOrSlug, initial }: { idOrSlug?: stri
             <p className="text-gray-500 text-sm">
               <span className="text-2xl font-extrabold text-[#01b7f2]">₹{car.price.toLocaleString("en-IN")}</span> /day · {car.capacity} seats · {car.transmission} · {car.year}
             </p>
+
+            {/* Call to book — fastest path for users who’d rather talk than fill a form */}
+            <div className="flex flex-wrap items-center gap-3 pt-1">
+              <a
+                href={`tel:${BOOKING_PHONE}`}
+                className="inline-flex items-center gap-2 bg-[#0A65AB] hover:bg-[#085089] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors shadow-sm"
+              >
+                <Phone size={17} /> Call to Book
+              </a>
+              <a
+                href={`tel:${BOOKING_PHONE}`}
+                className="text-[#0A65AB] font-semibold text-sm hover:underline"
+              >
+                {BOOKING_PHONE_DISPLAY}
+              </a>
+            </div>
           </div>
 
           {/* Right — booking form (sticky on desktop) */}
