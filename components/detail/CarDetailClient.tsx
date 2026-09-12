@@ -146,12 +146,8 @@ export default function CarDetailClient({ idOrSlug, initial }: { idOrSlug?: stri
             )}
 
             <h1 className="text-2xl lg:text-3xl font-extrabold text-[#0A65AB] pt-2">{car.name}</h1>
-            <p className="text-gray-500 text-sm">
-              <span className="text-2xl font-extrabold text-[#01b7f2]">₹{car.price.toLocaleString("en-IN")}</span> /day · {car.capacity} seats · {car.transmission} · {car.year}
-            </p>
-
             {/* Call to book — fastest path for users who’d rather talk than fill a form */}
-            <div className="pt-1">
+            <div className="pt-2">
               <a
                 href={`tel:${BOOKING_PHONE}`}
                 className="inline-flex items-center gap-2 bg-[#0A65AB] hover:bg-[#085089] text-white font-bold px-6 py-3 rounded-xl text-sm transition-colors shadow-sm"
