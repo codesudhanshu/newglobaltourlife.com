@@ -5,8 +5,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  Users, Zap, Calendar, ArrowRight, ChevronRight,
-  Search, SlidersHorizontal, X, Fuel
+  ArrowRight, ChevronRight,
+  Search, SlidersHorizontal, X
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
@@ -306,20 +306,6 @@ function CarsContent({ initialCategory }: { initialCategory?: string }) {
                           <h3 className="font-extrabold text-[#0A65AB] text-lg mb-2 group-hover:text-[#01b7f2] transition-colors">
                             {car.name}
                           </h3>
-
-                          {/* Specs chips */}
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {[
-                              { icon: Calendar, label: String(car.year) },
-                              { icon: Zap,      label: car.transmission },
-                              { icon: Users,    label: `${car.capacity} Seats` },
-                              { icon: Fuel,     label: car.category === "Electric" ? "Electric" : "Petrol" },
-                            ].map(({ icon: Icon, label }) => (
-                              <span key={label} className="flex items-center gap-1 text-xs text-gray-500 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-full">
-                                <Icon size={11} /> {label}
-                              </span>
-                            ))}
-                          </div>
 
                           {car.description && (
                             <p className="text-gray-400 text-xs mb-4 line-clamp-2">{car.description}</p>

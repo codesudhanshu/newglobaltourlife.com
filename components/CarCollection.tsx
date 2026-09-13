@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, MapPin, Star, Calendar, Users, Fuel, Settings2, ArrowRight } from "lucide-react";
+import { Heart, MapPin, Star, ArrowRight } from "lucide-react";
 import Slider from "@/components/Slider";
 
 interface Car {
@@ -62,7 +62,6 @@ export default function CarCollection() {
           {cars.map((car) => {
             const isStatic = car._id.startsWith("s");
             const href = isStatic ? "/cars" : `/${car.slug || car._id}`;
-            const fuel = car.category === "Electric" ? "Electric" : car.transmission === "Manual" ? "Petrol" : "Hybrid";
             return (
               <div
                 key={car._id}
@@ -106,13 +105,6 @@ export default function CarCollection() {
                     <span className="text-xs text-gray-500 font-medium">Excellent <span className="text-gray-400">(2.5k Reviews)</span></span>
                   </div>
 
-                  {/* Specs grid */}
-                  <div className="grid grid-cols-2 gap-y-2.5 gap-x-3 text-xs text-gray-500 border-t border-gray-100 pt-4 mb-4">
-                    <span className="flex items-center gap-1.5"><Calendar size={13} className="text-[#01b7f2]" /> Model: {car.year}</span>
-                    <span className="flex items-center gap-1.5"><Users size={13} className="text-[#01b7f2]" /> {car.capacity} People</span>
-                    <span className="flex items-center gap-1.5"><Fuel size={13} className="text-[#01b7f2]" /> {fuel}</span>
-                    <span className="flex items-center gap-1.5"><Settings2 size={13} className="text-[#01b7f2]" /> {car.transmission}</span>
-                  </div>
 
                   {/* CTA */}
                   <div className="flex items-center justify-end border-t border-gray-100 pt-4">
